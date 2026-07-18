@@ -164,7 +164,7 @@ export function HeroSection() {
                 <Image src="/images/fardeen-hero.png" alt="Fardeen Ansari" fill className="object-cover object-[center_15%] scale-125 origin-[center_15%]" priority />
                 
                 {/* Frosted glass overlay at bottom */}
-                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#2A1B14]/90 via-[#2A1B14]/40 to-transparent backdrop-blur-[4px]" />
+                <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#2A1B14]/90 via-[#2A1B14]/40 to-transparent backdrop-blur-[4px]" />
                 
                 {/* Content overlaid */}
                 <div className="absolute inset-x-0 bottom-0 p-5 flex flex-col gap-1.5">
@@ -175,11 +175,7 @@ export function HeroSection() {
                   <p className="text-xs text-white/90 leading-relaxed font-sans">
                     A Full Stack Engineer focused on scalable systems & ML integration.
                   </p>
-                  <div className="flex items-center justify-between mt-2">
-                    <div className="flex items-center gap-3 text-white/80 text-xs font-mono">
-                      <span className="flex items-center gap-1"><Code size={12} /> 15+</span>
-                      <span className="flex items-center gap-1"><Star size={12} /> 4.9</span>
-                    </div>
+                  <div className="flex justify-end mt-2">
                     <a href="#contact" className="bg-white text-[#2A1B14] px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 hover:bg-[#FFF8F0] transition-colors">
                       Hire Me <ArrowUpRight size={12} />
                     </a>
@@ -201,7 +197,7 @@ export function HeroSection() {
               <Image src="/images/fardeen-hero.png" alt="Fardeen Ansari" fill className="object-cover object-[center_15%] scale-125 origin-[center_15%]" priority />
               
               {/* Frosted glass overlay at bottom */}
-              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#2A1B14]/90 via-[#2A1B14]/50 to-transparent backdrop-blur-[6px]" />
+              <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#2A1B14]/90 via-[#2A1B14]/50 to-transparent backdrop-blur-[6px]" />
               
               {/* Content overlaid */}
               <div className="absolute inset-x-0 bottom-0 p-7 flex flex-col gap-2">
@@ -212,11 +208,7 @@ export function HeroSection() {
                 <p className="text-sm text-white/90 leading-relaxed font-sans">
                   A Full Stack Engineer focused on scalable systems & ML integration.
                 </p>
-                <div className="flex items-center justify-between mt-4">
-                  <div className="flex items-center gap-4 text-white/80 text-sm font-mono">
-                    <span className="flex items-center gap-1.5"><Code size={16} /> 15+</span>
-                    <span className="flex items-center gap-1.5"><Star size={16} /> 4.9</span>
-                  </div>
+                <div className="flex justify-end mt-4">
                   <a href="#contact" className="bg-white text-[#2A1B14] px-4 py-2 rounded-full text-sm font-bold flex items-center gap-1 hover:bg-[#FFF8F0] transition-colors shadow-lg">
                     Hire Me <ArrowUpRight size={14} />
                   </a>

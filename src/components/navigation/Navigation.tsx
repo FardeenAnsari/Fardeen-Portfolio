@@ -73,19 +73,18 @@ export function Navigation() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-          scrolled
-            ? "py-3"
-            : "py-6"
+          "fixed z-50 transition-all duration-500",
+          pathname.startsWith("/blog") ? "top-6 right-4 sm:right-8" : "top-0 left-0 right-0",
+          !pathname.startsWith("/blog") && (scrolled ? "py-3" : "py-6")
         )}
       >
-        <div className="container-portfolio">
+        <div className={cn(!pathname.startsWith("/blog") && "container-portfolio")}>
           <div
             className={cn(
               "flex items-center justify-between rounded-2xl transition-all duration-500",
-              scrolled
-                ? "glass px-5 py-3 shadow-lg"
-                : "px-0 py-0"
+              pathname.startsWith("/blog") 
+                ? "glass px-4 sm:px-5 py-2 sm:py-3 shadow-lg gap-4 sm:gap-6" 
+                : (scrolled ? "glass px-5 py-3 shadow-lg" : "px-0 py-0")
             )}
           >
             {/* Logo */}

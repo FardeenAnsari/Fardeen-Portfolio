@@ -13,7 +13,7 @@ export function Footer() {
   return (
     <footer className="relative border-t border-border-subtle py-16">
       <div className="container-portfolio">
-        <div className="grid md:grid-cols-3 gap-12 mb-12">
+        <div className="grid md:grid-cols-3 gap-16 lg:gap-24 mb-16">
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -22,7 +22,7 @@ export function Footer() {
                   src="/images/fardeen-hero.png"
                   alt="Fardeen Ansari"
                   fill
-                  className="object-cover object-top"
+                  className="object-cover object-[center_15%] scale-125 origin-[center_15%]"
                   sizes="40px"
                 />
               </div>
