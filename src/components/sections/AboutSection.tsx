@@ -182,7 +182,8 @@ export function MindSection() {
       <div className="container-portfolio">
         <motion.div
           initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
           className="space-y-16"
         >
@@ -197,8 +198,8 @@ export function MindSection() {
             </p>
           </div>
 
-          {/* Skills grid */}
-          <div className="space-y-10">
+          {/* Skills Bento Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {SKILL_CATEGORIES.map((cat, catIdx) => {
               const skills = SKILLS.filter((s) => s.category === cat.key);
               if (skills.length === 0) return null;
@@ -206,38 +207,38 @@ export function MindSection() {
               return (
                 <motion.div
                   key={cat.key}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: catIdx * 0.1, duration: 0.6 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ delay: catIdx * 0.1, duration: 0.5 }}
+                  className="glass-card p-6 flex flex-col h-full border border-border-subtle hover:border-accent-blue/30 transition-colors shadow-lg hover:shadow-accent-blue/5"
                 >
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className={cn("w-2 h-2 rounded-full bg-gradient-to-r", CATEGORY_COLORS[cat.key])} />
+                  <div className="flex items-center gap-3 mb-8">
+                    <div className={cn("w-3 h-3 rounded-full bg-gradient-to-r", CATEGORY_COLORS[cat.key])} />
                     <h3 className="text-sm font-semibold text-muted uppercase tracking-wider font-mono">
                       {cat.label}
                     </h3>
                   </div>
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap gap-5 mt-auto">
                     {skills.map((skill, i) => {
                       const IconComponent = (SiIcons as any)[skill.icon] || (FaIcons as any)[skill.icon];
                       return (
-                        <motion.div
+                        <div
                           key={skill.name}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                          transition={{ delay: catIdx * 0.1 + i * 0.05, duration: 0.4 }}
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          className="glass-card px-4 py-3 flex items-center gap-3 cursor-default"
+                          className="flex flex-col items-center justify-center gap-2 group"
                         >
-                          {IconComponent ? (
-                            <IconComponent className="w-5 h-5 flex-shrink-0" style={{ color: skill.color }} />
-                          ) : (
-                            <div
-                              className="w-2 h-2 rounded-full flex-shrink-0"
-                              style={{ background: skill.color }}
-                            />
-                          )}
-                          <span className="text-sm font-medium text-primary">{skill.name}</span>
-                        </motion.div>
+                          <div className="w-12 h-12 rounded-xl bg-surface-mid/30 border border-border-subtle/50 flex items-center justify-center group-hover:bg-surface-mid/80 group-hover:border-border-strong group-hover:shadow-glow-sm transition-all duration-300">
+                            {IconComponent ? (
+                              <IconComponent className="w-6 h-6 transition-transform duration-300 group-hover:-translate-y-1" style={{ color: skill.color }} />
+                            ) : (
+                              <div
+                                className="w-3 h-3 rounded-full"
+                                style={{ background: skill.color }}
+                              />
+                            )}
+                          </div>
+                          <span className="text-[10px] font-medium text-secondary group-hover:text-primary transition-colors text-center w-full max-w-[60px] truncate">{skill.name}</span>
+                        </div>
                       );
                     })}
                   </div>

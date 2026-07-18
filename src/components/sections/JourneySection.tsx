@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { TIMELINE } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -16,9 +16,15 @@ const CATEGORY_STYLES: Record<string, { color: string; bg: string; label: string
 
 export function JourneySection() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start center", "end end"]
+  });
+  
+  const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
     <section
@@ -30,7 +36,8 @@ export function JourneySection() {
       <div className="container-portfolio">
         <motion.div
           initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
           className="space-y-16"
         >
@@ -48,13 +55,14 @@ export function JourneySection() {
 
           {/* Timeline */}
           <div className="relative">
-            {/* Vertical line */}
+            {/* Background line track */}
+            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-border-subtle/50" />
+            
+            {/* Scroll-filling Vertical line */}
             <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px">
               <motion.div
-                className="h-full w-full bg-gradient-to-b from-accent-blue/60 via-accent-purple/40 to-transparent"
-                initial={{ scaleY: 0, transformOrigin: "top" }}
-                animate={isInView ? { scaleY: 1 } : {}}
-                transition={{ duration: 2, ease: "easeInOut", delay: 0.4 }}
+                className="h-full w-[2px] -ml-[0.5px] bg-gradient-to-b from-accent-blue via-[#C08552] to-transparent origin-top"
+                style={{ scaleY }}
               />
             </div>
 
@@ -68,21 +76,22 @@ export function JourneySection() {
                 return (
                   <motion.div
                     key={idx}
-                    initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ delay: 0.2 + idx * 0.07, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.5 }}
                     className={cn(
                       "relative md:grid md:grid-cols-2 md:gap-8 items-center",
-                      "pl-16 md:pl-0"
+                      "pl-14 sm:pl-16 md:pl-0"
                     )}
                   >
                     {/* Content */}
                     <div className={cn("md:pr-12", isLeft ? "md:text-right md:pr-12" : "md:col-start-2 md:pl-12")}>
                       <motion.button
                         onClick={() => setActiveIndex(isActive ? null : idx)}
-                        whileHover={{ scale: 1.01 }}
+                        whileHover={{ scale: 1.02 }}
                         className={cn(
-                          "w-full text-left glass-card p-5 border transition-all duration-300",
+                          "w-full text-left glass-card p-4 sm:p-5 border transition-all duration-300",
                           isActive ? "border-accent-blue/40 shadow-glow-sm" : "border-border-subtle"
                         )}
                       >

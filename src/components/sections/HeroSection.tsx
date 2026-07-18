@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect, useMemo } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { ArrowDown, Mail } from "lucide-react";
+import { ArrowDown, Mail, FileText } from "lucide-react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import Image from "next/image";
 import { PERSONAL } from "@/lib/data";
@@ -132,6 +132,16 @@ export function HeroSection() {
                 whileTap={{ scale: 0.97 }}
               >
                 Get In Touch
+              </motion.a>
+              <motion.a
+                href="/assets/cv/Fardeen-Ansari-CV.pdf"
+                download
+                className="btn-ghost magnetic-btn flex items-center gap-2 text-accent-blue"
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <FileText size={16} />
+                Download CV
               </motion.a>
             </div>
 
