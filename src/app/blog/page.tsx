@@ -20,7 +20,7 @@ export default function BlogPage() {
       {/* Brown vignette/burn edges */}
       <div className="fixed inset-0 bg-gradient-to-br from-[#4B2E2B]/10 via-transparent to-[#4B2E2B]/20 pointer-events-none z-0" />
       
-      <div className="container-portfolio max-w-4xl mx-auto space-y-16 pt-32 pb-24 relative z-10">
+      <div className="container-portfolio max-w-4xl mx-auto space-y-16 pt-40 pb-24 relative z-10">
         {/* Header */}
         <div className="space-y-4">
           <span className="px-3 py-1 text-xs font-bold uppercase tracking-widest text-[#FFF8F0] bg-[#4B2E2B] rounded-sm">Writing</span>

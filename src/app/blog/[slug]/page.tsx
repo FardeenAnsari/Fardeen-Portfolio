@@ -70,109 +70,76 @@ const Diagram = ({ title, type }: { title: string, type: 'architecture' | 'flow'
 
 const BLOG_CONTENT: Record<string, React.ReactNode[]> = {
   "building-trashium": [
-    <P key="1">When we started building Trashium as our final year project, we had one ambitious goal: make recycling genuinely rewarding for households in West Bengal. Traditional waste management in Indian cities suffers from three critical failures: zero household incentive, unpredictable pricing by informal collectors, and highly inefficient, carbon-heavy collection routes.</P>,
-    <P key="2">We realized that simply building another &quot;Uber for Trash&quot; wouldn&apos;t work. The economics of municipal solid waste (MSW) are razor-thin. To make it sustainable, we needed to dramatically reduce collection costs while maximizing the perceived value for the household. This led us to the core philosophy of Trashium: <strong>Gamified Green Credits tied to dynamic ML pricing.</strong></P>,
-    <H2 key="h1">The Three-Sided Architecture</H2>,
-    <P key="3">Trashium operates as a three-sided marketplace. It connects households, collection crews, and administrative recycling hubs. Building a system that synchronizes state across three distinct user roles in real-time required a robust architecture.</P>,
+    <P key="1">When we started building Trashium, our goal was to make recycling genuinely rewarding for households in West Bengal. Traditional waste management in Indian cities suffers from zero household incentive and highly inefficient, carbon-heavy collection routes.</P>,
+    <P key="2">We realized that simply building another &quot;Uber for Trash&quot; wouldn&apos;t work. To make it sustainable, we needed to dramatically reduce collection costs while maximizing the perceived value for the household. This led us to the core philosophy of Trashium: <strong>Gamified Green Credits tied to dynamic ML pricing.</strong></P>,
+    <H2 key="h1">The Technology Stack</H2>,
+    <P key="3">Trashium connects households, collection crews, and administrative recycling hubs using a robust modern stack. We built the platform on Next.js 16 (App Router) and React 19, backed by Supabase for Auth and PostgreSQL.</P>,
     <Diagram key="d1" title="Trashium System Architecture" type="architecture" />,
-    <P key="4">We chose React Native for the household and crew apps to ensure cross-platform availability, backed by a Node.js/Express monolithic core and PostgreSQL. For real-time updates—such as tracking a collection crew&apos;s location—we implemented WebSockets. This ensures households receive push notifications exactly 5 minutes before the pickup truck arrives, solving the notorious &quot;missed pickup&quot; problem.</P>,
+    <P key="4">Rather than managing a complex Node.js monolith, we utilized React Server Components (RSC) with a strict Server-Client component split. The UI leverages Tailwind CSS v4, Framer Motion v12, and OGL WebGL Ribbons for a tactile &quot;Editorial Botanical&quot; design.</P>,
     <H2 key="h2">Designing the Gamification Engine</H2>,
-    <P key="5">Human behavior is fascinating. During our beta testing, we found that offering households ₹50 for their plastics resulted in a 12% retention rate. But offering them 500 &quot;Green Credits&quot; (equivalent to ₹50) and a &quot;Bronze Seedling&quot; badge resulted in a 47% retention rate.</P>,
-    <P key="6">We built a 20-tier gamification system. Users start as a &quot;Seedling&quot; and can grind their way up to &quot;Earth Guardian.&quot; We implemented streak multipliers with a precise decay formula:</P>,
+    <P key="5">We built a 20-tier gamification system in `lib/gamification.ts`. Users start as a &quot;Seedling&quot; and can grind their way up to &quot;Earth Guardian.&quot; We implemented a Daily Grove Ritual (Log In, Sort Waste, Eco-Quiz) with a streak multiplier formula:</P>,
     <CodeBox key="c1" title="streak_multiplier.ts">
-{`function calculateMultiplier(currentStreak: number, lastPickup: Date): number {
-  const daysSinceLastPickup = getDaysDifference(lastPickup, new Date());
-  
-  // Break streak if more than 14 days
-  if (daysSinceLastPickup > 14) return 1.0;
-  
+{`function calculateMultiplier(currentStreak: number): number {
   // Base formula: 5% bonus per consecutive pickup
   const baseBonus = 0.05 * currentStreak;
-  const maxBonus = 0.50; // Cap at 50% extra credits
   
-  return 1.0 + Math.min(baseBonus, maxBonus);
+  return 1.0 + baseBonus;
 }`}
     </CodeBox>,
-    <P key="7">Users can also use their Green Credits in the Trashium Marketplace to purchase &quot;Streak Shields&quot; (preventing streak resets during vacations) or redeem them for partnered brand discounts. This closed-loop economy keeps the system engaging without bleeding fiat capital.</P>,
+    <P key="7">Users can also use their Green Credits in the Trashium Marketplace to purchase &quot;Streak Shields&quot; (preventing streak resets) or redeem them for partnered brand discounts. A PostgreSQL RPC `redeem_marketplace_item` safely handles stock validation and credit subtraction.</P>,
     <H2 key="h3">Route Optimization for Crews</H2>,
-    <P key="8">The most expensive part of recycling logistics is fuel. A collection truck driving randomly to fulfill scattered requests will burn more cash than the scrap is worth. We implemented a Nearest-Neighbor algorithm paired with a 2-Opt local search heuristic to calculate the most fuel-efficient route every morning at 4 AM.</P>,
-    <P key="9">This optimization reduced total fleet kilometers by 23% during our 5-district pilot in West Bengal. Building Trashium taught us that software isn&apos;t just about code—it&apos;s about manipulating logistics and human psychology to create a net positive for the planet.</P>,
+    <P key="8">To solve the logistics cost problem, we implemented Pathfinder Route Optimization using Nearest-Neighbor and 2-opt algorithms. Pickups are auto-geocoded to their sector centers, and the crew&apos;s interactive map (built with Leaflet) calculates the shortest sequence of stops.</P>,
+    <P key="9">Building Trashium taught us how to seamlessly integrate Next.js, ML pipelines, and behavioral psychology to create a net positive for the planet.</P>,
   ],
   "ml-pricing-engine": [
-    <P key="1">Pricing recyclables dynamically sounds straightforward until you realize it involves volatile commodity markets, logistics costs, behavioral economics, and real-time fairness guarantees. The scrap metal and plastics market fluctuates daily, meaning fixed pricing models will inevitably lead to marketplace bankruptcy.</P>,
-    <P key="2">For Trashium, we couldn&apos;t rely on hardcoded arrays. We needed an engine that could predict fair market value, subtract operational costs, and output a &quot;Green Credit&quot; value that felt rewarding to the user. Thus, our ML Pricing Engine was born.</P>,
+    <P key="1">Pricing recyclables dynamically sounds straightforward until you realize it involves volatile commodity markets, logistics costs, behavioral economics, and real-time fairness guarantees.</P>,
+    <P key="2">For Trashium, we couldn&apos;t rely on hardcoded arrays. We needed an engine that could predict fair market value, subtract operational costs, and output a &quot;Green Credit&quot; value that felt rewarding to the user. Thus, our Python ML Pricing Engine was born.</P>,
     <H2 key="h1">The Prediction Stack</H2>,
     <Diagram key="d1" title="Pricing Prediction Pipeline" type="ml" />,
-    <P key="3">We built a three-layer pricing stack. Layer 1 handles market value prediction. We scraped historical scrap commodity prices and trained two models using scikit-learn. Linear Regression on log-transformed market values achieved a Mean Absolute Percentage Error (MAPE) of ~6.11%, while our challenger Random Forest model hit ~9.80% but was better at catching non-linear spikes during market shocks.</P>,
+    <P key="3">We built a sophisticated prediction pipeline using scikit-learn. Our production model uses Linear Regression on log-transformed market values, achieving a Mean Absolute Percentage Error (MAPE) of ~6.11%. We also run a Random Forest challenger model (~9.80% MAPE) to sanity-check predictions during non-linear market shocks.</P>,
     <H2 key="h2">The Logistics Penalty</H2>,
-    <P key="4">Layer 2 handles logistics cost calculation. A household offering 1kg of plastic 10 kilometers away is fundamentally unprofitable compared to a household offering 10kg of plastic 1 kilometer away. We created a dynamic penalty formula:</P>,
-    <CodeBox key="c1" title="logistics_cost.py">
-{`def calculate_logistics_cost(distance_km, stops_on_route, total_weight_kg):
+    <P key="4">Logistics costs are deterministically calculated. A household offering 1kg of plastic 10 kilometers away is fundamentally unprofitable compared to a household offering 10kg of plastic 1 kilometer away. The penalty is calculated as:</P>,
+    <CodeBox key="c1" title="pricing.py">
+{`def calculate_logistics_cost(distance_km, expected_stops, total_weight_kg):
     BASE_TRANSPORT = 15.0  # Flat truck deployment cost
     COST_PER_KM = 8.5      # Fuel and maintenance
     
     # Prorate the transport cost across all stops on the route
-    route_efficiency_factor = max(1, stops_on_route)
-    shared_transport_cost = (BASE_TRANSPORT + (COST_PER_KM * distance_km)) / route_efficiency_factor
+    shared_transport_cost = (BASE_TRANSPORT + (COST_PER_KM * distance_km)) / expected_stops
     
     # Calculate cost per kg
     cost_per_kg = shared_transport_cost / max(0.1, total_weight_kg)
     
     return cost_per_kg`}
     </CodeBox>,
-    <P key="5">By subtracting this `cost_per_kg` from the ML predicted market value, we arrive at the absolute maximum payout we can offer without losing money. But we don&apos;t output this raw number.</P>,
+    <P key="5">By subtracting this `cost_per_kg` (along with a 15% platform commission) from the ML predicted market value, we arrive at the absolute maximum payout we can offer without losing money.</P>,
     <H2 key="h3">Behavioral Smoothing Guardrails</H2>,
-    <P key="6">Layer 3 is the psychological layer. If the ML model says plastic is worth ₹15 today, and tomorrow a market crash drops it to ₹8, users will feel cheated and abandon the platform. Humans hate loss more than they love gains.</P>,
-    <P key="7">To fix this, we implemented a 7-day Exponential Moving Average (EMA) guardrail. Prices are allowed to climb quickly during bull markets, but they are artificially slowed down during crashes. We eat the temporary margin loss to preserve user trust, treating the margin difference as a Customer Acquisition Cost (CAC).</P>,
-    <P key="8">This engine has processed thousands of pricing requests, ensuring Trashium remains economically viable while households feel they are getting a fair, predictable deal for saving the planet.</P>,
+    <P key="6">If the ML model says plastic is worth ₹15 today, and tomorrow a market crash drops it to ₹8, users will feel cheated. To fix this, we implemented an Exponential Moving Average (EMA) guardrail. Prices are allowed to climb quickly during bull markets, but they are artificially slowed down during crashes, preserving user trust.</P>,
   ],
   "payroll-architecture": [
-    <P key="1">VetanFlow was born out of a simple observation: modern small-to-medium enterprises (SMEs) in India are stuck between two extremes. On one end, they use messy Excel sheets and WhatsApp groups to track attendance. On the other end, they are forced to buy bloated, expensive enterprise HRMS software that takes months to implement.</P>,
-    <P key="2">We set out to build a lightweight, bank-grade payroll system that just works. The architecture needed to be fault-tolerant—because you absolutely cannot mess up someone&apos;s salary—and fast enough to process bulk payouts for 500+ employees in seconds.</P>,
-    <H2 key="h1">The Event-Driven Flow</H2>,
+    <P key="1">VetanFlow was born out of a simple observation: modern small-to-medium enterprises (SMEs) in India are stuck between two extremes. On one end, they use messy Excel sheets. On the other end, they are forced to buy bloated enterprise HRMS software.</P>,
+    <P key="2">We set out to build a lightweight, bank-grade payroll operations platform. Built with React 19, Express 5, and Supabase, it handles employee setup, time data, approvals, and payroll in one controlled monthly workflow.</P>,
+    <H2 key="h1">Role-Based Control</H2>,
     <Diagram key="d1" title="VetanFlow Payroll Processing" type="flow" />,
-    <P key="3">At the heart of VetanFlow is an event-driven architecture. When an employee punches in via the mobile app, the payload includes precise GPS coordinates and a timestamp. Our backend instantly checks these coordinates against a predefined geofence (using PostGIS spatial queries). If they are within 50 meters of the office polygon, the attendance event is logged as valid.</P>,
-    <H2 key="h2">Idempotent Salary Processing</H2>,
-    <P key="4">The most critical part of VetanFlow is the payroll calculation engine. At the end of the month, the system aggregates all attendance events, calculates overtime, subtracts leave without pay (LWP), applies tax deductions (TDS), and generates a final payout figure.</P>,
-    <P key="5">When dealing with money, distributed systems face the dreaded &quot;double-spend&quot; problem. If the network drops while processing a salary, and the admin clicks &quot;Run Payroll&quot; again, you risk paying everyone twice. We solved this by making the payout endpoint strictly idempotent.</P>,
-    <CodeBox key="c1" title="payout_service.ts">
-{`async function executePayout(companyId: string, month: string, idempotencyKey: string) {
-  // 1. Check if this exact operation was already processed
-  const existingJob = await db.query(
-    'SELECT status FROM payroll_jobs WHERE idempotency_key = $1',
-    [idempotencyKey]
-  );
-  
-  if (existingJob && existingJob.status === 'COMPLETED') {
-    return { status: 200, message: "Already processed" };
-  }
-
-  // 2. Open a database transaction
-  const client = await db.getClient();
-  try {
-    await client.query('BEGIN');
-    
-    // 3. Mark as PROCESSING to lock the row
-    await client.query(
-      'INSERT INTO payroll_jobs (idempotency_key, status) VALUES ($1, $2)',
-      [idempotencyKey, 'PROCESSING']
-    );
-
-    // 4. Execute bank API transfers here...
-    
-    await client.query('COMMIT');
-  } catch (err) {
-    await client.query('ROLLBACK');
-    throw err;
-  } finally {
-    client.release();
-  }
-}`}
+    <P key="3">VetanFlow supports six distinct application roles: Owner, Admin, HR, Finance, Manager, and Employee. This isn&apos;t just about disabling UI buttons—it&apos;s a strict backend authorization model. The Express API checks the Bearer token, resolves the organizational role, and executes RLS-scoped reads or validated service writes.</P>,
+    <H2 key="h2">Maker-Checker & Immutability</H2>,
+    <P key="4">The most critical part of VetanFlow is the payroll calculation engine. HR maintains attendance, holidays, and locks the source month. Finance creates a run only from a locked month.</P>,
+    <P key="5">To prevent fraud and errors, we enforce maker-checker separation. A maker submits the draft payroll, but a different authorized operator must approve and finalize it. Once finalized, Postgres triggers reject any mutations to the payroll data.</P>,
+    <CodeBox key="c1" title="payroll_trigger.sql">
+{`CREATE OR REPLACE FUNCTION prevent_finalized_edits()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF OLD.status = 'finalized' THEN
+    RAISE EXCEPTION 'Cannot modify finalized payroll records';
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;`}
     </CodeBox>,
-    <P key="6">Using an <code>idempotency_key</code> (usually a hash of the company ID and the month string) ensures that even if the client retries the request 100 times due to terrible internet, the database transaction only commits the bank transfer once.</P>,
-    <H2 key="h3">Reporting and Export</H2>,
-    <P key="7">Finally, we built a robust reporting engine. Using Puppeteer and specialized CSV streaming buffers, VetanFlow can instantly export complex tax compliance reports and PDF payslips. Streaming the CSV chunks directly to the HTTP response, rather than holding 500 rows in server memory, kept our server costs incredibly low.</P>,
-    <P key="8">VetanFlow proves that you don&apos;t need a massive team to build enterprise-grade financial software—you just need a maniacal focus on database ACID properties and edge-case handling.</P>,
+    <P key="6">This ensures that once a salary snapshot is approved, it becomes completely immutable at the database level.</P>,
+    <H2 key="h3">Secure Document Delivery</H2>,
+    <P key="7">Finally, VetanFlow securely handles sensitive documents. The backend generates one PDF per payroll line and uploads it to a private Supabase Storage bucket. Employees can only access their own payslips via short-lived signed URLs, protecting privacy across the organization.</P>,
+    <P key="8">VetanFlow proves that you don&apos;t need a massive team to build enterprise-grade financial software—you just need a maniacal focus on database ACID properties, strict Role-Based Access Control, and clean architecture.</P>,
   ],
 };
 
@@ -202,7 +169,7 @@ export default function BlogPost({ params }: Props) {
       {/* Brown vignette/burn edges */}
       <div className="fixed inset-0 bg-gradient-to-br from-[#4B2E2B]/10 via-transparent to-[#4B2E2B]/20 pointer-events-none z-0" />
       
-      <div className="container-portfolio max-w-3xl mx-auto pt-32 pb-20 relative z-10">
+      <div className="container-portfolio max-w-3xl mx-auto pt-40 pb-20 relative z-10">
         <Link
           href="/blog"
           className="inline-flex items-center gap-2 text-[#4B2E2B] font-medium mb-12 hover:text-[#C08552] transition-colors border border-[#4B2E2B]/20 rounded-full px-4 py-1.5 bg-[#FFF8F0]/30 backdrop-blur-sm"
