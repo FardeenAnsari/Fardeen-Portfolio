@@ -246,7 +246,7 @@ function PortraitCard() {
       <motion.div
         animate={{ y: [0, -8, 0], rotate: [0, 1, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-        className="absolute -left-44 top-20 glass rounded-2xl px-4 py-3 border border-border-subtle shadow-lg"
+        className="absolute -left-44 top-20 z-20 glass rounded-2xl px-4 py-3 border border-border-subtle shadow-lg"
       >
         <p className="text-xs text-muted font-mono">Achievement</p>
         <p className="mt-1 flex items-center gap-2 text-sm font-semibold text-primary">
@@ -260,7 +260,7 @@ function PortraitCard() {
       <motion.div
         animate={{ y: [0, 10, 0], rotate: [0, -1, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute -right-16 top-12 glass rounded-2xl px-4 py-3 border border-border-subtle shadow-lg"
+        className="absolute -right-16 top-12 z-20 glass rounded-2xl px-4 py-3 border border-border-subtle shadow-lg"
       >
         <p className="text-xs text-muted font-mono">Stack</p>
         <div className="mt-2 flex gap-2">
@@ -276,7 +276,7 @@ function PortraitCard() {
       <motion.div
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-        className="absolute -right-24 bottom-28 glass rounded-2xl px-4 py-3 border border-green-500/20 shadow-lg"
+        className="absolute -right-24 bottom-28 z-20 glass rounded-2xl px-4 py-3 border border-green-500/20 shadow-lg"
       >
         <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2">
