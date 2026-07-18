@@ -163,8 +163,11 @@ export function HeroSection() {
               >
                 <Image src="/images/fardeen-hero.png" alt="Fardeen Ansari" fill className="object-cover object-[center_15%] scale-125 origin-[center_15%]" priority />
                 
-                {/* Frosted glass overlay at bottom */}
-                <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#2A1B14]/90 via-[#2A1B14]/40 to-transparent backdrop-blur-[4px]" />
+                {/* Frosted glass overlay at bottom with smooth blur fade */}
+                <div 
+                  className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-[#2A1B14]/90 via-[#2A1B14]/40 to-transparent backdrop-blur-[6px]" 
+                  style={{ WebkitMaskImage: "linear-gradient(to top, black 50%, transparent 100%)", maskImage: "linear-gradient(to top, black 50%, transparent 100%)" }}
+                />
                 
                 {/* Content overlaid */}
                 <div className="absolute inset-x-0 bottom-0 p-5 flex flex-col gap-1.5">
@@ -196,8 +199,11 @@ export function HeroSection() {
             >
               <Image src="/images/fardeen-hero.png" alt="Fardeen Ansari" fill className="object-cover object-[center_15%] scale-125 origin-[center_15%]" priority />
               
-              {/* Frosted glass overlay at bottom */}
-              <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#2A1B14]/90 via-[#2A1B14]/50 to-transparent backdrop-blur-[6px]" />
+              {/* Frosted glass overlay at bottom with smooth blur fade */}
+              <div 
+                className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-t from-[#2A1B14]/90 via-[#2A1B14]/50 to-transparent backdrop-blur-[8px]"
+                style={{ WebkitMaskImage: "linear-gradient(to top, black 60%, transparent 100%)", maskImage: "linear-gradient(to top, black 60%, transparent 100%)" }} 
+              />
               
               {/* Content overlaid */}
               <div className="absolute inset-x-0 bottom-0 p-7 flex flex-col gap-2">

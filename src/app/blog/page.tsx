@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { SpaceInvaders } from "@/components/game/SpaceInvaders";
+import LineSidebar from "@/components/navigation/LineSidebar";
 
 export const metadata: Metadata = {
   title: "Blog — Coming Soon",
@@ -9,6 +10,11 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   return (
     <div className="min-h-screen bg-[#DBCBB5] selection:bg-[#4B2E2B] selection:text-[#FFF8F0] relative overflow-hidden font-serif flex flex-col items-center">
+      {/* Left Sidebar Navigation */}
+      <div className="fixed left-8 top-1/2 -translate-y-1/2 z-50 hidden xl:block">
+        <LineSidebar />
+      </div>
+
       {/* Rusted paper noise texture */}
       <div className="fixed inset-0 opacity-40 mix-blend-multiply pointer-events-none z-0" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")", backgroundSize: "150px" }} />
       
