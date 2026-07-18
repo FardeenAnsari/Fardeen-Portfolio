@@ -96,7 +96,7 @@ export function Navigation() {
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
               <div className="relative w-8 h-8 rounded-lg overflow-hidden flex-shrink-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#C08552] to-[#8C5A3C]" />
                 <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-sm">
                   FA
                 </span>
@@ -152,7 +152,7 @@ export function Navigation() {
                 href="#contact"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="hidden sm:flex btn-primary text-xs px-4 py-2"
+                className="hidden sm:flex bg-[#8C5A3C] hover:bg-[#4B2E2B] text-[#FFF8F0] rounded-full transition-colors font-medium text-xs px-4 py-2"
                 data-cursor-label="Say hi"
               >
                 Let&apos;s Talk

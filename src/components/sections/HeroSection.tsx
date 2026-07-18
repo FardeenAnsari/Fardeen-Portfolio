@@ -1,12 +1,11 @@
 "use client";
 
-import { useRef, useState, useEffect, useMemo } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { ArrowDown, Mail, FileText } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowDown, Mail, FileText, BadgeCheck, Code, Star, ArrowUpRight } from "lucide-react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import Image from "next/image";
 import { PERSONAL } from "@/lib/data";
-
 
 const ROLES = [
   "Full Stack Engineer",
@@ -154,22 +153,36 @@ export function HeroSection() {
               <span className="text-xs text-muted font-mono">Kolkata, India</span>
             </div>
 
-            <div className="lg:hidden w-full h-[420px] relative">
+            <div className="lg:hidden w-full h-[420px] relative flex items-center justify-center">
               <div className="absolute inset-0 bg-[#C08552]/10 blur-3xl rounded-full" />
               <div className="absolute inset-0 bg-[#8C5A3C]/8 blur-2xl rounded-full translate-x-4" />
               <motion.div 
-                className="w-64 glass rounded-2xl border border-border-subtle mx-auto shadow-2xl p-3 flex flex-col gap-3"
+                className="relative w-64 aspect-[3/4] rounded-[2rem] border-[6px] border-[#FFF8F0]/40 mx-auto shadow-2xl overflow-hidden bg-surface-mid/30"
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               >
-                <div className="relative w-full rounded-xl overflow-hidden bg-surface-mid/30 border border-border-subtle/50">
-                  <Image src="/images/fardeen-hero.png" alt="Fardeen Ansari" width={400} height={500} className="w-full h-auto object-contain" priority />
-                </div>
-                <div className="px-1 pb-1">
-                  <div className="text-lg font-bold text-primary font-serif tracking-wide">Fardeen Ansari</div>
-                  <div className="text-[10px] text-accent-blue font-mono mt-1 flex justify-between items-center uppercase tracking-wider">
-                    <span>Full Stack</span>
-                    <span className="flex items-center gap-1.5 text-secondary"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> IN</span>
+                <Image src="/images/fardeen-hero.png" alt="Fardeen Ansari" fill className="object-cover object-[center_15%] scale-125 origin-[center_15%]" priority />
+                
+                {/* Frosted glass overlay at bottom */}
+                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#2A1B14]/90 via-[#2A1B14]/40 to-transparent backdrop-blur-[4px]" />
+                
+                {/* Content overlaid */}
+                <div className="absolute inset-x-0 bottom-0 p-5 flex flex-col gap-1.5">
+                  <div className="flex items-center gap-1.5">
+                    <h3 className="text-lg font-bold text-white tracking-wide font-serif">Fardeen Ansari</h3>
+                    <BadgeCheck size={16} className="text-white fill-[#C08552]" />
+                  </div>
+                  <p className="text-xs text-white/90 leading-relaxed font-sans">
+                    A Full Stack Engineer focused on scalable systems & ML integration.
+                  </p>
+                  <div className="flex items-center justify-between mt-2">
+                    <div className="flex items-center gap-3 text-white/80 text-xs font-mono">
+                      <span className="flex items-center gap-1"><Code size={12} /> 15+</span>
+                      <span className="flex items-center gap-1"><Star size={12} /> 4.9</span>
+                    </div>
+                    <a href="#contact" className="bg-white text-[#2A1B14] px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 hover:bg-[#FFF8F0] transition-colors">
+                      Hire Me <ArrowUpRight size={12} />
+                    </a>
                   </div>
                 </div>
               </motion.div>
@@ -181,18 +194,32 @@ export function HeroSection() {
             <div className="absolute inset-0 bg-[#C08552]/10 blur-3xl rounded-full max-w-sm mx-auto" />
             <div className="absolute inset-0 bg-[#8C5A3C]/8 blur-2xl rounded-full translate-x-12 max-w-sm mx-auto" />
             <motion.div 
-              className="w-80 glass rounded-3xl border border-border-subtle mx-auto shadow-2xl p-4 flex flex-col gap-4"
+              className="relative w-[340px] aspect-[3/4] rounded-[2.5rem] border-[8px] border-[#FFF8F0]/40 mx-auto shadow-2xl overflow-hidden bg-surface-mid/30"
               animate={{ y: [0, -12, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             >
-              <div className="relative w-full rounded-2xl overflow-hidden bg-surface-mid/30 border border-border-subtle/50">
-                <Image src="/images/fardeen-hero.png" alt="Fardeen Ansari" width={400} height={500} className="w-full h-auto object-contain" priority />
-              </div>
-              <div className="px-2 pb-2">
-                <div className="text-2xl font-bold text-primary font-serif tracking-wide">Fardeen Ansari</div>
-                <div className="text-xs text-accent-blue font-mono mt-2 flex justify-between items-center uppercase tracking-wider">
-                  <span>Software Engineer</span>
-                  <span className="flex items-center gap-1.5 text-secondary"><div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Available</span>
+              <Image src="/images/fardeen-hero.png" alt="Fardeen Ansari" fill className="object-cover object-[center_15%] scale-125 origin-[center_15%]" priority />
+              
+              {/* Frosted glass overlay at bottom */}
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#2A1B14]/90 via-[#2A1B14]/50 to-transparent backdrop-blur-[6px]" />
+              
+              {/* Content overlaid */}
+              <div className="absolute inset-x-0 bottom-0 p-7 flex flex-col gap-2">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-2xl font-bold text-white tracking-wide font-serif">Fardeen Ansari</h3>
+                  <BadgeCheck size={20} className="text-white fill-[#C08552]" />
+                </div>
+                <p className="text-sm text-white/90 leading-relaxed font-sans">
+                  A Full Stack Engineer focused on scalable systems & ML integration.
+                </p>
+                <div className="flex items-center justify-between mt-4">
+                  <div className="flex items-center gap-4 text-white/80 text-sm font-mono">
+                    <span className="flex items-center gap-1.5"><Code size={16} /> 15+</span>
+                    <span className="flex items-center gap-1.5"><Star size={16} /> 4.9</span>
+                  </div>
+                  <a href="#contact" className="bg-white text-[#2A1B14] px-4 py-2 rounded-full text-sm font-bold flex items-center gap-1 hover:bg-[#FFF8F0] transition-colors shadow-lg">
+                    Hire Me <ArrowUpRight size={14} />
+                  </a>
                 </div>
               </div>
             </motion.div>
