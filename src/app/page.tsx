@@ -24,7 +24,7 @@ export default function HomePage() {
       "color: #4f6fff; font-family: monospace; font-size: 10px;"
     );
     console.log(
-      "%c👋 Hey there, fellow developer! You found a secret.",
+      "%cHey there, fellow developer! You found a secret.",
       "color: #8b5cf6; font-size: 14px; font-weight: bold;"
     );
     console.log(
@@ -32,7 +32,7 @@ export default function HomePage() {
       "color: #888; font-size: 12px;"
     );
     console.log(
-      "%c> Try: window.konami() for a secret mode 🎮",
+      "%c> Try: window.konami() for a secret mode",
       "color: #4f6fff; font-family: monospace; font-size: 11px;"
     );
 
@@ -46,7 +46,7 @@ export default function HomePage() {
         setTimeout(() => {
           document.body.style.filter = "none";
         }, 3000);
-        console.log("%c🎮 Konami Code activated! You're a legend.", "color: #f59e0b; font-size: 16px; font-weight: bold;");
+        console.log("%cKonami Code activated! You're a legend.", "color: #f59e0b; font-size: 16px; font-weight: bold;");
       }
     };
 
@@ -59,7 +59,7 @@ export default function HomePage() {
         document.body.style.fontFamily = "";
         document.body.style.filter = "";
       }, 4000);
-      console.log("%c🖥️ Terminal mode: active for 4 seconds", "color: #10b981; font-family: monospace;");
+      console.log("%cTerminal mode: active for 4 seconds", "color: #10b981; font-family: monospace;");
     };
 
     document.addEventListener("keydown", handleKeydown);

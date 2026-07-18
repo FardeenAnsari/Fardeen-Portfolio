@@ -28,7 +28,7 @@ export const SKILLS = [
   { name: "JavaScript", category: "language", level: 95, icon: "SiJavascript", color: "#F7DF1E" },
   { name: "TypeScript", category: "language", level: 88, icon: "SiTypescript", color: "#3178C6" },
   { name: "Python", category: "language", level: 82, icon: "SiPython", color: "#3776AB" },
-  { name: "Java", category: "language", level: 78, icon: "SiJava", color: "#ED8B00" },
+  { name: "Java", category: "language", level: 78, icon: "FaJava", color: "#ED8B00" },
   { name: "C", category: "language", level: 70, icon: "SiC", color: "#A8B9CC" },
   // Frontend
   { name: "React.js", category: "frontend", level: 92, icon: "SiReact", color: "#61DAFB" },
@@ -450,6 +450,16 @@ export const BLOG_POSTS_META = [
     category: "Architecture",
     tags: ["Express", "Supabase", "Security", "RLS"],
     featured: false,
+  },
+  {
+    slug: "ai-development-learning",
+    title: "Why to use AI for development while retaining and learning new tech",
+    excerpt: "Exploring the balance between leveraging AI for rapid software development and maintaining a deep understanding of core engineering principles to avoid knowledge decay.",
+    date: "2026-07-18",
+    readTime: "8 min read",
+    category: "Opinion",
+    tags: ["AI", "Career", "Learning", "Development"],
+    featured: true,
   },
   {
     slug: "iot-aeroponic",

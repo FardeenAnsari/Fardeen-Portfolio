@@ -2,18 +2,18 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Calendar, Tag, CheckCircle } from "lucide-react";
+import { ArrowLeft, ExternalLink, Calendar, Tag, CheckCircle, Leaf, Briefcase, Utensils, Link as LinkIcon, Target } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { PROJECTS } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 type Project = (typeof PROJECTS)[0];
 
-const PROJECT_ICONS: Record<string, string> = {
-  trashium: "♻️",
-  vetanflow: "💼",
-  restaurantpos: "🍽️",
-  "tiny-link": "🔗",
+const PROJECT_ICONS: Record<string, React.ReactNode> = {
+  trashium: <Leaf className="text-emerald-500" size={32} />,
+  vetanflow: <Briefcase className="text-blue-500" size={32} />,
+  restaurantpos: <Utensils className="text-orange-500" size={32} />,
+  "tiny-link": <LinkIcon className="text-purple-500" size={32} />,
 };
 
 export function ProjectPageClient({ project }: { project: Project }) {
@@ -162,7 +162,7 @@ export function ProjectPageClient({ project }: { project: Project }) {
           className="glass-card p-8 border border-accent-blue/20 bg-accent-blue/5"
         >
           <h2 className="text-xl font-bold text-primary mb-3 flex items-center gap-2">
-            <span>🎯</span> Impact
+            <Target className="text-accent-blue" size={20} /> Impact
           </h2>
           <p className="text-secondary">{project.impact}</p>
         </motion.div>

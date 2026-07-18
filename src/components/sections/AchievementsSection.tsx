@@ -284,7 +284,7 @@ function AchievementModal({
                     src={img}
                     alt={`Event photo ${i + 1}`}
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     sizes="300px"
                   />
                 </div>

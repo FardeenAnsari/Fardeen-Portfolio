@@ -6,6 +6,8 @@ import Image from "next/image";
 import { PERSONAL, SKILLS } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { GraduationCap } from "lucide-react";
+import * as SiIcons from "react-icons/si";
+import * as FaIcons from "react-icons/fa";
 
 const SKILL_CATEGORIES = [
   { key: "language", label: "Languages" },
@@ -18,13 +20,13 @@ const SKILL_CATEGORIES = [
 ];
 
 const CATEGORY_COLORS: Record<string, string> = {
-  language: "from-yellow-500 to-orange-500",
-  frontend: "from-blue-500 to-cyan-500",
-  backend: "from-green-500 to-teal-500",
-  database: "from-indigo-500 to-blue-600",
-  tool: "from-red-500 to-rose-500",
-  ai: "from-purple-500 to-pink-500",
-  iot: "from-amber-500 to-yellow-500",
+  language: "from-accent-blue to-accent-purple",
+  frontend: "from-accent-blue to-accent-purple",
+  backend: "from-accent-blue to-accent-purple",
+  database: "from-accent-blue to-accent-purple",
+  tools: "from-accent-blue to-accent-purple",
+  ai: "from-accent-blue to-accent-purple",
+  iot: "from-accent-blue to-accent-purple",
 };
 
 export function AboutSection() {
@@ -71,35 +73,35 @@ export function AboutSection() {
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.4 }}
-                  className="relative aspect-[4/5] rounded-3xl overflow-hidden border border-border-default"
+                  className="relative aspect-[4/5] rounded-[32px] overflow-hidden"
                 >
                   <Image
-                    src="/images/fardeen-about.jpeg"
+                    src="/images/fardeen-about.png"
                     alt="Fardeen Ansari"
                     fill
-                    className="object-cover object-center"
+                    className="object-contain object-center"
                     sizes="(max-width: 768px) 100vw, 400px"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/50 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/20 to-transparent" />
                 </motion.div>
 
                 {/* Stats cards */}
                 <motion.div
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -right-8 top-12 glass rounded-2xl p-4 border border-border-subtle"
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  className="absolute -right-8 top-16 bg-white/90 dark:bg-white/95 backdrop-blur-md shadow-xl rounded-2xl p-4 min-w-[120px]"
                 >
-                  <p className="text-2xl font-bold text-primary">7.35</p>
-                  <p className="text-xs text-muted">CGPA · SKFGI</p>
+                  <p className="text-3xl font-black text-black">7.35</p>
+                  <p className="text-xs text-black/50 font-medium mt-0.5">CGPA · SKFGI</p>
                 </motion.div>
 
                 <motion.div
-                  animate={{ y: [0, 8, 0] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                  className="absolute -left-6 bottom-20 glass rounded-2xl p-4 border border-border-subtle"
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                  className="absolute -left-6 bottom-20 bg-white/90 dark:bg-white/95 backdrop-blur-md shadow-xl rounded-2xl p-4 min-w-[140px]"
                 >
-                  <p className="text-2xl font-bold text-gradient">9+</p>
-                  <p className="text-xs text-muted">Events & Achievements</p>
+                  <p className="text-3xl font-black text-accent-blue">9+</p>
+                  <p className="text-xs text-black/50 font-medium mt-0.5">Events & Achievements</p>
                 </motion.div>
               </div>
             </motion.div>
@@ -137,7 +139,7 @@ export function AboutSection() {
               <motion.div variants={itemVariants}>
                 <div className="glass-card p-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-lg flex-shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center text-white text-lg flex-shrink-0">
                       <GraduationCap size={20} />
                     </div>
                     <div>
@@ -215,35 +217,29 @@ export function MindSection() {
                     </h3>
                   </div>
                   <div className="flex flex-wrap gap-3">
-                    {skills.map((skill, i) => (
-                      <motion.div
-                        key={skill.name}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                        transition={{ delay: catIdx * 0.1 + i * 0.05, duration: 0.4 }}
-                        whileHover={{ scale: 1.05, y: -2 }}
-                        className="glass-card px-4 py-3 flex items-center gap-3 cursor-default"
-                      >
-                        <div
-                          className="w-2 h-2 rounded-full flex-shrink-0"
-                          style={{ background: skill.color }}
-                        />
-                        <span className="text-sm font-medium text-primary">{skill.name}</span>
-                        <div className="flex gap-0.5 ml-2">
-                          {Array.from({ length: 5 }, (_, i) => (
+                    {skills.map((skill, i) => {
+                      const IconComponent = (SiIcons as any)[skill.icon] || (FaIcons as any)[skill.icon];
+                      return (
+                        <motion.div
+                          key={skill.name}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                          transition={{ delay: catIdx * 0.1 + i * 0.05, duration: 0.4 }}
+                          whileHover={{ scale: 1.05, y: -2 }}
+                          className="glass-card px-4 py-3 flex items-center gap-3 cursor-default"
+                        >
+                          {IconComponent ? (
+                            <IconComponent className="w-5 h-5 flex-shrink-0" style={{ color: skill.color }} />
+                          ) : (
                             <div
-                              key={i}
-                              className={cn(
-                                "w-1 h-3 rounded-full",
-                                i < Math.round(skill.level / 20)
-                                  ? "bg-accent-blue"
-                                  : "bg-border-default"
-                              )}
+                              className="w-2 h-2 rounded-full flex-shrink-0"
+                              style={{ background: skill.color }}
                             />
-                          ))}
-                        </div>
-                      </motion.div>
-                    ))}
+                          )}
+                          <span className="text-sm font-medium text-primary">{skill.name}</span>
+                        </motion.div>
+                      );
+                    })}
                   </div>
                 </motion.div>
               );

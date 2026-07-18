@@ -27,6 +27,15 @@ const BLOG_CONTENT: Record<string, string[]> = {
     "The pipeline runs nightly via a cron job, updating prices for 5 waste types across 5 West Bengal districts. Each update is logged with confidence intervals so the admin dashboard shows trend direction.",
     "One unexpected lesson: explainability matters more than accuracy. Households needed to understand why prices changed, not just see a number. So we added price trend cards showing weekly movement and seasonal factors.",
   ],
+  "ai-development-learning": [
+    "In the rapidly evolving landscape of software engineering, artificial intelligence tools like GitHub Copilot and conversational LLMs have fundamentally changed how we write code. They offer unprecedented speed, allowing developers to scaffold applications in hours rather than days.",
+    "However, this speed comes with a hidden risk: knowledge decay. When an AI writes the boilerplate, configuration, and even the core logic for you, it becomes alarmingly easy to treat the underlying system as a black box.",
+    "The true value of an engineer isn't typing speed; it's the ability to design robust architectures, debug complex edge cases, and understand the deep technical implications of a technical choice. If you rely solely on AI to generate code you don't understand, you aren't engineering — you are just prompting.",
+    "To use AI effectively while retaining and expanding your knowledge, you must adopt a 'Trust, but Verify and Dissect' approach. When an AI generates a solution, don't just accept it and move on. Read every line. Ask yourself: Why did it choose this design pattern? What are the security implications? How would I write a unit test for this?",
+    "Furthermore, AI should be treated as an interactive pair programmer and tutor. Instead of asking 'Write a script to do X', try asking 'Explain the best practices for implementing X in this framework, and give me a small example'. This forces you to engage with the concepts and internalize the knowledge, rather than just copying and pasting.",
+    "Ultimately, the goal is to leverage AI to handle the mundane tasks — the boilerplate, the syntax formatting, the repetitive CRUD operations — freeing your cognitive load to focus on the hard engineering problems: system architecture, data modeling, performance optimization, and user experience.",
+    "By maintaining a strong foundational understanding of the technologies you use, and using AI as a multiplier rather than a crutch, you can achieve both incredible development velocity and deep technical mastery."
+  ],
 };
 
 export async function generateStaticParams() {
@@ -55,9 +64,9 @@ export default function BlogPostPage({ params }: Props) {
   const paragraphs = BLOG_CONTENT[params.slug] || [post.excerpt, "Full article coming soon."];
 
   return (
-    <div className="min-h-screen pt-24 pb-24">
-      <div className="container-portfolio max-w-3xl space-y-10">
-        <Link href="/blog" className="inline-flex items-center gap-2 text-secondary hover:text-primary text-sm">
+    <div className="min-h-screen pt-24 pb-24 bg-bg-primary">
+      <div className="container-portfolio max-w-2xl space-y-12">
+        <Link href="/blog" className="inline-flex items-center gap-2 text-secondary hover:text-primary text-sm font-sans tracking-wide uppercase">
           ← Back to Blog
         </Link>
 
@@ -69,7 +78,7 @@ export default function BlogPostPage({ params }: Props) {
             ))}
           </div>
 
-          <h1 className="text-3xl lg:text-4xl font-bold text-primary leading-tight">{post.title}</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif italic text-primary leading-[1.1]">{post.title}</h1>
 
           <div className="flex flex-wrap items-center gap-5 text-sm text-muted border-b border-border-subtle pb-6">
             <div className="flex items-center gap-2">
@@ -81,9 +90,9 @@ export default function BlogPostPage({ params }: Props) {
           </div>
         </div>
 
-        <div className="space-y-5">
+        <div className="space-y-8 font-serif">
           {paragraphs.map((para, i) => (
-            <p key={i} className="text-secondary leading-relaxed text-lg">{para}</p>
+            <p key={i} className="text-primary leading-loose text-xl md:text-[22px] text-pretty">{para}</p>
           ))}
         </div>
 

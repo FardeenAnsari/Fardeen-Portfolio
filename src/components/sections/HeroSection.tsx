@@ -2,10 +2,11 @@
 
 import { useRef, useState, useEffect, useMemo } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import Image from "next/image";
-import { ArrowDown, Atom, Braces, Database, Mail, Server, Trophy } from "lucide-react";
+import { ArrowDown, Mail } from "lucide-react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import Image from "next/image";
 import { PERSONAL } from "@/lib/data";
+
 
 const ROLES = [
   "Full Stack Engineer",
@@ -59,8 +60,7 @@ export function HeroSection() {
       className="relative min-h-[100svh] flex items-start justify-center overflow-hidden lg:items-center"
       aria-label="Hero section"
     >
-      {/* Floating particles */}
-      <Particles />
+      <div className="absolute inset-0 pointer-events-none radial-blur" />
 
       <motion.div
         style={{ y, opacity }}
@@ -144,14 +144,48 @@ export function HeroSection() {
               <span className="text-xs text-muted font-mono">Kolkata, India</span>
             </div>
 
-            <div className="lg:hidden">
-              <MobilePortrait />
+            <div className="lg:hidden w-full h-[420px] relative">
+              <div className="absolute inset-0 bg-[#C08552]/10 blur-3xl rounded-full" />
+              <div className="absolute inset-0 bg-[#8C5A3C]/8 blur-2xl rounded-full translate-x-4" />
+              <motion.div 
+                className="w-64 glass rounded-2xl border border-border-subtle mx-auto shadow-2xl p-3 flex flex-col gap-3"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <div className="relative w-full rounded-xl overflow-hidden bg-surface-mid/30 border border-border-subtle/50">
+                  <Image src="/images/fardeen-hero.png" alt="Fardeen Ansari" width={400} height={500} className="w-full h-auto object-contain" priority />
+                </div>
+                <div className="px-1 pb-1">
+                  <div className="text-lg font-bold text-primary font-serif tracking-wide">Fardeen Ansari</div>
+                  <div className="text-[10px] text-accent-blue font-mono mt-1 flex justify-between items-center uppercase tracking-wider">
+                    <span>Full Stack</span>
+                    <span className="flex items-center gap-1.5 text-secondary"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> IN</span>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
 
           {/* Right — Portrait + floating elements */}
-          <div className="relative hidden lg:flex items-center justify-center">
-            <PortraitCard />
+          <div className="relative hidden lg:flex items-center justify-center w-full h-[600px]">
+            <div className="absolute inset-0 bg-[#C08552]/10 blur-3xl rounded-full max-w-sm mx-auto" />
+            <div className="absolute inset-0 bg-[#8C5A3C]/8 blur-2xl rounded-full translate-x-12 max-w-sm mx-auto" />
+            <motion.div 
+              className="w-80 glass rounded-3xl border border-border-subtle mx-auto shadow-2xl p-4 flex flex-col gap-4"
+              animate={{ y: [0, -12, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <div className="relative w-full rounded-2xl overflow-hidden bg-surface-mid/30 border border-border-subtle/50">
+                <Image src="/images/fardeen-hero.png" alt="Fardeen Ansari" width={400} height={500} className="w-full h-auto object-contain" priority />
+              </div>
+              <div className="px-2 pb-2">
+                <div className="text-2xl font-bold text-primary font-serif tracking-wide">Fardeen Ansari</div>
+                <div className="text-xs text-accent-blue font-mono mt-2 flex justify-between items-center uppercase tracking-wider">
+                  <span>Software Engineer</span>
+                  <span className="flex items-center gap-1.5 text-secondary"><div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Available</span>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
 
@@ -174,123 +208,6 @@ export function HeroSection() {
   );
 }
 
-function MobilePortrait() {
-  return (
-    <div className="relative max-w-[calc(100vw-40px)] overflow-hidden rounded-2xl border border-border-default bg-bg-surface shadow-lg">
-      <div className="relative h-64 xs:h-72">
-        <Image
-          src="/images/fardeen-hero.png"
-          alt="Fardeen Ansari"
-          fill
-          className="object-cover object-top"
-          priority
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-bg-primary/20 to-transparent" />
-      </div>
-      <div className="absolute bottom-0 left-0 right-0 p-4">
-        <div className="rounded-xl border border-border-subtle bg-[var(--bg-glass)] px-4 py-3 backdrop-blur-md">
-          <div>
-            <p className="text-xs text-muted font-mono">Currently building</p>
-            <p className="text-sm font-semibold text-primary">Trashium</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function PortraitCard() {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9, y: 40 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ delay: 1.0, duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="relative w-full max-w-[440px]"
-    >
-      {/* Main portrait */}
-      <motion.div
-        animate={{ y: [0, -12, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="relative z-10"
-      >
-        <div className="relative mx-auto h-[25rem] w-[21rem] rounded-3xl overflow-hidden border border-border-default shadow-2xl">
-          {/* Glass overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/60 to-transparent z-10" />
-          <Image
-            src="/images/fardeen-hero.png"
-            alt="Fardeen Ansari — Full Stack Engineer"
-            fill
-            className="object-cover object-top"
-            priority
-            sizes="(max-width: 768px) 100vw, 320px"
-          />
-          {/* Gradient border effect */}
-          <div className="absolute inset-0 rounded-3xl ring-1 ring-white/10 z-20" />
-
-          {/* Bottom info card */}
-          <div className="absolute bottom-0 left-0 right-0 p-5 z-20">
-            <div className="glass rounded-2xl p-4 border border-border-subtle">
-              <p className="text-xs text-muted font-mono mb-1">Currently building</p>
-              <p className="text-sm font-semibold text-primary">Trashium</p>
-              <p className="text-xs text-secondary">Incentivized Waste Management</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Glow */}
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-accent-blue/10 to-accent-purple/10 blur-3xl -z-10 scale-110" />
-      </motion.div>
-
-      {/* Floating badge 1 — SIH */}
-      <motion.div
-        animate={{ y: [0, -8, 0], rotate: [0, 1, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-        className="absolute -left-44 top-20 z-20 glass rounded-2xl px-4 py-3 border border-border-subtle shadow-lg"
-      >
-        <p className="text-xs text-muted font-mono">Achievement</p>
-        <p className="mt-1 flex items-center gap-2 text-sm font-semibold text-primary">
-          <Trophy size={16} className="text-yellow-400" />
-          SIH Finalist
-        </p>
-        <p className="text-xs text-secondary">National Level · 2023</p>
-      </motion.div>
-
-      {/* Floating badge 2 — Tech */}
-      <motion.div
-        animate={{ y: [0, 10, 0], rotate: [0, -1, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute -right-16 top-12 z-20 glass rounded-2xl px-4 py-3 border border-border-subtle shadow-lg"
-      >
-        <p className="text-xs text-muted font-mono">Stack</p>
-        <div className="mt-2 flex gap-2">
-          {[Atom, Braces, Server, Database].map((Icon, i) => (
-            <span key={i} className="flex h-7 w-7 items-center justify-center rounded-lg border border-border-subtle bg-white/5 text-accent-blue">
-              <Icon size={15} />
-            </span>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Floating badge 3 — Live */}
-      <motion.div
-        animate={{ y: [0, -6, 0] }}
-        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-        className="absolute -right-24 bottom-28 z-20 glass rounded-2xl px-4 py-3 border border-green-500/20 shadow-lg"
-      >
-        <div className="flex items-center gap-2">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-          </span>
-          <span className="text-xs font-semibold text-green-400">2 Projects Live</span>
-        </div>
-        <p className="text-xs text-muted mt-1">Trashium · VetanFlow</p>
-      </motion.div>
-    </motion.div>
-  );
-}
-
 function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
   return (
     <motion.a
@@ -305,53 +222,5 @@ function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode
     >
       {icon}
     </motion.a>
-  );
-}
-
-function Particles() {
-  const prefersReducedMotion = useReducedMotion();
-  const particles = useMemo(
-    () =>
-      Array.from({ length: 18 }, (_, i) => ({
-        id: i,
-        x: (i * 37 + 11) % 100,
-        y: (i * 53 + 19) % 100,
-        size: ((i * 7) % 25) / 10 + 1,
-        duration: ((i * 13) % 10) + 8,
-        delay: ((i * 17) % 50) / 10,
-      })),
-    []
-  );
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      {!prefersReducedMotion &&
-        particles.map((p) => (
-          <motion.div
-            key={p.id}
-            className="absolute rounded-full bg-accent-blue/20"
-            style={{
-              left: `${p.x}%`,
-              top: `${p.y}%`,
-              width: p.size,
-              height: p.size,
-            }}
-            animate={{
-              y: [0, -40, 0],
-              opacity: [0, 0.6, 0],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: p.duration,
-              repeat: Infinity,
-              delay: p.delay,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-
-      {/* Grid pattern */}
-      <div className="absolute inset-0 grid-pattern opacity-30" />
-    </div>
   );
 }

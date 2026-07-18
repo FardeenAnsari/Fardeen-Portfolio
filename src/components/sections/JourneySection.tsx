@@ -18,6 +18,7 @@ export function JourneySection() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   return (
     <section
@@ -108,12 +109,19 @@ export function JourneySection() {
                             className="mt-4 grid grid-cols-2 gap-2"
                           >
                             {item.gallery.slice(0, 4).map((img, i) => (
-                              <div key={i} className="relative aspect-video rounded-xl overflow-hidden">
+                              <div
+                                key={i}
+                                className="relative aspect-video rounded-xl overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setPreviewImage(img);
+                                }}
+                              >
                                 <Image
                                   src={img}
                                   alt={`${item.title} photo ${i + 1}`}
                                   fill
-                                  className="object-cover"
+                                  className="object-contain"
                                   sizes="200px"
                                 />
                               </div>
@@ -128,12 +136,18 @@ export function JourneySection() {
                             animate={{ opacity: 1, height: "auto" }}
                             className="mt-4"
                           >
-                            <div className="relative h-40 rounded-xl overflow-hidden border border-border-subtle">
+                            <div
+                              className="relative h-40 rounded-xl overflow-hidden border border-border-subtle cursor-pointer hover:opacity-80 transition-opacity"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setPreviewImage(item.certificate!);
+                              }}
+                            >
                               <Image
                                 src={item.certificate}
                                 alt={`${item.title} certificate`}
                                 fill
-                                className="object-cover"
+                                className="object-contain"
                                 sizes="400px"
                               />
                             </div>
@@ -169,6 +183,25 @@ export function JourneySection() {
           </div>
         </motion.div>
       </div>
+
+      <AnimatePresence>
+        {previewImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-background/90 backdrop-blur-sm p-4 md:p-12 cursor-pointer"
+            onClick={() => setPreviewImage(null)}
+          >
+            <div className="relative w-full h-full max-w-5xl max-h-[80vh] rounded-2xl overflow-hidden shadow-2xl border border-border-subtle">
+              <Image src={previewImage} alt="Preview" fill className="object-contain" />
+            </div>
+            <div className="absolute top-6 right-6 text-primary/50 hover:text-primary transition-colors text-sm font-mono tracking-widest uppercase">
+              Click anywhere to close
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

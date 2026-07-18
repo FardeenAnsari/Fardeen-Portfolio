@@ -3,17 +3,19 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Sun, Moon, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
-  { label: "About", href: "#about" },
-  { label: "Skills", href: "#mind" },
-  { label: "Journey", href: "#journey" },
-  { label: "Work", href: "#work" },
-  { label: "Achievements", href: "#achievements" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "/#about" },
+  { label: "Skills", href: "/#mind" },
+  { label: "Journey", href: "/#journey" },
+  { label: "Work", href: "/#work" },
+  { label: "Achievements", href: "/#achievements" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export function Navigation() {
@@ -22,6 +24,7 @@ export function Navigation() {
   const [activeSection, setActiveSection] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -31,7 +34,10 @@ export function Navigation() {
     };
 
     // Intersection observer for active section
-    const sections = NAV_ITEMS.map((item) => item.href.slice(1));
+    const sections = NAV_ITEMS
+      .map((item) => item.href.split("#")[1])
+      .filter(Boolean) as string[];
+      
     const observers: IntersectionObserver[] = [];
 
     sections.forEach((id) => {
@@ -105,7 +111,11 @@ export function Navigation() {
                   key={item.href}
                   href={item.href}
                   label={item.label}
-                  isActive={activeSection === item.href.slice(1)}
+                  isActive={
+                    item.href.startsWith("/#")
+                      ? activeSection === item.href.split("#")[1] && pathname === "/"
+                      : pathname === item.href
+                  }
                 />
               ))}
             </nav>

@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowUpRight,
   BriefcaseBusiness,
@@ -33,6 +34,7 @@ const PROJECT_ICONS: Record<string, LucideIcon> = {
 };
 
 export function WorkSection() {
+  const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
@@ -107,11 +109,12 @@ export function WorkSection() {
 }
 
 function TrashiumHeroCard() {
+  const router = useRouter();
   const trashium = PROJECTS.find((p) => p.id === "trashium")!;
   const ProjectIcon = PROJECT_ICONS[trashium.id];
 
   return (
-    <Link href={`/work/${trashium.id}`} className="group block">
+    <div onClick={() => router.push(`/work/${trashium.id}`)} className="group block cursor-pointer">
       <motion.div
         whileHover={{ y: -4 }}
         transition={{ duration: 0.3 }}
@@ -253,7 +256,7 @@ function TrashiumHeroCard() {
           </motion.div>
         </div>
       </motion.div>
-    </Link>
+    </div>
   );
 }
 
@@ -270,8 +273,10 @@ function ProjectCard({
 }) {
   const ProjectIcon = PROJECT_ICONS[project.id] ?? Link2;
 
+  const router = useRouter();
+
   return (
-    <Link href={`/work/${project.id}`} className="group block h-full">
+    <div onClick={() => router.push(`/work/${project.id}`)} className="group block h-full cursor-pointer">
       <motion.div
         whileHover={{ y: -6, scale: 1.01 }}
         transition={{ duration: 0.3 }}
@@ -361,6 +366,6 @@ function ProjectCard({
           </div>
         </div>
       </motion.div>
-    </Link>
+    </div>
   );
 }
