@@ -71,14 +71,14 @@ const Diagram = ({ title, type }: { title: string, type: 'architecture' | 'flow'
 const BLOG_CONTENT: Record<string, React.ReactNode[]> = {
   "building-trashium": [
     <P key="1">When we started building Trashium as our final year project, we had one ambitious goal: make recycling genuinely rewarding for households in West Bengal. Traditional waste management in Indian cities suffers from three critical failures: zero household incentive, unpredictable pricing by informal collectors, and highly inefficient, carbon-heavy collection routes.</P>,
-    <P key="2">We realized that simply building another "Uber for Trash" wouldn't work. The economics of municipal solid waste (MSW) are razor-thin. To make it sustainable, we needed to dramatically reduce collection costs while maximizing the perceived value for the household. This led us to the core philosophy of Trashium: **Gamified Green Credits tied to dynamic ML pricing.**</P>,
+    <P key="2">We realized that simply building another &quot;Uber for Trash&quot; wouldn&apos;t work. The economics of municipal solid waste (MSW) are razor-thin. To make it sustainable, we needed to dramatically reduce collection costs while maximizing the perceived value for the household. This led us to the core philosophy of Trashium: <strong>Gamified Green Credits tied to dynamic ML pricing.</strong></P>,
     <H2 key="h1">The Three-Sided Architecture</H2>,
     <P key="3">Trashium operates as a three-sided marketplace. It connects households, collection crews, and administrative recycling hubs. Building a system that synchronizes state across three distinct user roles in real-time required a robust architecture.</P>,
     <Diagram key="d1" title="Trashium System Architecture" type="architecture" />,
-    <P key="4">We chose React Native for the household and crew apps to ensure cross-platform availability, backed by a Node.js/Express monolithic core and PostgreSQL. For real-time updates—such as tracking a collection crew's location—we implemented WebSockets. This ensures households receive push notifications exactly 5 minutes before the pickup truck arrives, solving the notorious "missed pickup" problem.</P>,
+    <P key="4">We chose React Native for the household and crew apps to ensure cross-platform availability, backed by a Node.js/Express monolithic core and PostgreSQL. For real-time updates—such as tracking a collection crew&apos;s location—we implemented WebSockets. This ensures households receive push notifications exactly 5 minutes before the pickup truck arrives, solving the notorious &quot;missed pickup&quot; problem.</P>,
     <H2 key="h2">Designing the Gamification Engine</H2>,
-    <P key="5">Human behavior is fascinating. During our beta testing, we found that offering households ₹50 for their plastics resulted in a 12% retention rate. But offering them 500 "Green Credits" (equivalent to ₹50) and a "Bronze Seedling" badge resulted in a 47% retention rate.</P>,
-    <P key="6">We built a 20-tier gamification system. Users start as a "Seedling" and can grind their way up to "Earth Guardian." We implemented streak multipliers with a precise decay formula:</P>,
+    <P key="5">Human behavior is fascinating. During our beta testing, we found that offering households ₹50 for their plastics resulted in a 12% retention rate. But offering them 500 &quot;Green Credits&quot; (equivalent to ₹50) and a &quot;Bronze Seedling&quot; badge resulted in a 47% retention rate.</P>,
+    <P key="6">We built a 20-tier gamification system. Users start as a &quot;Seedling&quot; and can grind their way up to &quot;Earth Guardian.&quot; We implemented streak multipliers with a precise decay formula:</P>,
     <CodeBox key="c1" title="streak_multiplier.ts">
 {`function calculateMultiplier(currentStreak: number, lastPickup: Date): number {
   const daysSinceLastPickup = getDaysDifference(lastPickup, new Date());
@@ -93,14 +93,14 @@ const BLOG_CONTENT: Record<string, React.ReactNode[]> = {
   return 1.0 + Math.min(baseBonus, maxBonus);
 }`}
     </CodeBox>,
-    <P key="7">Users can also use their Green Credits in the Trashium Marketplace to purchase "Streak Shields" (preventing streak resets during vacations) or redeem them for partnered brand discounts. This closed-loop economy keeps the system engaging without bleeding fiat capital.</P>,
+    <P key="7">Users can also use their Green Credits in the Trashium Marketplace to purchase &quot;Streak Shields&quot; (preventing streak resets during vacations) or redeem them for partnered brand discounts. This closed-loop economy keeps the system engaging without bleeding fiat capital.</P>,
     <H2 key="h3">Route Optimization for Crews</H2>,
     <P key="8">The most expensive part of recycling logistics is fuel. A collection truck driving randomly to fulfill scattered requests will burn more cash than the scrap is worth. We implemented a Nearest-Neighbor algorithm paired with a 2-Opt local search heuristic to calculate the most fuel-efficient route every morning at 4 AM.</P>,
-    <P key="9">This optimization reduced total fleet kilometers by 23% during our 5-district pilot in West Bengal. Building Trashium taught us that software isn't just about code—it's about manipulating logistics and human psychology to create a net positive for the planet.</P>,
+    <P key="9">This optimization reduced total fleet kilometers by 23% during our 5-district pilot in West Bengal. Building Trashium taught us that software isn&apos;t just about code—it&apos;s about manipulating logistics and human psychology to create a net positive for the planet.</P>,
   ],
   "ml-pricing-engine": [
     <P key="1">Pricing recyclables dynamically sounds straightforward until you realize it involves volatile commodity markets, logistics costs, behavioral economics, and real-time fairness guarantees. The scrap metal and plastics market fluctuates daily, meaning fixed pricing models will inevitably lead to marketplace bankruptcy.</P>,
-    <P key="2">For Trashium, we couldn't rely on hardcoded arrays. We needed an engine that could predict fair market value, subtract operational costs, and output a "Green Credit" value that felt rewarding to the user. Thus, our ML Pricing Engine was born.</P>,
+    <P key="2">For Trashium, we couldn&apos;t rely on hardcoded arrays. We needed an engine that could predict fair market value, subtract operational costs, and output a &quot;Green Credit&quot; value that felt rewarding to the user. Thus, our ML Pricing Engine was born.</P>,
     <H2 key="h1">The Prediction Stack</H2>,
     <Diagram key="d1" title="Pricing Prediction Pipeline" type="ml" />,
     <P key="3">We built a three-layer pricing stack. Layer 1 handles market value prediction. We scraped historical scrap commodity prices and trained two models using scikit-learn. Linear Regression on log-transformed market values achieved a Mean Absolute Percentage Error (MAPE) of ~6.11%, while our challenger Random Forest model hit ~9.80% but was better at catching non-linear spikes during market shocks.</P>,
@@ -120,7 +120,7 @@ const BLOG_CONTENT: Record<string, React.ReactNode[]> = {
     
     return cost_per_kg`}
     </CodeBox>,
-    <P key="5">By subtracting this `cost_per_kg` from the ML predicted market value, we arrive at the absolute maximum payout we can offer without losing money. But we don't output this raw number.</P>,
+    <P key="5">By subtracting this `cost_per_kg` from the ML predicted market value, we arrive at the absolute maximum payout we can offer without losing money. But we don&apos;t output this raw number.</P>,
     <H2 key="h3">Behavioral Smoothing Guardrails</H2>,
     <P key="6">Layer 3 is the psychological layer. If the ML model says plastic is worth ₹15 today, and tomorrow a market crash drops it to ₹8, users will feel cheated and abandon the platform. Humans hate loss more than they love gains.</P>,
     <P key="7">To fix this, we implemented a 7-day Exponential Moving Average (EMA) guardrail. Prices are allowed to climb quickly during bull markets, but they are artificially slowed down during crashes. We eat the temporary margin loss to preserve user trust, treating the margin difference as a Customer Acquisition Cost (CAC).</P>,
@@ -128,13 +128,13 @@ const BLOG_CONTENT: Record<string, React.ReactNode[]> = {
   ],
   "payroll-architecture": [
     <P key="1">VetanFlow was born out of a simple observation: modern small-to-medium enterprises (SMEs) in India are stuck between two extremes. On one end, they use messy Excel sheets and WhatsApp groups to track attendance. On the other end, they are forced to buy bloated, expensive enterprise HRMS software that takes months to implement.</P>,
-    <P key="2">We set out to build a lightweight, bank-grade payroll system that just works. The architecture needed to be fault-tolerant—because you absolutely cannot mess up someone's salary—and fast enough to process bulk payouts for 500+ employees in seconds.</P>,
+    <P key="2">We set out to build a lightweight, bank-grade payroll system that just works. The architecture needed to be fault-tolerant—because you absolutely cannot mess up someone&apos;s salary—and fast enough to process bulk payouts for 500+ employees in seconds.</P>,
     <H2 key="h1">The Event-Driven Flow</H2>,
     <Diagram key="d1" title="VetanFlow Payroll Processing" type="flow" />,
     <P key="3">At the heart of VetanFlow is an event-driven architecture. When an employee punches in via the mobile app, the payload includes precise GPS coordinates and a timestamp. Our backend instantly checks these coordinates against a predefined geofence (using PostGIS spatial queries). If they are within 50 meters of the office polygon, the attendance event is logged as valid.</P>,
     <H2 key="h2">Idempotent Salary Processing</H2>,
     <P key="4">The most critical part of VetanFlow is the payroll calculation engine. At the end of the month, the system aggregates all attendance events, calculates overtime, subtracts leave without pay (LWP), applies tax deductions (TDS), and generates a final payout figure.</P>,
-    <P key="5">When dealing with money, distributed systems face the dreaded "double-spend" problem. If the network drops while processing a salary, and the admin clicks "Run Payroll" again, you risk paying everyone twice. We solved this by making the payout endpoint strictly idempotent.</P>,
+    <P key="5">When dealing with money, distributed systems face the dreaded &quot;double-spend&quot; problem. If the network drops while processing a salary, and the admin clicks &quot;Run Payroll&quot; again, you risk paying everyone twice. We solved this by making the payout endpoint strictly idempotent.</P>,
     <CodeBox key="c1" title="payout_service.ts">
 {`async function executePayout(companyId: string, month: string, idempotencyKey: string) {
   // 1. Check if this exact operation was already processed
@@ -169,10 +169,10 @@ const BLOG_CONTENT: Record<string, React.ReactNode[]> = {
   }
 }`}
     </CodeBox>,
-    <P key="6">Using an `idempotency_key` (usually a hash of the company ID and the month string) ensures that even if the client retries the request 100 times due to terrible internet, the database transaction only commits the bank transfer once.</P>,
+    <P key="6">Using an <code>idempotency_key</code> (usually a hash of the company ID and the month string) ensures that even if the client retries the request 100 times due to terrible internet, the database transaction only commits the bank transfer once.</P>,
     <H2 key="h3">Reporting and Export</H2>,
     <P key="7">Finally, we built a robust reporting engine. Using Puppeteer and specialized CSV streaming buffers, VetanFlow can instantly export complex tax compliance reports and PDF payslips. Streaming the CSV chunks directly to the HTTP response, rather than holding 500 rows in server memory, kept our server costs incredibly low.</P>,
-    <P key="8">VetanFlow proves that you don't need a massive team to build enterprise-grade financial software—you just need a maniacal focus on database ACID properties and edge-case handling.</P>,
+    <P key="8">VetanFlow proves that you don&apos;t need a massive team to build enterprise-grade financial software—you just need a maniacal focus on database ACID properties and edge-case handling.</P>,
   ],
 };
 
