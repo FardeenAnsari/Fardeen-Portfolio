@@ -5,7 +5,42 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { ACHIEVEMENTS } from "@/lib/data";
 import { cn } from "@/lib/utils";
-import { X, Download, Award } from "lucide-react";
+import {
+  Award,
+  Bot,
+  Code2,
+  FileBadge,
+  Globe2,
+  Lightbulb,
+  Medal,
+  Microscope,
+  ScrollText,
+  ShieldAlert,
+  Star,
+  TrainFront,
+  type LucideIcon,
+  Waves,
+  X,
+} from "lucide-react";
+
+const STAT_ICONS = {
+  Hackathons: Medal,
+  "International Events": Globe2,
+  "Research Presentations": Microscope,
+  Certifications: ScrollText,
+} as const;
+
+const ACHIEVEMENT_ICONS: Record<string, LucideIcon> = {
+  sih2023: Medal,
+  gic2024: Waves,
+  esiot2024: Lightbulb,
+  rtet2024: Microscope,
+  sih2024: ShieldAlert,
+  icdmai2025: Bot,
+  sih2025: TrainFront,
+  suprinova2024: Star,
+  codesum: Code2,
+};
 
 export function AchievementsSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -48,23 +83,29 @@ export function AchievementsSection() {
             className="grid grid-cols-2 md:grid-cols-4 gap-4"
           >
             {[
-              { label: "Hackathons", value: "5+", icon: "🏆" },
-              { label: "International Events", value: "2", icon: "🌍" },
-              { label: "Research Presentations", value: "2", icon: "🔬" },
-              { label: "Certifications", value: "4+", icon: "📜" },
-            ].map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: 0.3 + i * 0.1 }}
-                className="glass-card p-5 text-center"
-              >
-                <span className="text-3xl mb-2 block">{stat.icon}</span>
-                <p className="text-2xl font-bold text-gradient">{stat.value}</p>
-                <p className="text-xs text-muted mt-1">{stat.label}</p>
-              </motion.div>
-            ))}
+              { label: "Hackathons", value: "5+" },
+              { label: "International Events", value: "2" },
+              { label: "Research Presentations", value: "2" },
+              { label: "Certifications", value: "4+" },
+            ].map((stat, i) => {
+              const Icon = STAT_ICONS[stat.label as keyof typeof STAT_ICONS];
+
+              return (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ delay: 0.3 + i * 0.1 }}
+                  className="glass-card p-5 text-center"
+                >
+                  <span className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl border border-accent-blue/20 bg-accent-blue/10 text-accent-blue">
+                    <Icon size={20} />
+                  </span>
+                  <p className="text-2xl font-bold text-gradient">{stat.value}</p>
+                  <p className="text-xs text-muted mt-1">{stat.label}</p>
+                </motion.div>
+              );
+            })}
           </motion.div>
 
           {/* Achievements masonry grid */}
@@ -106,6 +147,8 @@ function AchievementCard({
   achievement: (typeof ACHIEVEMENTS)[0];
   onClick: () => void;
 }) {
+  const Icon = ACHIEVEMENT_ICONS[achievement.id] ?? FileBadge;
+
   return (
     <motion.button
       onClick={onClick}
@@ -118,7 +161,7 @@ function AchievementCard({
       {/* Header */}
       <div className="flex items-start gap-4">
         <div className={cn("w-12 h-12 rounded-2xl bg-gradient-to-br flex items-center justify-center text-2xl flex-shrink-0", achievement.color)}>
-          {achievement.icon}
+          <Icon size={23} className="text-white" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap gap-2 mb-2">
@@ -130,7 +173,7 @@ function AchievementCard({
             </span>
             {achievement.highlight && (
               <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 font-semibold">
-                ★
+                <Star size={12} fill="currentColor" />
               </span>
             )}
           </div>
@@ -166,6 +209,8 @@ function AchievementModal({
   achievement: (typeof ACHIEVEMENTS)[0];
   onClose: () => void;
 }) {
+  const Icon = ACHIEVEMENT_ICONS[achievement.id] ?? FileBadge;
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -197,7 +242,7 @@ function AchievementModal({
         {/* Header */}
         <div className="flex items-start gap-5">
           <div className={cn("w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center text-3xl flex-shrink-0", achievement.color)}>
-            {achievement.icon}
+            <Icon size={28} className="text-white" />
           </div>
           <div>
             <div className="flex flex-wrap gap-2 mb-2">

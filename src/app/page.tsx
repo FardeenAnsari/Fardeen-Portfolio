@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
-import { Loader } from "@/components/sections/Loader";
+import { useEffect } from "react";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { AboutSection, MindSection } from "@/components/sections/AboutSection";
 import { JourneySection } from "@/components/sections/JourneySection";
@@ -12,8 +10,6 @@ import { ContactSection } from "@/components/sections/ContactSection";
 import { Footer } from "@/components/sections/Footer";
 
 export default function HomePage() {
-  const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     // Developer Easter Egg — Console Message
     console.log(
@@ -72,24 +68,14 @@ export default function HomePage() {
 
   return (
     <>
-      <AnimatePresence mode="wait">
-        {isLoading && (
-          <Loader onComplete={() => setIsLoading(false)} />
-        )}
-      </AnimatePresence>
-
-      {!isLoading && (
-        <>
-          <HeroSection />
-          <AboutSection />
-          <MindSection />
-          <JourneySection />
-          <WorkSection />
-          <AchievementsSection />
-          <ContactSection />
-          <Footer />
-        </>
-      )}
+      <HeroSection />
+      <AboutSection />
+      <MindSection />
+      <JourneySection />
+      <WorkSection />
+      <AchievementsSection />
+      <ContactSection />
+      <Footer />
     </>
   );
 }

@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { useRef, useState, useEffect, useMemo } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { ArrowDown, Mail } from "lucide-react";
+import { ArrowDown, Atom, Braces, Database, Mail, Server, Trophy } from "lucide-react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { PERSONAL } from "@/lib/data";
 
@@ -56,7 +56,7 @@ export function HeroSection() {
     <section
       ref={containerRef}
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-[100svh] flex items-start justify-center overflow-hidden lg:items-center"
       aria-label="Hero section"
     >
       {/* Floating particles */}
@@ -64,17 +64,13 @@ export function HeroSection() {
 
       <motion.div
         style={{ y, opacity }}
-        className="container-portfolio relative z-10 w-full pt-24 pb-16"
+        className="container-portfolio relative z-10 w-full pt-28 pb-16 sm:pt-24"
       >
-        <div className="grid lg:grid-cols-2 gap-16 items-center min-h-[85vh]">
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(360px,440px)] gap-12 lg:gap-20 items-center lg:min-h-[82svh]">
           {/* Left — Text content */}
-          <div className="flex flex-col gap-8">
+          <div className="flex min-w-0 flex-col gap-7 sm:gap-8">
             {/* Top badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.6 }}
-            >
+            <div>
               <div className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 border border-border-subtle w-fit">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
@@ -84,59 +80,41 @@ export function HeroSection() {
                   Open to opportunities · 2026 Graduate
                 </span>
               </div>
-            </motion.div>
+            </div>
 
             {/* Main headline */}
             <div className="space-y-3">
-              <motion.h1
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.9, duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="font-serif text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.95] tracking-tight"
+              <h1
+                className="font-serif text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.95] tracking-tight text-balance"
                 style={{ fontStyle: "italic" }}
               >
                 Fardeen
                 <br />
-                <span className="text-gradient not-italic" style={{ fontFamily: "var(--font-sans)", fontStyle: "normal", fontWeight: 800 }}>
+                <span className="text-accent-blue not-italic" style={{ fontFamily: "var(--font-sans)", fontStyle: "normal", fontWeight: 800 }}>
                   Ansari
                 </span>
-              </motion.h1>
+              </h1>
 
               {/* Typewriter role */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.2, duration: 0.6 }}
-                className="h-8 flex items-center"
-              >
-                <span className="font-mono text-lg text-secondary">
+              <div className="min-h-8 flex items-center">
+                <span className="font-mono text-base sm:text-lg text-secondary">
                   <span className="text-accent-blue">&gt;</span>{" "}
                   {displayText}
                   <span className="animate-pulse">|</span>
                 </span>
-              </motion.div>
+              </div>
             </div>
 
             {/* Bio */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.3, duration: 0.7 }}
-              className="text-secondary text-lg leading-relaxed max-w-lg"
-            >
+            <p className="max-w-[34ch] text-pretty text-base leading-relaxed text-secondary sm:max-w-xl sm:text-lg">
               Building scalable products with{" "}
               <span className="text-primary font-medium">engineering craft</span> —
               from ML-powered waste management platforms to enterprise payroll systems.
               <span className="text-primary font-medium"> SIH 2023 National Finalist</span>.
-            </motion.p>
+            </p>
 
             {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.4, duration: 0.7 }}
-              className="flex flex-wrap gap-3"
-            >
+            <div className="flex flex-wrap gap-3">
               <motion.a
                 href="#work"
                 className="btn-primary magnetic-btn"
@@ -155,21 +133,20 @@ export function HeroSection() {
               >
                 Get In Touch
               </motion.a>
-            </motion.div>
+            </div>
 
             {/* Social links */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.6, duration: 0.7 }}
-              className="flex items-center gap-2"
-            >
+            <div className="flex items-center gap-2">
               <SocialLink href={PERSONAL.github} icon={<FaGithub size={16} />} label="GitHub" />
               <SocialLink href={PERSONAL.linkedin} icon={<FaLinkedinIn size={14} />} label="LinkedIn" />
               <SocialLink href={`mailto:${PERSONAL.email}`} icon={<Mail size={16} />} label="Email" />
               <div className="w-px h-4 bg-border-default mx-2" />
               <span className="text-xs text-muted font-mono">Kolkata, India</span>
-            </motion.div>
+            </div>
+
+            <div className="lg:hidden">
+              <MobilePortrait />
+            </div>
           </div>
 
           {/* Right — Portrait + floating elements */}
@@ -183,7 +160,7 @@ export function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2, duration: 0.6 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          className="absolute bottom-8 left-8 hidden flex-col items-center gap-2 lg:flex"
         >
           <span className="text-xs text-muted font-mono tracking-widest uppercase">Scroll</span>
           <motion.div
@@ -197,13 +174,39 @@ export function HeroSection() {
   );
 }
 
+function MobilePortrait() {
+  return (
+    <div className="relative max-w-[calc(100vw-40px)] overflow-hidden rounded-2xl border border-border-default bg-bg-surface shadow-lg">
+      <div className="relative h-64 xs:h-72">
+        <Image
+          src="/images/fardeen-hero.png"
+          alt="Fardeen Ansari"
+          fill
+          className="object-cover object-top"
+          priority
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-bg-primary via-bg-primary/20 to-transparent" />
+      </div>
+      <div className="absolute bottom-0 left-0 right-0 p-4">
+        <div className="rounded-xl border border-border-subtle bg-[var(--bg-glass)] px-4 py-3 backdrop-blur-md">
+          <div>
+            <p className="text-xs text-muted font-mono">Currently building</p>
+            <p className="text-sm font-semibold text-primary">Trashium</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function PortraitCard() {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9, y: 40 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ delay: 1.0, duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="relative w-full max-w-md"
+      className="relative w-full max-w-[440px]"
     >
       {/* Main portrait */}
       <motion.div
@@ -211,7 +214,7 @@ function PortraitCard() {
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         className="relative z-10"
       >
-        <div className="relative w-80 h-96 mx-auto rounded-3xl overflow-hidden border border-border-default shadow-2xl">
+        <div className="relative mx-auto h-[25rem] w-[21rem] rounded-3xl overflow-hidden border border-border-default shadow-2xl">
           {/* Glass overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/60 to-transparent z-10" />
           <Image
@@ -243,10 +246,13 @@ function PortraitCard() {
       <motion.div
         animate={{ y: [0, -8, 0], rotate: [0, 1, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-        className="absolute -left-8 top-16 glass rounded-2xl px-4 py-3 border border-border-subtle shadow-lg"
+        className="absolute -left-44 top-20 glass rounded-2xl px-4 py-3 border border-border-subtle shadow-lg"
       >
         <p className="text-xs text-muted font-mono">Achievement</p>
-        <p className="text-sm font-semibold text-primary">🏆 SIH Finalist</p>
+        <p className="mt-1 flex items-center gap-2 text-sm font-semibold text-primary">
+          <Trophy size={16} className="text-yellow-400" />
+          SIH Finalist
+        </p>
         <p className="text-xs text-secondary">National Level · 2023</p>
       </motion.div>
 
@@ -254,12 +260,14 @@ function PortraitCard() {
       <motion.div
         animate={{ y: [0, 10, 0], rotate: [0, -1, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute -right-4 top-8 glass rounded-2xl px-4 py-3 border border-border-subtle shadow-lg"
+        className="absolute -right-16 top-12 glass rounded-2xl px-4 py-3 border border-border-subtle shadow-lg"
       >
         <p className="text-xs text-muted font-mono">Stack</p>
-        <div className="flex gap-1 mt-1">
-          {["⚛️", "🟨", "🐍", "🐘"].map((emoji, i) => (
-            <span key={i} className="text-base">{emoji}</span>
+        <div className="mt-2 flex gap-2">
+          {[Atom, Braces, Server, Database].map((Icon, i) => (
+            <span key={i} className="flex h-7 w-7 items-center justify-center rounded-lg border border-border-subtle bg-white/5 text-accent-blue">
+              <Icon size={15} />
+            </span>
           ))}
         </div>
       </motion.div>
@@ -268,7 +276,7 @@ function PortraitCard() {
       <motion.div
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-        className="absolute -right-8 bottom-32 glass rounded-2xl px-4 py-3 border border-green-500/20 shadow-lg"
+        className="absolute -right-24 bottom-28 glass rounded-2xl px-4 py-3 border border-green-500/20 shadow-lg"
       >
         <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2">
@@ -301,40 +309,46 @@ function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode
 }
 
 function Particles() {
-  const particles = Array.from({ length: 20 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 3 + 1,
-    duration: Math.random() * 10 + 8,
-    delay: Math.random() * 5,
-  }));
+  const prefersReducedMotion = useReducedMotion();
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 18 }, (_, i) => ({
+        id: i,
+        x: (i * 37 + 11) % 100,
+        y: (i * 53 + 19) % 100,
+        size: ((i * 7) % 25) / 10 + 1,
+        duration: ((i * 13) % 10) + 8,
+        delay: ((i * 17) % 50) / 10,
+      })),
+    []
+  );
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-      {particles.map((p) => (
-        <motion.div
-          key={p.id}
-          className="absolute rounded-full bg-accent-blue/20"
-          style={{
-            left: `${p.x}%`,
-            top: `${p.y}%`,
-            width: p.size,
-            height: p.size,
-          }}
-          animate={{
-            y: [0, -40, 0],
-            opacity: [0, 0.6, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: p.duration,
-            repeat: Infinity,
-            delay: p.delay,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
+      {!prefersReducedMotion &&
+        particles.map((p) => (
+          <motion.div
+            key={p.id}
+            className="absolute rounded-full bg-accent-blue/20"
+            style={{
+              left: `${p.x}%`,
+              top: `${p.y}%`,
+              width: p.size,
+              height: p.size,
+            }}
+            animate={{
+              y: [0, -40, 0],
+              opacity: [0, 0.6, 0],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: p.duration,
+              repeat: Infinity,
+              delay: p.delay,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
 
       {/* Grid pattern */}
       <div className="absolute inset-0 grid-pattern opacity-30" />

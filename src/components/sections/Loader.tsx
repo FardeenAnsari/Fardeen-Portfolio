@@ -1,26 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 export function Loader({ onComplete }: { onComplete: () => void }) {
   const [progress, setProgress] = useState(0);
   const [phase, setPhase] = useState(0);
+  const onCompleteRef = useRef(onComplete);
+  const completedRef = useRef(false);
 
   useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
+
+  useEffect(() => {
+    if (completedRef.current) return;
+
     const timer = setInterval(() => {
       setProgress((prev) => {
-        if (prev >= 100) {
+        if (prev >= 100) return 100;
+        const next = Math.min(prev + Math.random() * 12 + 3, 100);
+        if (next >= 100) {
           clearInterval(timer);
-          setTimeout(onComplete, 400);
-          return 100;
         }
-        return prev + Math.random() * 12 + 3;
+        return next;
       });
     }, 80);
 
     return () => clearInterval(timer);
-  }, [onComplete]);
+  }, []);
+
+  useEffect(() => {
+    if (progress < 100 || completedRef.current) return;
+
+    completedRef.current = true;
+    const timer = setTimeout(() => onCompleteRef.current(), 350);
+    return () => clearTimeout(timer);
+  }, [progress]);
 
   useEffect(() => {
     if (progress > 30) setPhase(1);

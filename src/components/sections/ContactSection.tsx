@@ -2,14 +2,29 @@
 
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Mail, MessageCircle, Send, Sparkles, Loader2, ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  BriefcaseBusiness,
+  Building2,
+  CheckCircle2,
+  GraduationCap,
+  Github,
+  Handshake,
+  Linkedin,
+  Mail,
+  MessageCircle,
+  MessageSquare,
+  Mic2,
+  Sparkles,
+  Loader2,
+  Wrench,
+} from "lucide-react";
 import { CONTACT, PERSONAL } from "@/lib/data";
 import { analyzeMessage, generateSubject, generateWhatsAppUrl, generateMailtoUrl, cn } from "@/lib/utils";
 
 type MessageAnalysis = {
   category: string;
   urgency: string;
-  emoji: string;
 };
 
 const URGENCY_COLORS: Record<string, string> = {
@@ -17,6 +32,16 @@ const URGENCY_COLORS: Record<string, string> = {
   Medium: "text-yellow-400 bg-yellow-500/10 border-yellow-500/20",
   Low: "text-green-400 bg-green-500/10 border-green-500/20",
 };
+
+const CATEGORY_ICONS = {
+  "General Inquiry": MessageSquare,
+  "Job Opportunity": BriefcaseBusiness,
+  "Freelance / Project": Wrench,
+  Collaboration: Handshake,
+  Mentorship: GraduationCap,
+  Speaking: Mic2,
+  Business: Building2,
+} as const;
 
 export function ContactSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -176,7 +201,10 @@ export function ContactSection() {
                                 <div>
                                   <span className="text-xs text-muted block mb-1">Category Detected</span>
                                   <div className="flex items-center gap-2">
-                                    <span className="text-lg">{analysis.emoji}</span>
+                                    {(() => {
+                                      const Icon = CATEGORY_ICONS[analysis.category as keyof typeof CATEGORY_ICONS] ?? MessageSquare;
+                                      return <Icon size={16} className="text-accent-blue" />;
+                                    })()}
                                     <span className="text-sm font-semibold text-primary">{analysis.category}</span>
                                   </div>
                                 </div>
@@ -244,7 +272,7 @@ export function ContactSection() {
                     </div>
                     <div className="flex flex-wrap gap-2">
                       <span className="tech-badge">
-                        {analysis.emoji} {analysis.category}
+                        {analysis.category}
                       </span>
                       <span className={cn("tech-badge border", URGENCY_COLORS[analysis.urgency])}>
                         {analysis.urgency} Priority
@@ -321,9 +349,9 @@ export function ContactSection() {
                   <motion.div
                     animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.2, 1] }}
                     transition={{ duration: 0.6 }}
-                    className="text-6xl"
+                    className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-green-500/20 bg-green-500/10 text-green-400"
                   >
-                    🎉
+                    <CheckCircle2 size={34} />
                   </motion.div>
                   <div>
                     <h3 className="text-2xl font-bold text-primary mb-2">Message Sent!</h3>
@@ -345,9 +373,9 @@ export function ContactSection() {
             className="flex flex-wrap justify-center gap-4"
           >
             {[
-              { label: "LinkedIn", href: CONTACT.linkedin, icon: "in" },
-              { label: "GitHub", href: PERSONAL.github, icon: "gh" },
-              { label: "Email", href: `mailto:${CONTACT.email}`, icon: "@" },
+              { label: "LinkedIn", href: CONTACT.linkedin, icon: Linkedin },
+              { label: "GitHub", href: PERSONAL.github, icon: Github },
+              { label: "Email", href: `mailto:${CONTACT.email}`, icon: Mail },
             ].map((link) => (
               <a
                 key={link.label}
@@ -357,7 +385,7 @@ export function ContactSection() {
                 className="glass rounded-xl px-5 py-3 border border-border-subtle hover:border-border-default flex items-center gap-2 text-secondary hover:text-primary transition-all"
                 data-cursor-label={link.label}
               >
-                <span className="font-mono text-accent-blue text-sm font-bold">[{link.icon}]</span>
+                <link.icon size={16} className="text-accent-blue" aria-hidden="true" />
                 <span className="text-sm">{link.label}</span>
               </a>
             ))}

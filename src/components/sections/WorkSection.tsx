@@ -3,7 +3,17 @@
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { ArrowUpRight, ExternalLink } from "lucide-react";
+import {
+  ArrowUpRight,
+  BriefcaseBusiness,
+  Check,
+  ExternalLink,
+  Leaf,
+  Link2,
+  type LucideIcon,
+  Recycle,
+  UtensilsCrossed,
+} from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { PROJECTS } from "@/lib/data";
 import { cn } from "@/lib/utils";
@@ -15,11 +25,11 @@ const PROJECT_GRADIENT: Record<string, string> = {
   "tiny-link": "from-cyan-500/20 via-blue-500/10 to-transparent",
 };
 
-const PROJECT_ICONS: Record<string, string> = {
-  trashium: "♻️",
-  vetanflow: "💼",
-  restaurantpos: "🍽️",
-  "tiny-link": "🔗",
+const PROJECT_ICONS: Record<string, LucideIcon> = {
+  trashium: Recycle,
+  vetanflow: BriefcaseBusiness,
+  restaurantpos: UtensilsCrossed,
+  "tiny-link": Link2,
 };
 
 export function WorkSection() {
@@ -98,6 +108,7 @@ export function WorkSection() {
 
 function TrashiumHeroCard() {
   const trashium = PROJECTS.find((p) => p.id === "trashium")!;
+  const ProjectIcon = PROJECT_ICONS[trashium.id];
 
   return (
     <Link href={`/work/${trashium.id}`} className="group block">
@@ -119,7 +130,9 @@ function TrashiumHeroCard() {
           {/* Left */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <span className="text-3xl">{PROJECT_ICONS[trashium.id]}</span>
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10 text-emerald-400">
+                <ProjectIcon size={22} />
+              </span>
               <div>
                 <div className="flex items-center gap-2">
                   <span className="section-label text-xs">Flagship Project</span>
@@ -142,7 +155,7 @@ function TrashiumHeroCard() {
             <div className="space-y-2">
               {trashium.highlights.slice(0, 3).map((h, i) => (
                 <div key={i} className="flex items-start gap-2">
-                  <span className="text-emerald-400 mt-0.5 flex-shrink-0">✓</span>
+                  <Check size={15} className="mt-0.5 flex-shrink-0 text-emerald-400" />
                   <span className="text-secondary text-sm">{h}</span>
                 </div>
               ))}
@@ -211,7 +224,7 @@ function TrashiumHeroCard() {
 
               {/* Eco tier badge */}
               <div className="flex items-center gap-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                <span className="text-2xl">🌿</span>
+                <Leaf size={24} className="text-emerald-400" />
                 <div>
                   <p className="text-xs text-emerald-400 font-semibold">Eco Level 12</p>
                   <p className="text-xs text-muted">Forest Guardian</p>
@@ -255,6 +268,8 @@ function ProjectCard({
   onHover: () => void;
   onLeave: () => void;
 }) {
+  const ProjectIcon = PROJECT_ICONS[project.id] ?? Link2;
+
   return (
     <Link href={`/work/${project.id}`} className="group block h-full">
       <motion.div
@@ -276,7 +291,9 @@ function ProjectCard({
           {/* Header */}
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-3">
-              <span className="text-2xl">{PROJECT_ICONS[project.id]}</span>
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-border-subtle bg-white/5 text-accent-blue">
+                <ProjectIcon size={19} />
+              </span>
               <div>
                 <span className={cn(
                   "text-xs px-2 py-0.5 rounded-full font-semibold",

@@ -5,6 +5,7 @@ import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { PERSONAL, SKILLS } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import { GraduationCap } from "lucide-react";
 
 const SKILL_CATEGORIES = [
   { key: "language", label: "Languages" },
@@ -137,7 +138,7 @@ export function AboutSection() {
                 <div className="glass-card p-6">
                   <div className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-lg flex-shrink-0">
-                      🎓
+                      <GraduationCap size={20} />
                     </div>
                     <div>
                       <p className="font-semibold text-primary">{PERSONAL.education.degree}</p>
@@ -153,7 +154,7 @@ export function AboutSection() {
 
               {/* Languages spoken */}
               <motion.div variants={itemVariants} className="flex flex-wrap gap-2">
-                {["🇬🇧 English", "🇮🇳 Hindi", "🇧🇩 Bengali"].map((lang) => (
+                {["English", "Hindi", "Bengali"].map((lang) => (
                   <span key={lang} className="tech-badge">{lang}</span>
                 ))}
               </motion.div>

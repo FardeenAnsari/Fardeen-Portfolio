@@ -55,32 +55,24 @@ export function generateMailtoUrl(
 export function analyzeMessage(message: string): {
   category: string;
   urgency: string;
-  emoji: string;
 } {
   const lower = message.toLowerCase();
 
   // Category detection
   let category = "General Inquiry";
-  let emoji = "💬";
 
   if (lower.includes("job") || lower.includes("hire") || lower.includes("position") || lower.includes("role") || lower.includes("opportunity")) {
     category = "Job Opportunity";
-    emoji = "💼";
   } else if (lower.includes("freelance") || lower.includes("project") || lower.includes("build") || lower.includes("develop") || lower.includes("contract")) {
     category = "Freelance / Project";
-    emoji = "🛠️";
   } else if (lower.includes("collaborate") || lower.includes("partner") || lower.includes("team") || lower.includes("together")) {
     category = "Collaboration";
-    emoji = "🤝";
   } else if (lower.includes("mentor") || lower.includes("advice") || lower.includes("guidance") || lower.includes("learn")) {
     category = "Mentorship";
-    emoji = "🎓";
   } else if (lower.includes("speak") || lower.includes("event") || lower.includes("talk") || lower.includes("presentation")) {
     category = "Speaking";
-    emoji = "🎙️";
   } else if (lower.includes("business") || lower.includes("company") || lower.includes("enterprise") || lower.includes("startup")) {
     category = "Business";
-    emoji = "🏢";
   }
 
   // Urgency detection
@@ -91,7 +83,7 @@ export function analyzeMessage(message: string): {
     urgency = "Low";
   }
 
-  return { category, urgency, emoji };
+  return { category, urgency };
 }
 
 export function generateSubject(message: string, category: string): string {

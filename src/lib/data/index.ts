@@ -221,21 +221,18 @@ export const TIMELINE = [
     title: "Class X — WBBSE",
     description: "Completed secondary education with 69.0%",
     category: "education",
-    icon: "📚",
   },
   {
     year: "2022",
     title: "Class XII — WBCHSE",
     description: "Completed higher secondary with 77.2%. Enrolled in B.Tech CSE at SKFGI.",
     category: "education",
-    icon: "🎓",
   },
   {
     year: "2023",
     title: "Smart India Hackathon — National Grand Finalist",
     description: "Selected for SIH 2023 Grand Finale. Developed a full-stack platform to route civic issues to government authorities, demonstrating end-to-end system design.",
     category: "achievement",
-    icon: "🏆",
     highlight: true,
     certificate: "/images/certificates/sih2023.jpeg",
     event: "SIH 2023",
@@ -246,7 +243,6 @@ export const TIMELINE = [
     title: "ESIoT Internship — Jadavpur University",
     description: "Summer intern at Jadavpur University. Worked on IoT system design, FPGA/Verilog, Arduino, and software development workflows. Participated in technical presentations. Awarded Grade A.",
     category: "experience",
-    icon: "💼",
     highlight: true,
     certificate: "/images/certificates/esiot.jpeg",
   },
@@ -255,7 +251,6 @@ export const TIMELINE = [
     title: "NGP-DST Geo Innovation Challenge",
     description: "Presented FRAMS — Flood Risk Management & Early Warning System at the National Innovation Challenge hosted by NIH Roorkee. A geospatial solution for water resource management addressing SDG 6.",
     category: "achievement",
-    icon: "🌊",
     highlight: true,
     certificate: "/images/certificates/gic-cert.jpg",
     event: "GIC 2024",
@@ -267,7 +262,6 @@ export const TIMELINE = [
     title: "RTET 2024 — International Seminar Presenter",
     description: "Presented a research framework on NLP model evaluation (BERT Model with Fuzzification for Sentiment Analysis) at an international seminar on Recent Trends in Emerging Technologies.",
     category: "achievement",
-    icon: "🔬",
     certificate: "/images/certificates/rtet2024.png",
     event: "RTET 2024",
   },
@@ -276,7 +270,6 @@ export const TIMELINE = [
     title: "Smart India Hackathon 2024",
     description: "Team: The 501 Solutionists. Developed a Real-Time Disaster Information Aggregation platform with automated data gathering, heat maps, and live video feed integration.",
     category: "achievement",
-    icon: "🚨",
     event: "SIH 2024",
   },
   {
@@ -284,7 +277,6 @@ export const TIMELINE = [
     title: "ICDMAI 2025",
     description: "Presented research at the International Conference on Data Management and Artificial Intelligence (ICDMAI 2025).",
     category: "achievement",
-    icon: "🤖",
     event: "ICDMAI 2025",
   },
   {
@@ -292,7 +284,6 @@ export const TIMELINE = [
     title: "Smart India Hackathon 2025",
     description: "Team: CodEXplorers. Participated in SIH 2025 with a solution for KMRL (Kochi Metro Rail Limited) — advancing transit optimization with data-driven approaches.",
     category: "achievement",
-    icon: "🚇",
     event: "SIH 2025",
   },
   {
@@ -300,7 +291,6 @@ export const TIMELINE = [
     title: "Trashium — Final Year Project Launch",
     description: "Led development of Trashium — an incentivized waste-management platform. Engineered ML pricing, gamification, and route optimization. Live at trashium.com.",
     category: "project",
-    icon: "♻️",
     highlight: true,
   },
   {
@@ -308,7 +298,6 @@ export const TIMELINE = [
     title: "B.Tech Graduation (Expected)",
     description: "Completing B.Tech Computer Science & Engineering at SKFGI — CGPA: 7.35",
     category: "education",
-    icon: "🎓",
   },
 ];
 
@@ -321,7 +310,6 @@ export const ACHIEVEMENTS = [
     year: "2023",
     level: "National",
     category: "Hackathon",
-    icon: "🏆",
     color: "from-yellow-500 to-orange-500",
     certificate: "/images/certificates/sih2023.jpeg",
     highlight: true,
@@ -334,7 +322,6 @@ export const ACHIEVEMENTS = [
     year: "2024",
     level: "National",
     category: "Innovation Challenge",
-    icon: "🌊",
     color: "from-blue-500 to-cyan-500",
     certificate: "/images/certificates/gic-cert.jpg",
     gallery: ["/images/events/gic-group.jpg", "/images/events/gic-fardeen.jpg", "/images/events/gic-1.jpg", "/images/events/gic-3.jpg"],
@@ -348,7 +335,6 @@ export const ACHIEVEMENTS = [
     year: "2024",
     level: "University",
     category: "Internship",
-    icon: "💡",
     color: "from-green-500 to-teal-500",
     certificate: "/images/certificates/esiot.jpeg",
     highlight: true,
@@ -361,7 +347,6 @@ export const ACHIEVEMENTS = [
     year: "2024",
     level: "International",
     category: "Research",
-    icon: "🔬",
     color: "from-purple-500 to-pink-500",
     certificate: "/images/certificates/rtet2024.png",
   },
@@ -373,7 +358,6 @@ export const ACHIEVEMENTS = [
     year: "2024",
     level: "National",
     category: "Hackathon",
-    icon: "🚨",
     color: "from-red-500 to-orange-500",
   },
   {
@@ -384,7 +368,6 @@ export const ACHIEVEMENTS = [
     year: "2025",
     level: "International",
     category: "Conference",
-    icon: "🤖",
     color: "from-indigo-500 to-blue-500",
   },
   {
@@ -395,7 +378,6 @@ export const ACHIEVEMENTS = [
     year: "2025",
     level: "National",
     category: "Hackathon",
-    icon: "🚇",
     color: "from-cyan-500 to-blue-500",
   },
   {
@@ -406,7 +388,6 @@ export const ACHIEVEMENTS = [
     year: "2024",
     level: "Inter-college",
     category: "Competition",
-    icon: "⭐",
     color: "from-yellow-500 to-amber-500",
   },
   {
@@ -417,7 +398,6 @@ export const ACHIEVEMENTS = [
     year: "2024",
     level: "Inter-college",
     category: "Hackathon",
-    icon: "💻",
     color: "from-violet-500 to-purple-500",
   },
 ];

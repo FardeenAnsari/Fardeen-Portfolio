@@ -5,6 +5,7 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { TIMELINE } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { Star } from "lucide-react";
 
 const CATEGORY_STYLES: Record<string, { color: string; bg: string; label: string }> = {
   education: { color: "text-blue-400", bg: "bg-blue-500/10 border-blue-500/20", label: "Education" },
@@ -90,8 +91,9 @@ export function JourneySection() {
                           </span>
                           <span className="text-xs text-muted font-mono">{item.year}</span>
                           {item.highlight && (
-                            <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 font-semibold">
-                              ★ Highlight
+                            <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 font-semibold">
+                              <Star size={11} fill="currentColor" />
+                              Highlight
                             </span>
                           )}
                         </div>
@@ -158,7 +160,7 @@ export function JourneySection() {
 
                     {/* Year label — mobile */}
                     <div className="absolute left-12 top-5 md:hidden">
-                      <span className="text-xs text-muted font-mono">{item.icon} {item.year}</span>
+                      <span className="text-xs text-muted font-mono">{item.year}</span>
                     </div>
                   </motion.div>
                 );
