@@ -21,7 +21,7 @@ export default function BlogPage() {
       {/* Brown vignette/burn edges */}
       <div className="fixed inset-0 bg-gradient-to-br from-[#4B2E2B]/10 via-transparent to-[#4B2E2B]/20 pointer-events-none z-0" />
       
-      <div className="container-portfolio max-w-4xl mx-auto space-y-12 pt-32 pb-24 relative z-10 flex flex-col items-center text-center">
+      <div className="container-portfolio max-w-5xl mx-auto space-y-12 pt-16 md:pt-32 pb-24 px-6 md:px-12 lg:pl-32 xl:pl-12 relative z-10 flex flex-col items-center text-center">
         {/* Header */}
         <div className="space-y-4">
           <span className="px-3 py-1 text-xs font-bold uppercase tracking-widest text-[#FFF8F0] bg-[#4B2E2B] rounded-sm">Writing</span>

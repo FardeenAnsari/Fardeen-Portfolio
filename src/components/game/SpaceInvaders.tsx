@@ -112,7 +112,8 @@ export function SpaceInvaders() {
       const ab = alienBullets.current[i];
       const p = player.current;
       if (ab.x > p.x && ab.x < p.x + p.width && ab.y > p.y && ab.y < p.y + p.height) {
-        createExplosion(p.x + p.width / 2, p.y + p.height / 2, "#4B2E2B");
+        const isDark = document.documentElement.classList.contains("dark");
+        createExplosion(p.x + p.width / 2, p.y + p.height / 2, isDark ? "#FFF8F0" : "#4B2E2B");
         setGameState("gameover");
       }
     }
@@ -181,12 +182,16 @@ export function SpaceInvaders() {
   }, [gameState, createExplosion]);
 
   const draw = useCallback((ctx: CanvasRenderingContext2D) => {
-    ctx.fillStyle = "#FFF8F0"; 
+    const isDark = document.documentElement.classList.contains("dark");
+    const bgColor = isDark ? "#2A1B14" : "#FFF8F0";
+    const playerColor = isDark ? "#FFF8F0" : "#4B2E2B";
+    
+    ctx.fillStyle = bgColor; 
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
     if (gameState !== "playing") return;
 
-    ctx.fillStyle = "#4B2E2B";
+    ctx.fillStyle = playerColor;
     ctx.beginPath();
     ctx.moveTo(player.current.x + PLAYER_WIDTH / 2, player.current.y);
     ctx.lineTo(player.current.x + PLAYER_WIDTH, player.current.y + PLAYER_HEIGHT);
@@ -197,7 +202,7 @@ export function SpaceInvaders() {
       if (!a.alive) return;
       ctx.fillStyle = "#C08552";
       ctx.fillRect(a.x, a.y, a.width, a.height);
-      ctx.fillStyle = "#FFF8F0";
+      ctx.fillStyle = bgColor;
       ctx.fillRect(a.x + 6, a.y + 4, 4, 4);
       ctx.fillRect(a.x + a.width - 10, a.y + 4, 4, 4);
     });
