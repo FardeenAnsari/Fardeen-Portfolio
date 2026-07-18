@@ -239,7 +239,7 @@ function TrashiumHeroCard() {
             <motion.div
               animate={{ y: [0, -6, 0] }}
               transition={{ duration: 3, repeat: Infinity }}
-              className="absolute -top-4 -right-4 glass rounded-xl px-3 py-2 border border-border-subtle"
+              className="absolute -bottom-6 right-4 glass rounded-xl px-3 py-2 border border-border-subtle"
             >
               <span className="text-xs font-mono text-accent-blue">ML Pricing Engine</span>
             </motion.div>

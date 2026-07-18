@@ -204,7 +204,7 @@ export function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2, duration: 0.6 }}
-          className="absolute bottom-8 left-8 hidden flex-col items-center gap-2 lg:flex"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden flex-col items-center gap-2 lg:flex"
         >
           <span className="text-xs text-muted font-mono tracking-widest uppercase">Scroll</span>
           <motion.div

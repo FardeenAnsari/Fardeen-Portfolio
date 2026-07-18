@@ -5,6 +5,7 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/lib/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
@@ -44,18 +45,7 @@ module.exports = {
         // Light theme palette
         'electric-blue-light': '#C08552',
         'aurora-purple-light': '#8C5A3C',
-        // Override default colors to STRICTLY enforce palette
-        blue: { 400: '#C08552', 500: '#C08552', 600: '#C08552' },
-        green: { 400: '#8C5A3C', 500: '#8C5A3C', 600: '#8C5A3C' },
-        emerald: { 400: '#8C5A3C', 500: '#8C5A3C', 600: '#8C5A3C' },
-        purple: { 400: '#C08552', 500: '#C08552', 600: '#C08552' },
-        yellow: { 400: '#C08552', 500: '#C08552', 600: '#C08552' },
-        orange: { 400: '#8C5A3C', 500: '#8C5A3C', 600: '#8C5A3C' },
-        amber: { 400: '#C08552', 500: '#C08552', 600: '#C08552' },
-        indigo: { 400: '#8C5A3C', 500: '#8C5A3C', 600: '#8C5A3C' },
-        teal: { 400: '#C08552', 500: '#C08552', 600: '#C08552' },
-        cyan: { 400: '#8C5A3C', 500: '#8C5A3C', 600: '#8C5A3C' },
-        pink: { 400: '#C08552', 500: '#C08552', 600: '#C08552' },
+
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
