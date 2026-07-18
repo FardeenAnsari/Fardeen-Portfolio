@@ -146,7 +146,7 @@ export function JourneySection() {
                             className="mt-4"
                           >
                             <div
-                              className="relative h-40 rounded-xl overflow-hidden border border-border-subtle cursor-pointer hover:opacity-80 transition-opacity"
+                              className="relative w-full rounded-xl overflow-hidden border border-border-subtle cursor-pointer hover:opacity-80 transition-opacity bg-surface-mid/30"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setPreviewImage(item.certificate!);
@@ -155,9 +155,10 @@ export function JourneySection() {
                               <Image
                                 src={item.certificate}
                                 alt={`${item.title} certificate`}
-                                fill
-                                className="object-contain"
-                                sizes="400px"
+                                width={600}
+                                height={450}
+                                className="w-full h-auto object-contain"
+                                sizes="(max-width: 768px) 100vw, 400px"
                               />
                             </div>
                           </motion.div>

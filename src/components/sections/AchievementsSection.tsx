@@ -261,13 +261,14 @@ function AchievementModal({
         {achievement.certificate && (
           <div className="space-y-3">
             <h3 className="font-semibold text-primary">Certificate</h3>
-            <div className="relative aspect-video rounded-2xl overflow-hidden border border-border-default">
+            <div className="relative w-full rounded-2xl overflow-hidden border border-border-default">
               <Image
                 src={achievement.certificate}
                 alt={`${achievement.title} certificate`}
-                fill
-                className="object-contain bg-white/5"
-                sizes="600px"
+                width={800}
+                height={600}
+                className="w-full h-auto object-contain bg-white/5"
+                sizes="(max-width: 768px) 100vw, 600px"
               />
             </div>
           </div>
@@ -279,13 +280,14 @@ function AchievementModal({
             <h3 className="font-semibold text-primary">Event Gallery</h3>
             <div className="grid grid-cols-2 gap-3">
               {achievement.gallery.map((img, i) => (
-                <div key={i} className="relative aspect-video rounded-xl overflow-hidden border border-border-subtle">
+                <div key={i} className="relative w-full rounded-xl overflow-hidden border border-border-subtle bg-white/5">
                   <Image
                     src={img}
                     alt={`Event photo ${i + 1}`}
-                    fill
-                    className="object-contain"
-                    sizes="300px"
+                    width={400}
+                    height={300}
+                    className="w-full h-auto object-cover"
+                    sizes="(max-width: 768px) 50vw, 300px"
                   />
                 </div>
               ))}
