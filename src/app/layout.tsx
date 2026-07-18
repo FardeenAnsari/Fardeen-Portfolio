@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://fardeenansari.dev"),
   title: {
     default: "Fardeen Ansari — Full Stack Engineer & Product Builder",
     template: "%s | Fardeen Ansari",

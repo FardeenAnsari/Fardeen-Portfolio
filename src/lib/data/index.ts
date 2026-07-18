@@ -285,7 +285,6 @@ export const TIMELINE = [
     description: "Presented research at the International Conference on Data Management and Artificial Intelligence (ICDMAI 2025).",
     category: "achievement",
     icon: "🤖",
-    certificate: "/images/certificates/icdmai.jpeg",
     event: "ICDMAI 2025",
   },
   {
@@ -387,7 +386,6 @@ export const ACHIEVEMENTS = [
     category: "Conference",
     icon: "🤖",
     color: "from-indigo-500 to-blue-500",
-    certificate: "/images/certificates/icdmai.jpeg",
   },
   {
     id: "sih2025",
