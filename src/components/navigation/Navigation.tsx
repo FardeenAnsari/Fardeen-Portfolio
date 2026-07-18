@@ -66,6 +66,10 @@ export function Navigation() {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
+  if (pathname.startsWith("/blog")) {
+    return null;
+  }
+
   return (
     <>
       <motion.header

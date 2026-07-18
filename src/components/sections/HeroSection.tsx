@@ -170,19 +170,19 @@ export function HeroSection() {
                 />
                 
                 {/* Content overlaid */}
-                <div className="absolute inset-x-0 bottom-0 p-5 flex flex-col gap-1.5">
-                  <div className="flex items-center gap-1.5">
-                    <h3 className="text-lg font-bold text-white tracking-wide font-serif">Fardeen Ansari</h3>
-                    <BadgeCheck size={16} className="text-white fill-[#C08552]" />
+                <div className="absolute inset-x-0 bottom-0 p-5 flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1.5">
+                      <h3 className="text-lg font-bold text-white tracking-wide font-serif">Fardeen Ansari</h3>
+                      <BadgeCheck size={16} className="text-white fill-[#C08552]" />
+                    </div>
+                    <a href="#contact" className="bg-white text-[#2A1B14] px-3 py-1.5 rounded-full text-[10px] font-bold flex items-center gap-1 hover:bg-[#FFF8F0] transition-colors">
+                      Hire Me <ArrowUpRight size={10} />
+                    </a>
                   </div>
                   <p className="text-xs text-white/90 leading-relaxed font-sans">
                     A Full Stack Engineer focused on scalable systems & ML integration.
                   </p>
-                  <div className="flex justify-end mt-2">
-                    <a href="#contact" className="bg-white text-[#2A1B14] px-3 py-1.5 rounded-full text-xs font-bold flex items-center gap-1 hover:bg-[#FFF8F0] transition-colors">
-                      Hire Me <ArrowUpRight size={12} />
-                    </a>
-                  </div>
                 </div>
               </motion.div>
             </div>
@@ -206,19 +206,19 @@ export function HeroSection() {
               />
               
               {/* Content overlaid */}
-              <div className="absolute inset-x-0 bottom-0 p-7 flex flex-col gap-2">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-2xl font-bold text-white tracking-wide font-serif">Fardeen Ansari</h3>
-                  <BadgeCheck size={20} className="text-white fill-[#C08552]" />
+              <div className="absolute inset-x-0 bottom-0 p-7 flex flex-col gap-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-2xl font-bold text-white tracking-wide font-serif">Fardeen Ansari</h3>
+                    <BadgeCheck size={20} className="text-white fill-[#C08552]" />
+                  </div>
+                  <a href="#contact" className="bg-white text-[#2A1B14] px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1 hover:bg-[#FFF8F0] transition-colors shadow-lg">
+                    Hire Me <ArrowUpRight size={14} />
+                  </a>
                 </div>
                 <p className="text-sm text-white/90 leading-relaxed font-sans">
                   A Full Stack Engineer focused on scalable systems & ML integration.
                 </p>
-                <div className="flex justify-end mt-4">
-                  <a href="#contact" className="bg-white text-[#2A1B14] px-4 py-2 rounded-full text-sm font-bold flex items-center gap-1 hover:bg-[#FFF8F0] transition-colors shadow-lg">
-                    Hire Me <ArrowUpRight size={14} />
-                  </a>
-                </div>
               </div>
             </motion.div>
           </div>
