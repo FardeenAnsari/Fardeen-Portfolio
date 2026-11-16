@@ -180,7 +180,7 @@ export function ProjectPageClient({ project }: { project: Project }) {
                 <div className="flex items-center gap-3 mb-3">
                   <span className="text-2xl">{PROJECT_ICONS[rp.id]}</span>
                   <div>
-                    <h3 className="font-bold text-primary group-hover:text-gradient transition-all">{rp.title}</h3>
+                    <h3 className="font-bold text-primary group-hover:text-gradient transition-colors">{rp.title}</h3>
                     <p className="text-xs text-muted">{rp.subtitle}</p>
                   </div>
                 </div>

@@ -4,22 +4,22 @@ export const PERSONAL = {
   name: "Fardeen Ansari",
   title: "Full Stack Engineer",
   taglines: ["Full Stack Engineer", "Product Engineer", "AI Enthusiast", "IoT Developer", "System Designer"],
-  location: "Kolkata, West Bengal, India",
+  location: "Bengaluru, Karnataka, India",
   email: "imailfard@gmail.com",
   phone: "+91 91238 81320",
   linkedin: "https://linkedin.com/in/itsfardeen",
   github: "https://github.com/FardeenAnsari",
   portfolio: "https://fardeenansari.github.io/Fardeen-Portfolio/",
   whatsapp: "919123881320",
-  bio: "B.Tech Computer Science & Engineering student with strong foundations in Java, JavaScript, Python, OOP, and full-stack web development. I build scalable web applications, mobile interfaces, and database-driven solutions — bridging the gap between design and engineering with precision and craft.",
+  bio: "B.Tech Computer Science & Engineering graduate (July 2026, CGPA 7.52) with strong foundations in full-stack web development. I build scalable web applications, mobile interfaces, and database-driven systems — bridging the gap between design and engineering with precision and craft.",
   bio_short: "Engineer who builds products with craft.",
   education: {
     degree: "B.Tech, Computer Science & Engineering",
     institution: "Supreme Knowledge Foundation Group of Institutions (SKFGI)",
     university: "MAKAUT",
     period: "2022 – 2026",
-    cgpa: "7.35",
-    location: "Mankundu, West Bengal",
+    cgpa: "7.52",
+    location: "Mankundu, West Bengal (Graduated July 2026)",
   },
 } as const;
 
@@ -36,7 +36,6 @@ export const SKILLS = [
   { name: "React Native", category: "frontend", level: 80, icon: "SiReact", color: "#61DAFB" },
   { name: "Tailwind CSS", category: "frontend", level: 92, icon: "SiTailwindcss", color: "#06B6D4" },
   { name: "Framer Motion", category: "frontend", level: 78, icon: "SiFramer", color: "#0055FF" },
-  { name: "Flutter", category: "frontend", level: 65, icon: "SiFlutter", color: "#02569B" },
   // Backend
   { name: "Node.js", category: "backend", level: 88, icon: "SiNodedotjs", color: "#339933" },
   { name: "Express.js", category: "backend", level: 85, icon: "SiExpress", color: "#000000" },
@@ -45,7 +44,6 @@ export const SKILLS = [
   { name: "PostgreSQL", category: "database", level: 82, icon: "SiPostgresql", color: "#4169E1" },
   { name: "Supabase", category: "database", level: 85, icon: "SiSupabase", color: "#3ECF8E" },
   { name: "SQLite", category: "database", level: 80, icon: "SiSqlite", color: "#003B57" },
-  { name: "MongoDB", category: "database", level: 70, icon: "SiMongodb", color: "#47A248" },
   // Tools
   { name: "Git", category: "tool", level: 88, icon: "SiGit", color: "#F05032" },
   { name: "Docker", category: "tool", level: 70, icon: "SiDocker", color: "#2496ED" },
@@ -295,8 +293,8 @@ export const TIMELINE = [
   },
   {
     year: "2026",
-    title: "B.Tech Graduation (Expected)",
-    description: "Completing B.Tech Computer Science & Engineering at SKFGI — CGPA: 7.35",
+    title: "B.Tech Graduation",
+    description: "Completed B.Tech Computer Science & Engineering at SKFGI — CGPA: 7.52",
     category: "education",
   },
 ];
@@ -347,7 +345,7 @@ export const ACHIEVEMENTS = [
     year: "2024",
     level: "International",
     category: "Research",
-    color: "from-purple-500 to-pink-500",
+    color: "",
     certificate: "/images/certificates/rtet2024.png",
   },
   {
@@ -368,7 +366,7 @@ export const ACHIEVEMENTS = [
     year: "2025",
     level: "International",
     category: "Conference",
-    color: "from-indigo-500 to-blue-500",
+    color: "",
   },
   {
     id: "sih2025",
@@ -378,7 +376,7 @@ export const ACHIEVEMENTS = [
     year: "2025",
     level: "National",
     category: "Hackathon",
-    color: "from-cyan-500 to-blue-500",
+    color: "",
   },
   {
     id: "suprinova2024",
@@ -398,7 +396,7 @@ export const ACHIEVEMENTS = [
     year: "2024",
     level: "Inter-college",
     category: "Hackathon",
-    color: "from-violet-500 to-purple-500",
+    color: "",
   },
 ];
 

@@ -1,396 +1,263 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import {
-  ArrowRight,
-  BriefcaseBusiness,
-  Building2,
-  CheckCircle2,
-  GraduationCap,
-  Github,
-  Handshake,
-  Linkedin,
-  Mail,
-  MessageCircle,
-  MessageSquare,
-  Mic2,
-  Sparkles,
-  Loader2,
-  Wrench,
-} from "lucide-react";
-import { CONTACT, PERSONAL } from "@/lib/data";
-import { analyzeMessage, generateSubject, generateWhatsAppUrl, generateMailtoUrl, cn } from "@/lib/utils";
-
-type MessageAnalysis = {
-  category: string;
-  urgency: string;
-};
-
-const URGENCY_COLORS: Record<string, string> = {
-  High: "text-red-400 bg-red-500/10 border-red-500/20",
-  Medium: "text-yellow-400 bg-yellow-500/10 border-yellow-500/20",
-  Low: "text-green-400 bg-green-500/10 border-green-500/20",
-};
-
-const CATEGORY_ICONS = {
-  "General Inquiry": MessageSquare,
-  "Job Opportunity": BriefcaseBusiness,
-  "Freelance / Project": Wrench,
-  Collaboration: Handshake,
-  Mentorship: GraduationCap,
-  Speaking: Mic2,
-  Business: Building2,
-} as const;
+import { useState } from "react";
+import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { PERSONAL } from "@/lib/data";
 
 export function ContactSection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const [message, setMessage] = useState("");
-  const [name, setName] = useState("");
-  const [analysis, setAnalysis] = useState<MessageAnalysis | null>(null);
-  const [step, setStep] = useState<"compose" | "choose" | "done">("compose");
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  // Real-time analysis with debounce
-  useEffect(() => {
-    if (message.length < 20) {
-      setAnalysis(null);
-      return;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMessage("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to deliver message. Please reach out via email directly.");
+      }
+
+      setStatus("success");
+      setFormData({ name: "", email: "", phone: "", message: "" });
+    } catch (err: unknown) {
+      setStatus("error");
+      setErrorMessage(
+        err instanceof Error ? err.message : "Failed to send message. Please reach out directly at imailfard@gmail.com"
+      );
     }
-    const timer = setTimeout(() => {
-      setIsAnalyzing(true);
-      setTimeout(() => {
-        setAnalysis(analyzeMessage(message));
-        setIsAnalyzing(false);
-      }, 600);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [message]);
-
-  const handleAnalyze = () => {
-    if (!message.trim() || message.length < 10) return;
-    setIsAnalyzing(true);
-    setTimeout(() => {
-      setAnalysis(analyzeMessage(message));
-      setIsAnalyzing(false);
-      setStep("choose");
-    }, 800);
-  };
-
-  const handleEmail = () => {
-    const subject = analysis
-      ? generateSubject(message, analysis.category)
-      : `Hello from ${name || "your portfolio visitor"}`;
-
-    const body = `Hi Fardeen,\n\n${message}\n\n${name ? `Best regards,\n${name}` : ""}`;
-
-    window.location.href = generateMailtoUrl(CONTACT.email, subject, body);
-    setStep("done");
-  };
-
-  const handleWhatsApp = () => {
-    const greeting = name ? `Hi Fardeen, I'm ${name}.\n\n` : "Hi Fardeen,\n\n";
-    const fullMessage = `${greeting}${message}`;
-    window.open(generateWhatsAppUrl(CONTACT.whatsapp, fullMessage), "_blank");
-    setStep("done");
-  };
-
-  const reset = () => {
-    setMessage("");
-    setName("");
-    setAnalysis(null);
-    setStep("compose");
   };
 
   return (
-    <section
-      id="contact"
-      ref={ref}
-      className="section-padding relative"
-      aria-label="Contact section"
-    >
-      <div className="container-portfolio">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6 }}
-          className="max-w-3xl mx-auto space-y-16"
-        >
-          {/* Header */}
-          <div className="text-center space-y-4">
-            <span className="section-label mx-auto">Let&apos;s Connect</span>
-            <h2 className="text-4xl lg:text-5xl font-bold mt-4">
-              Have something in{" "}
-              <span className="font-serif italic text-gradient">mind?</span>
+    <section id="contact" className="section border-t border-[var(--color-rule)]" aria-label="Contact Information">
+      <div className="container">
+        
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12 lg:mb-16">
+          <div className="space-y-3">
+            <div className="section-label">Direct Communication</div>
+            <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-[var(--color-ink)]">
+              Get in Touch
             </h2>
-            <p className="text-secondary max-w-xl mx-auto">
-              Whether it&apos;s a job opportunity, collaboration, or just a hello — I&apos;d love to hear from you.
-              Type your message and I&apos;ll help you send it the best way.
-            </p>
+          </div>
+          <p className="text-sm sm:text-base text-[var(--color-ink-2)] max-w-[42ch]">
+            Open to full-time Software Engineer, Frontend Engineer, and Full-Stack roles.
+          </p>
+        </div>
+
+        {/* Split Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          
+          {/* Left Column: Direct Contact Facts */}
+          <div className="lg:col-span-5 space-y-8">
+            <div className="space-y-4">
+              <h3 className="text-2xl font-bold text-[var(--color-ink)] font-display">
+                Start a Conversation
+              </h3>
+              <p className="text-sm text-[var(--color-ink-2)] leading-relaxed">
+                Whether discussing an engineering role, technical consultation, or architectural challenge, 
+                I respond promptly. Feel free to connect via direct email or form submission.
+              </p>
+            </div>
+
+            <div className="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)] font-mono text-sm">
+              
+              <div className="py-4 flex items-center justify-between">
+                <span className="text-xs text-[var(--color-ink-3)] uppercase">Email</span>
+                <a
+                  href={`mailto:${PERSONAL.email}`}
+                  className="text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors underline underline-offset-4"
+                >
+                  {PERSONAL.email}
+                </a>
+              </div>
+
+              <div className="py-4 flex items-center justify-between">
+                <span className="text-xs text-[var(--color-ink-3)] uppercase">Phone</span>
+                <a
+                  href={`tel:${PERSONAL.phone.replace(/\s+/g, "")}`}
+                  className="text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors"
+                >
+                  {PERSONAL.phone}
+                </a>
+              </div>
+
+              <div className="py-4 flex items-center justify-between">
+                <span className="text-xs text-[var(--color-ink-3)] uppercase">Location</span>
+                <span className="text-[var(--color-ink)]">Bengaluru, Karnataka, IN</span>
+              </div>
+
+              <div className="py-4 flex items-center justify-between">
+                <span className="text-xs text-[var(--color-ink-3)] uppercase">Profiles</span>
+                <div className="flex items-center gap-3">
+                  <a
+                    href={PERSONAL.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-ink-2)] hover:text-[var(--color-ink)] transition-colors"
+                    aria-label="GitHub Profile"
+                  >
+                    <FaGithub size={16} />
+                  </a>
+                  <a
+                    href={PERSONAL.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-ink-2)] hover:text-[var(--color-ink)] transition-colors"
+                    aria-label="LinkedIn Profile"
+                  >
+                    <FaLinkedinIn size={16} />
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            <div className="rounded-xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-5 text-xs text-[var(--color-ink-3)] font-mono space-y-1">
+              <div className="text-[var(--color-ink-2)] font-semibold">RESPONSE SLA:</div>
+              <p>Typically replies within 24 hours for verified recruitment inquiries.</p>
+            </div>
           </div>
 
-          {/* Contact interface */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.7 }}
-          >
-            <AnimatePresence mode="wait">
-              {step === "compose" && (
-                <motion.div
-                  key="compose"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="space-y-4"
-                >
-                  <div className="glass-card p-8 space-y-6 border border-border-subtle">
-                    {/* Name input */}
+          {/* Right Column: High-Integrity Minimalist Form */}
+          <div className="lg:col-span-7">
+            <div className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 sm:p-10">
+              
+              <form onSubmit={handleSubmit} className="space-y-6">
+                
+                {/* Name */}
+                <div className="space-y-2">
+                  <label htmlFor="name" className="block text-xs font-mono uppercase text-[var(--color-ink-2)]">
+                    Full Name <span className="text-[var(--color-accent)]">*</span>
+                  </label>
+                  <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="e.g. Alex Chen"
+                    className="w-full px-4 py-3 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-3)] text-sm text-[var(--color-ink)] placeholder-[var(--color-ink-3)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
+                  />
+                </div>
+
+                {/* Email & Phone grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label htmlFor="email" className="block text-xs font-mono uppercase text-[var(--color-ink-2)]">
+                      Email Address <span className="text-[var(--color-accent)]">*</span>
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="alex@example.com"
+                      className="w-full px-4 py-3 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-3)] text-sm text-[var(--color-ink)] placeholder-[var(--color-ink-3)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label htmlFor="phone" className="block text-xs font-mono uppercase text-[var(--color-ink-2)]">
+                      Phone Number (Optional)
+                    </label>
+                    <input
+                      id="phone"
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="+91 90000 00000"
+                      className="w-full px-4 py-3 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-3)] text-sm text-[var(--color-ink)] placeholder-[var(--color-ink-3)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
+                    />
+                  </div>
+                </div>
+
+                {/* Message */}
+                <div className="space-y-2">
+                  <label htmlFor="message" className="block text-xs font-mono uppercase text-[var(--color-ink-2)]">
+                    Message Details <span className="text-[var(--color-accent)]">*</span>
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows={5}
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Describe the role, project, or collaboration opportunity..."
+                    className="w-full px-4 py-3 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-3)] text-sm text-[var(--color-ink)] placeholder-[var(--color-ink-3)] focus:border-[var(--color-accent)] focus:outline-none transition-colors resize-none"
+                  />
+                </div>
+
+                {/* Status Banners */}
+                {status === "success" && (
+                  <div className="flex items-start gap-3 p-4 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-sm">
+                    <CheckCircle2 size={18} className="flex-shrink-0 mt-0.5" />
                     <div>
-                      <label className="text-sm text-secondary mb-2 block font-medium">
-                        Your name (optional)
-                      </label>
-                      <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="John Smith"
-                        className="w-full glass rounded-xl px-4 py-3 border border-border-subtle focus:border-accent-blue/50 text-primary placeholder-muted outline-none transition-colors bg-transparent font-sans"
-                      />
+                      <p className="font-semibold">Message delivered successfully.</p>
+                      <p className="text-xs text-emerald-400/80">Thank you for reaching out. I will get back to you shortly.</p>
                     </div>
+                  </div>
+                )}
 
-                    {/* Message textarea */}
+                {status === "error" && (
+                  <div className="flex items-start gap-3 p-4 rounded-lg border border-amber-500/30 bg-amber-500/10 text-amber-300 text-sm">
+                    <AlertCircle size={18} className="flex-shrink-0 mt-0.5" />
                     <div>
-                      <label className="text-sm text-secondary mb-2 block font-medium">
-                        Your message
-                      </label>
-                      <textarea
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        placeholder="Hi Fardeen! I came across your portfolio and would love to discuss..."
-                        rows={6}
-                        className="w-full glass rounded-xl px-4 py-3 border border-border-subtle focus:border-accent-blue/50 text-primary placeholder-muted outline-none transition-colors bg-transparent font-sans resize-none leading-relaxed"
-                      />
-                      <div className="flex justify-between mt-1">
-                        <span className="text-xs text-muted">
-                          {message.length < 20 ? "Keep typing to analyze your message..." : ""}
-                        </span>
-                        <span className="text-xs text-muted font-mono">{message.length} chars</span>
-                      </div>
+                      <p className="font-semibold">Unable to dispatch message via server.</p>
+                      <p className="text-xs text-amber-300/80">{errorMessage}</p>
                     </div>
-
-                    {/* AI Analysis panel */}
-                    <AnimatePresence>
-                      {(analysis || isAnalyzing) && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="glass rounded-xl p-4 border border-accent-blue/20 bg-accent-blue/5">
-                            <div className="flex items-center gap-2 mb-3">
-                              <Sparkles size={14} className="text-accent-blue" />
-                              <span className="text-xs font-semibold text-accent-blue">AI Message Analysis</span>
-                              {isAnalyzing && <Loader2 size={12} className="animate-spin text-accent-blue" />}
-                            </div>
-
-                            {analysis && !isAnalyzing && (
-                              <div className="grid grid-cols-2 gap-3">
-                                <div>
-                                  <span className="text-xs text-muted block mb-1">Category Detected</span>
-                                  <div className="flex items-center gap-2">
-                                    {(() => {
-                                      const Icon = CATEGORY_ICONS[analysis.category as keyof typeof CATEGORY_ICONS] ?? MessageSquare;
-                                      return <Icon size={16} className="text-accent-blue" />;
-                                    })()}
-                                    <span className="text-sm font-semibold text-primary">{analysis.category}</span>
-                                  </div>
-                                </div>
-                                <div>
-                                  <span className="text-xs text-muted block mb-1">Urgency</span>
-                                  <span className={cn("text-xs font-semibold px-2 py-1 rounded-full border", URGENCY_COLORS[analysis.urgency])}>
-                                    {analysis.urgency}
-                                  </span>
-                                </div>
-                              </div>
-                            )}
-
-                            {isAnalyzing && (
-                              <div className="flex items-center gap-2 text-secondary text-sm">
-                                <span>Analyzing message intent...</span>
-                              </div>
-                            )}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
-                    {/* Send button */}
-                    <motion.button
-                      onClick={handleAnalyze}
-                      disabled={message.trim().length < 10}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full btn-primary flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
-                    >
-                      {isAnalyzing ? (
-                        <>
-                          <Loader2 size={16} className="animate-spin" />
-                          Analyzing...
-                        </>
-                      ) : (
-                        <>
-                          Continue
-                          <ArrowRight size={16} />
-                        </>
-                      )}
-                    </motion.button>
                   </div>
-                </motion.div>
-              )}
+                )}
 
-              {step === "choose" && analysis && (
-                <motion.div
-                  key="choose"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="space-y-6"
+                {/* Submit button */}
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="btn-primary w-full py-3.5 flex items-center justify-center gap-2"
                 >
-                  {/* Message preview */}
-                  <div className="glass-card p-6 border border-border-subtle space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-semibold text-primary">Message Preview</span>
-                      <button onClick={() => setStep("compose")} className="text-xs text-accent-blue hover:underline">
-                        Edit
-                      </button>
-                    </div>
-                    <div className="glass rounded-xl p-4 border border-border-subtle">
-                      <p className="text-secondary text-sm leading-relaxed line-clamp-3">{message}</p>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="tech-badge">
-                        {analysis.category}
-                      </span>
-                      <span className={cn("tech-badge border", URGENCY_COLORS[analysis.urgency])}>
-                        {analysis.urgency} Priority
-                      </span>
-                      {name && <span className="tech-badge">From: {name}</span>}
-                    </div>
-                  </div>
+                  {status === "loading" ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin" />
+                      <span>Transmitting...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Transmit Message</span>
+                      <Send size={15} />
+                    </>
+                  )}
+                </button>
 
-                  {/* Subject preview */}
-                  <div className="glass rounded-xl p-4 border border-accent-blue/20 bg-accent-blue/5">
-                    <span className="text-xs text-muted block mb-1">Suggested email subject:</span>
-                    <span className="text-sm text-primary font-medium">
-                      &ldquo;{generateSubject(message, analysis.category)}&rdquo;
-                    </span>
-                  </div>
+              </form>
 
-                  <p className="text-center text-secondary text-sm">How would you like to send this?</p>
+            </div>
+          </div>
 
-                  {/* Channel options */}
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {/* Email */}
-                    <motion.button
-                      onClick={handleEmail}
-                      whileHover={{ scale: 1.02, y: -3 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="glass-card p-6 border border-border-subtle hover:border-accent-blue/40 text-left space-y-3 group"
-                      data-cursor-label="Email"
-                    >
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
-                        <Mail className="text-white" size={22} />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-primary group-hover:text-gradient transition-all">Send via Email</h3>
-                        <p className="text-secondary text-sm">Opens your email client with subject and body pre-filled.</p>
-                      </div>
-                      <div className="flex items-center gap-1.5 text-xs text-accent-blue">
-                        <span>{CONTACT.email}</span>
-                        <ArrowRight size={12} />
-                      </div>
-                    </motion.button>
+        </div>
 
-                    {/* WhatsApp */}
-                    <motion.button
-                      onClick={handleWhatsApp}
-                      whileHover={{ scale: 1.02, y: -3 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="glass-card p-6 border border-border-subtle hover:border-green-500/40 text-left space-y-3 group"
-                      data-cursor-label="WhatsApp"
-                    >
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
-                        <MessageCircle className="text-white" size={22} />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-primary group-hover:text-gradient transition-all">Send via WhatsApp</h3>
-                        <p className="text-secondary text-sm">Opens WhatsApp with your message pre-formatted and ready to send.</p>
-                      </div>
-                      <div className="flex items-center gap-1.5 text-xs text-green-400">
-                        <span>+91 91238 81320</span>
-                        <ArrowRight size={12} />
-                      </div>
-                    </motion.button>
-                  </div>
-                </motion.div>
-              )}
-
-              {step === "done" && (
-                <motion.div
-                  key="done"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="glass-card p-12 text-center border border-border-subtle space-y-6"
-                >
-                  <motion.div
-                    animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.2, 1] }}
-                    transition={{ duration: 0.6 }}
-                    className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-green-500/20 bg-green-500/10 text-green-400"
-                  >
-                    <CheckCircle2 size={34} />
-                  </motion.div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-primary mb-2">Message Sent!</h3>
-                    <p className="text-secondary">Thanks for reaching out. I&apos;ll get back to you as soon as possible.</p>
-                  </div>
-                  <button onClick={reset} className="btn-ghost">
-                    Send another message
-                  </button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-
-          {/* Direct links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.4 }}
-            className="flex flex-wrap justify-center gap-4"
-          >
-            {[
-              { label: "LinkedIn", href: CONTACT.linkedin, icon: Linkedin },
-              { label: "GitHub", href: PERSONAL.github, icon: Github },
-              { label: "Email", href: `mailto:${CONTACT.email}`, icon: Mail },
-            ].map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="glass rounded-xl px-5 py-3 border border-border-subtle hover:border-border-default flex items-center gap-2 text-secondary hover:text-primary transition-all"
-                data-cursor-label={link.label}
-              >
-                <link.icon size={16} className="text-accent-blue" aria-hidden="true" />
-                <span className="text-sm">{link.label}</span>
-              </a>
-            ))}
-          </motion.div>
-        </motion.div>
       </div>
     </section>
   );

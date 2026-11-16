@@ -1,46 +1,43 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { useTheme } from "next-themes";
-import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { Sun, Moon, Menu, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
+import { Menu, X, Gamepad2 } from "lucide-react";
 
 const NAV_ITEMS = [
-  { label: "About", href: "/#about" },
-  { label: "Skills", href: "/#mind" },
-  { label: "Journey", href: "/#journey" },
-  { label: "Work", href: "/#work" },
-  { label: "Achievements", href: "/#achievements" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Work",        href: "/#work" },
+  { label: "GitHub",      href: "/#github-status" },
+  { label: "About",       href: "/#about" },
+  { label: "Journey",     href: "/#journey" },
+  { label: "Recognition", href: "/#achievements" },
+  { label: "Arcade",      href: "/blog" },
+  { label: "Contact",     href: "/#contact" },
 ];
 
 export function Navigation() {
-  const { theme, setTheme } = useTheme();
-  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
   const [activeSection, setActiveSection] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const pathname = usePathname();
+  const [reducedMotion, setReducedMotion] = useState(false);
 
-  useEffect(() => { setMounted(true); }, []);
-
+  /* ── Detect prefers-reduced-motion ─────────────────────────── */
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 60);
-    };
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
-    // Intersection observer for active section
-    const sections = NAV_ITEMS
-      .map((item) => item.href.split("#")[1])
-      .filter(Boolean) as string[];
-      
+  /* ── IntersectionObserver – active section ──────────────────── */
+  useEffect(() => {
+    if (pathname !== "/") return;
+    const ids = NAV_ITEMS.map((item) => item.href.split("#")[1]).filter(Boolean) as string[];
     const observers: IntersectionObserver[] = [];
 
-    sections.forEach((id) => {
+    ids.forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
       const obs = new IntersectionObserver(
@@ -53,163 +50,233 @@ export function Navigation() {
       observers.push(obs);
     });
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      observers.forEach((obs) => obs.disconnect());
+    return () => observers.forEach((obs) => obs.disconnect());
+  }, [pathname]);
+
+  /* ── Close mobile menu on resize to desktop ─────────────────── */
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 768) setMobileOpen(false);
     };
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  const toggleTheme = () => {
-    document.documentElement.classList.add("transitioning");
-    setTimeout(() => document.documentElement.classList.remove("transitioning"), 600);
-    setTheme(theme === "dark" ? "light" : "dark");
+  /* ── Framer-motion entry variants ───────────────────────────── */
+  const pillVariants = {
+    initial: reducedMotion ? { y: 0, opacity: 1 } : { y: -20, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
   };
-
-  if (pathname.startsWith("/blog")) {
-    return null;
-  }
 
   return (
     <>
-      <motion.header
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className={cn(
-          "fixed z-50 transition-all duration-500",
-          pathname.startsWith("/blog") ? "top-6 right-4 sm:right-8" : "top-0 left-0 right-0",
-          !pathname.startsWith("/blog") && (scrolled ? "py-3" : "py-6")
-        )}
+      {/* ── Floating Pill ──────────────────────────────────────── */}
+      <motion.div
+        variants={pillVariants}
+        initial="initial"
+        animate="animate"
+        transition={reducedMotion ? { duration: 0 } : { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+        style={{
+          position: "fixed",
+          top: "20px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 50,
+          width: "max-content",
+          maxWidth: "calc(100vw - 32px)",
+        }}
       >
-        <div className={cn(!pathname.startsWith("/blog") && "container-portfolio")}>
-          <div
-            className={cn(
-              "flex items-center justify-between rounded-2xl transition-all duration-500",
-              pathname.startsWith("/blog") 
-                ? "glass px-4 sm:px-5 py-2 sm:py-3 shadow-lg gap-4 sm:gap-6" 
-                : (scrolled ? "glass px-5 py-3 shadow-lg" : "px-0 py-0")
-            )}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            height: "56px",
+            borderRadius: "9999px",
+            paddingInline: "20px",
+            gap: "16px",
+            background: "var(--color-paper-2)",
+            border: "1px solid var(--color-rule)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+          }}
+        >
+          {/* ── Logo ─────────────────────────────────────────── */}
+          <Link
+            href="/"
+            aria-label="Fardeen Ansari — home"
+            onClick={() => {
+              if (pathname === "/") {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
+            style={{
+              fontFamily: "'Space Grotesk', monospace",
+              fontSize: "13px",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+              color: "var(--color-ink)",
+              textDecoration: "none",
+              flexShrink: 0,
+            }}
           >
-            {/* Logo */}
-            <Link
-              href="#"
-              className="group flex items-center gap-3 font-mono text-sm font-semibold"
-              aria-label="Fardeen Ansari"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            >
-              <div className="relative w-8 h-8 rounded-lg overflow-hidden flex-shrink-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#C08552] to-[#8C5A3C]" />
-                <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-sm">
-                  FA
-                </span>
-              </div>
-              <span className="text-gradient hidden sm:block">Fardeen Ansari</span>
-            </Link>
+            FA
+          </Link>
 
-            {/* Desktop nav */}
-            <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-              {NAV_ITEMS.map((item) => (
+          {/* ── Desktop nav links ─────────────────────────────── */}
+          <nav
+            className="hidden lg:flex"
+            style={{
+              alignItems: "center",
+              gap: "4px",
+            }}
+            aria-label="Main Navigation"
+          >
+            {NAV_ITEMS.map((item) => {
+              const isBlog = item.href === "/blog";
+              const sectionId = item.href.split("#")[1];
+              const isActive = isBlog
+                ? pathname.startsWith("/blog")
+                : sectionId
+                ? activeSection === sectionId && pathname === "/"
+                : pathname === item.href;
+
+              return (
                 <NavLink
                   key={item.href}
                   href={item.href}
                   label={item.label}
-                  isActive={
-                    item.href.startsWith("/#")
-                      ? activeSection === item.href.split("#")[1] && pathname === "/"
-                      : pathname === item.href
-                  }
+                  isActive={isActive}
                 />
-              ))}
-            </nav>
+              );
+            })}
+          </nav>
 
-            {/* Actions */}
-            <div className="flex items-center gap-3">
-              {/* Theme toggle */}
-              {mounted && (
-                <motion.button
-                  onClick={toggleTheme}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-9 h-9 rounded-xl glass flex items-center justify-center text-secondary border border-border-subtle hover:border-border-default transition-colors"
-                  aria-label="Toggle theme"
-                  data-cursor-label={theme === "dark" ? "Light" : "Dark"}
-                >
-                  <motion.div
-                    key={theme}
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {theme === "dark" ? (
-                      <Sun size={15} className="text-yellow-400" />
-                    ) : (
-                      <Moon size={15} className="text-indigo-400" />
-                    )}
-                  </motion.div>
-                </motion.button>
-              )}
+          {/* ── Right side CTA + mobile toggle ────────────────── */}
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <Link
+              href="/#contact"
+              className="btn-primary hidden sm:inline-flex"
+              style={{
+                fontSize: "12px",
+                paddingInline: "16px",
+                paddingBlock: "7px",
+                textDecoration: "none",
+                whiteSpace: "nowrap",
+                border: "1px solid var(--color-rule)",
+              }}
+            >
+              Let&apos;s talk
+            </Link>
 
-              {/* Contact button */}
-              <motion.a
-                href="#contact"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="hidden sm:flex bg-[#8C5A3C] hover:bg-[#4B2E2B] text-[#FFF8F0] rounded-full transition-colors font-medium text-xs px-4 py-2"
-                data-cursor-label="Say hi"
-              >
-                Let&apos;s Talk
-              </motion.a>
-
-              {/* Mobile menu toggle */}
-              <button
-                onClick={() => setMobileOpen(!mobileOpen)}
-                className="md:hidden w-9 h-9 rounded-xl glass flex items-center justify-center border border-border-subtle"
-                aria-label="Toggle menu"
-              >
-                {mobileOpen ? <X size={16} /> : <Menu size={16} />}
-              </button>
-            </div>
+            {/* Hamburger — mobile only */}
+            <button
+              className="lg:hidden"
+              onClick={() => setMobileOpen((v) => !v)}
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "34px",
+                height: "34px",
+                borderRadius: "9999px",
+                background: "var(--color-paper-3)",
+                border: "1px solid var(--color-rule)",
+                color: "var(--color-ink)",
+                cursor: "pointer",
+              }}
+            >
+              {mobileOpen ? <X size={15} aria-hidden /> : <Menu size={15} aria-hidden />}
+            </button>
           </div>
         </div>
 
-        {/* Mobile menu */}
+        {/* ── Mobile dropdown ────────────────────────────────── */}
         <AnimatePresence>
           {mobileOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -20, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-              className="md:hidden container-portfolio mt-3"
+              key="mobile-menu"
+              initial={reducedMotion ? { opacity: 1 } : { opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reducedMotion ? { opacity: 1 } : { opacity: 0, y: -8 }}
+              transition={reducedMotion ? { duration: 0 } : { duration: 0.2, ease: "easeOut" }}
+              style={{
+                marginTop: "8px",
+                borderRadius: "16px",
+                padding: "8px",
+                background: "var(--color-paper-2)",
+                border: "1px solid var(--color-rule)",
+                display: "flex",
+                flexDirection: "column",
+                gap: "2px",
+              }}
+              role="menu"
+              aria-label="Mobile navigation"
             >
-              <div className="glass rounded-2xl p-4 border border-border-default">
-                <nav className="flex flex-col gap-1">
-                  {NAV_ITEMS.map((item) => (
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setMobileOpen(false)}
-                      className={cn(
-                        "px-4 py-3 rounded-xl text-sm font-medium transition-all",
-                        activeSection === item.href.slice(1)
-                          ? "bg-blue-500/10 text-accent-blue"
-                          : "text-secondary hover:text-primary hover:bg-white/5"
-                      )}
-                    >
-                      {item.label}
-                    </a>
-                  ))}
-                </nav>
-              </div>
+              {NAV_ITEMS.map((item) => {
+                const isBlog = item.href === "/blog";
+                const sectionId = item.href.split("#")[1];
+                const isActive = isBlog
+                  ? pathname.startsWith("/blog")
+                  : sectionId
+                  ? activeSection === sectionId && pathname === "/"
+                  : pathname === item.href;
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    role="menuitem"
+                    tabIndex={0}
+                    onClick={() => setMobileOpen(false)}
+                    style={{
+                      display: "block",
+                      padding: "10px 14px",
+                      borderRadius: "10px",
+                      fontSize: "13px",
+                      fontWeight: 500,
+                      textDecoration: "none",
+                      color: isActive ? "var(--color-accent)" : "var(--color-ink-2)",
+                      background: isActive ? "var(--color-paper-3)" : "transparent",
+                    }}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+
+              {/* Mobile CTA */}
+              <Link
+                href="/#contact"
+                role="menuitem"
+                tabIndex={0}
+                onClick={() => setMobileOpen(false)}
+                style={{
+                  display: "block",
+                  margin: "4px 0 2px",
+                  padding: "10px 14px",
+                  borderRadius: "10px",
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                  color: "var(--color-ink)",
+                  background: "var(--color-paper-3)",
+                  border: "1px solid var(--color-rule)",
+                  textAlign: "center",
+                }}
+              >
+                Let&apos;s talk
+              </Link>
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.header>
+      </motion.div>
     </>
   );
 }
 
+/* ── NavLink sub-component ──────────────────────────────────────── */
 function NavLink({
   href,
   label,
@@ -220,23 +287,22 @@ function NavLink({
   isActive: boolean;
 }) {
   return (
-    <a
+    <Link
       href={href}
-      className={cn(
-        "relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200",
-        isActive
-          ? "text-accent-blue"
-          : "text-secondary hover:text-primary"
-      )}
+      style={{
+        position: "relative",
+        display: "inline-flex",
+        alignItems: "center",
+        padding: "6px 12px",
+        borderRadius: "9999px",
+        fontSize: "13px",
+        fontWeight: 500,
+        textDecoration: "none",
+        color: isActive ? "var(--color-ink)" : "var(--color-ink-2)",
+        background: isActive ? "var(--color-paper-3)" : "transparent",
+      }}
     >
-      {isActive && (
-        <motion.div
-          layoutId="nav-indicator"
-          className="absolute inset-0 rounded-xl bg-blue-500/10"
-          transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
-        />
-      )}
-      <span className="relative z-10">{label}</span>
-    </a>
+      {label}
+    </Link>
   );
 }

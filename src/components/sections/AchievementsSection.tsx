@@ -1,300 +1,300 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { Award, Eye, Globe2, Medal, Waves, Images, Sparkles } from "lucide-react";
 import Image from "next/image";
-import { ACHIEVEMENTS } from "@/lib/data";
-import { cn } from "@/lib/utils";
-import {
-  Award,
-  Bot,
-  Code2,
-  FileBadge,
-  Globe2,
-  Lightbulb,
-  Medal,
-  Microscope,
-  ScrollText,
-  ShieldAlert,
-  Star,
-  TrainFront,
-  type LucideIcon,
-  Waves,
-  X,
-} from "lucide-react";
+import { PreviewModal, PreviewItem } from "@/components/ui/PreviewModal";
 
-const STAT_ICONS = {
-  Hackathons: Medal,
-  "International Events": Globe2,
-  "Research Presentations": Microscope,
-  Certifications: ScrollText,
-} as const;
+const CERTIFICATES: PreviewItem[] = [
+  {
+    id: "sih2023-cert",
+    title: "Smart India Hackathon 2023 — National Finalist",
+    subtitle: "Ministry of Education, AICTE & Govt. of India",
+    imageUrl: "/images/certificates/sih2023.jpeg",
+    category: "National Finalist",
+    date: "December 2023",
+    description: "Official credential awarded for qualifying as a National Finalist in Smart India Hackathon 2023 for engineering an automated civic complaint routing platform.",
+  },
+  {
+    id: "gic2024-cert",
+    title: "NGP-DST Geo Innovation Challenge 2024 — Presenter",
+    subtitle: "National Geospatial Programme, Department of Science & Technology, Govt. of India",
+    imageUrl: "/images/certificates/gic-cert.jpg",
+    category: "National Level Innovation",
+    date: "2024",
+    description: "Official certificate of presentation at the national level Geo Innovation Challenge for designing a flood-risk management and early-warning telemetry framework.",
+  },
+  {
+    id: "rtet2024-cert",
+    title: "RTET 2024 — International Seminar Presenter",
+    subtitle: "Recent Trends in Engineering & Technology",
+    imageUrl: "/images/certificates/rtet2024.png",
+    category: "International Conference",
+    date: "2024",
+    description: "Presented a research framework on natural language processing (NLP) model evaluation standards at the international conference on Recent Trends in Engineering & Technology.",
+  },
+];
 
-const ACHIEVEMENT_ICONS: Record<string, LucideIcon> = {
-  sih2023: Medal,
-  gic2024: Waves,
-  esiot2024: Lightbulb,
-  rtet2024: Microscope,
-  sih2024: ShieldAlert,
-  icdmai2025: Bot,
-  sih2025: TrainFront,
-  suprinova2024: Star,
-  codesum: Code2,
-};
+const EVENT_GALLERY: PreviewItem[] = [
+  {
+    id: "gic-fardeen-pic",
+    title: "Fardeen at Geo Innovation Challenge",
+    subtitle: "National Geospatial Programme — Final Summit",
+    imageUrl: "/images/events/gic-fardeen.jpg",
+    category: "Summit Presentation",
+    date: "2024",
+    description: "Fardeen presenting the flood-risk telemetry architecture before the evaluation panel at the national Geo Innovation Challenge.",
+  },
+  {
+    id: "gic-presentation",
+    title: "Technical Defence & Presentation",
+    subtitle: "Geo Innovation Challenge Summit",
+    imageUrl: "/images/events/gic-1.jpg",
+    category: "Summit Presentation",
+    date: "2024",
+    description: "Delivering the live system demonstration and telemetry dashboard for regional flood prediction.",
+  },
+  {
+    id: "gic-summit",
+    title: "Innovation Summit Stage",
+    subtitle: "NGP-DST National Challenge",
+    imageUrl: "/images/events/gic-3.jpg",
+    category: "National Summit",
+    date: "2024",
+    description: "On-stage event capture at the National Geospatial Challenge proceedings.",
+  },
+  {
+    id: "gic-team-group",
+    title: "Finalist Cohort & Mentors",
+    subtitle: "Geo Innovation Challenge 2024",
+    imageUrl: "/images/events/gic-group.jpg",
+    category: "Team & Cohort",
+    date: "2024",
+    description: "With fellow engineering innovators and jury members at the conclusion of the Geo Innovation Challenge.",
+  },
+  {
+    id: "sih-event-team",
+    title: "Smart India Hackathon Team",
+    subtitle: "National Hackathon Arena",
+    imageUrl: "/images/events/sih2024.jpeg",
+    category: "Hackathon Arena",
+    date: "SIH Finals",
+    description: "Collaborative 36-hour sprint at the Smart India Hackathon solving municipal workflow bottlenecks.",
+  },
+];
+
+const ALL_PREVIEW_ITEMS = [...CERTIFICATES, ...EVENT_GALLERY];
 
 export function AchievementsSection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const [selectedAchievement, setSelectedAchievement] = useState<string | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<PreviewItem | null>(null);
 
-  const selected = ACHIEVEMENTS.find((a) => a.id === selectedAchievement);
+  const handleOpenPreview = (item: PreviewItem) => {
+    setSelectedItem(item);
+    setModalOpen(true);
+  };
 
   return (
-    <section
-      id="achievements"
-      ref={ref}
-      className="section-padding relative"
-      aria-label="Achievements and credentials"
-    >
-      <div className="container-portfolio">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6 }}
-          className="space-y-16"
-        >
-          {/* Header */}
-          <div className="text-center space-y-4">
-            <span className="section-label mx-auto">Achievements</span>
-            <h2 className="text-4xl lg:text-5xl font-bold mt-4">
-              The{" "}
-              <span className="font-serif italic text-gradient">Trophy Room</span>
+    <section id="achievements" className="section border-t border-[var(--color-rule)]" aria-label="Honors and Awards">
+      <div className="container space-y-12 lg:space-y-16">
+        
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="space-y-3">
+            <div className="section-label">Verified Honors &amp; Summits</div>
+            <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-[var(--color-ink)]">
+              Competitive Recognition
             </h2>
-            <p className="text-secondary max-w-xl mx-auto">
-              From national hackathon stages to international research forums — each milestone tells a story.
-            </p>
+          </div>
+          <p className="text-sm sm:text-base text-[var(--color-ink-2)] max-w-[42ch]">
+            Official credentials from national hackathons, innovation challenges, and international conferences. Click any credential to preview instantly.
+          </p>
+        </div>
+
+        {/* 3-Across Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          
+          {/* Card 1: SIH 2023 */}
+          <div className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-[var(--color-accent)]/50 transition-colors">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs font-semibold text-[var(--color-accent)]">
+                  2023
+                </span>
+                <span className="px-2.5 py-1 rounded text-[11px] font-mono border border-[var(--color-rule)] bg-[var(--color-paper-3)] text-[var(--color-ink-3)] uppercase tracking-wider">
+                  National Level
+                </span>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold text-[var(--color-ink)] font-display">
+                  Smart India Hackathon
+                </h3>
+                <div className="text-sm font-semibold text-[var(--color-ink-2)] pt-0.5">
+                  National Finalist
+                </div>
+                <div className="text-xs font-mono text-[var(--color-ink-3)] pt-1">
+                  Ministry of Education &amp; AICTE
+                </div>
+              </div>
+
+              <p className="text-sm text-[var(--color-ink-2)] leading-relaxed">
+                Selected as a National Finalist in India&apos;s flagship hackathon. Engineered a collaborative civic-routing platform to automate municipal complaint triage and accountability.
+              </p>
+            </div>
+
+            <div className="pt-4 border-t border-[var(--color-rule)]">
+              <button
+                type="button"
+                onClick={() => handleOpenPreview(CERTIFICATES[0])}
+                className="btn-ghost py-2 px-3 text-xs flex items-center gap-2 w-full justify-center"
+                aria-label="Preview Smart India Hackathon Certificate"
+              >
+                <Eye size={13} />
+                <span>Preview Verified Certificate</span>
+              </button>
+            </div>
           </div>
 
-          {/* Stats bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4"
-          >
-            {[
-              { label: "Hackathons", value: "5+" },
-              { label: "International Events", value: "2" },
-              { label: "Research Presentations", value: "2" },
-              { label: "Certifications", value: "4+" },
-            ].map((stat, i) => {
-              const Icon = STAT_ICONS[stat.label as keyof typeof STAT_ICONS];
+          {/* Card 2: Geo Innovation Challenge 2024 */}
+          <div className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-[var(--color-accent)]/50 transition-colors">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs font-semibold text-[var(--color-accent)]">
+                  2024
+                </span>
+                <span className="px-2.5 py-1 rounded text-[11px] font-mono border border-[var(--color-rule)] bg-[var(--color-paper-3)] text-[var(--color-ink-3)] uppercase tracking-wider">
+                  National Level
+                </span>
+              </div>
 
-              return (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: 0.3 + i * 0.1 }}
-                  className="glass-card p-5 text-center"
-                >
-                  <span className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl border border-accent-blue/20 bg-accent-blue/10 text-accent-blue">
-                    <Icon size={20} />
-                  </span>
-                  <p className="text-2xl font-bold text-gradient">{stat.value}</p>
-                  <p className="text-xs text-muted mt-1">{stat.label}</p>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+              <div>
+                <h3 className="text-xl font-bold text-[var(--color-ink)] font-display">
+                  Geo Innovation Challenge
+                </h3>
+                <div className="text-sm font-semibold text-[var(--color-ink-2)] pt-0.5">
+                  Presenter &amp; Innovator
+                </div>
+                <div className="text-xs font-mono text-[var(--color-ink-3)] pt-1">
+                  NGP-DST Government of India
+                </div>
+              </div>
 
-          {/* Achievements masonry grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {ACHIEVEMENTS.map((achievement, i) => (
-              <motion.div
-                key={achievement.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.4 + i * 0.07, duration: 0.6 }}
+              <p className="text-sm text-[var(--color-ink-2)] leading-relaxed">
+                Presented an integrated flood-risk telemetry and early-warning management system at a national geospatial innovation summit, addressing regional disaster mitigation.
+              </p>
+            </div>
+
+            <div className="pt-4 border-t border-[var(--color-rule)]">
+              <button
+                type="button"
+                onClick={() => handleOpenPreview(CERTIFICATES[1])}
+                className="btn-ghost py-2 px-3 text-xs flex items-center gap-2 w-full justify-center"
+                aria-label="Preview Geo Innovation Challenge Certificate"
               >
-                <AchievementCard
-                  achievement={achievement}
-                  onClick={() => setSelectedAchievement(achievement.id)}
+                <Eye size={13} />
+                <span>Preview Verified Certificate</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Card 3: RTET 2024 International Seminar */}
+          <div className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-[var(--color-accent)]/50 transition-colors">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs font-semibold text-[var(--color-accent)]">
+                  2024
+                </span>
+                <span className="px-2.5 py-1 rounded text-[11px] font-mono border border-[var(--color-rule)] bg-[var(--color-paper-3)] text-[var(--color-ink-3)] uppercase tracking-wider">
+                  International Level
+                </span>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold text-[var(--color-ink)] font-display">
+                  RTET International Seminar
+                </h3>
+                <div className="text-sm font-semibold text-[var(--color-ink-2)] pt-0.5">
+                  Research Framework Presenter
+                </div>
+                <div className="text-xs font-mono text-[var(--color-ink-3)] pt-1">
+                  Recent Trends in Engineering &amp; Tech
+                </div>
+              </div>
+
+              <p className="text-sm text-[var(--color-ink-2)] leading-relaxed">
+                Presented a structured evaluation framework analyzing NLP model benchmarking standards at an international peer-reviewed conference.
+              </p>
+            </div>
+
+            <div className="pt-4 border-t border-[var(--color-rule)]">
+              <button
+                type="button"
+                onClick={() => handleOpenPreview(CERTIFICATES[2])}
+                className="btn-ghost py-2 px-3 text-xs flex items-center gap-2 w-full justify-center"
+                aria-label="Preview RTET Conference Certificate"
+              >
+                <Eye size={13} />
+                <span>Preview Verified Certificate</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Event Photo Gallery Strip — In-app visual proof */}
+        <div className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 sm:p-8 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--color-rule)] pb-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 text-xs font-mono text-[var(--color-accent)]">
+                <Images size={13} />
+                <span>INNOVATION SUMMIT GALLERY</span>
+              </div>
+              <h3 className="text-lg font-bold text-[var(--color-ink)] font-display">
+                National Stage &amp; Technical Defences
+              </h3>
+            </div>
+            <span className="text-xs font-mono text-[var(--color-ink-3)]">
+              Click any frame to inspect full-size
+            </span>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+            {EVENT_GALLERY.map((photo) => (
+              <button
+                key={photo.id}
+                type="button"
+                onClick={() => handleOpenPreview(photo)}
+                className="group relative aspect-[4/3] rounded-xl overflow-hidden border border-[var(--color-rule)] bg-[var(--color-paper-3)] hover:border-[var(--color-accent)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] text-left"
+                aria-label={`View photo: ${photo.title}`}
+              >
+                <Image
+                  src={photo.imageUrl}
+                  alt={photo.title}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                 />
-              </motion.div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-2 flex flex-col justify-end">
+                  <span className="text-[11px] font-mono text-white truncate font-medium">
+                    {photo.title}
+                  </span>
+                </div>
+              </button>
             ))}
           </div>
-        </motion.div>
+        </div>
+
       </div>
 
-      {/* Achievement Modal */}
-      <AnimatePresence>
-        {selected && (
-          <AchievementModal
-            achievement={selected}
-            onClose={() => setSelectedAchievement(null)}
-          />
-        )}
-      </AnimatePresence>
+      {/* Universal In-App Preview Modal */}
+      <PreviewModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        currentItem={selectedItem}
+        items={ALL_PREVIEW_ITEMS}
+        onNavigate={(item) => setSelectedItem(item)}
+      />
     </section>
-  );
-}
-
-function AchievementCard({
-  achievement,
-  onClick,
-}: {
-  achievement: (typeof ACHIEVEMENTS)[0];
-  onClick: () => void;
-}) {
-  const Icon = ACHIEVEMENT_ICONS[achievement.id] ?? FileBadge;
-
-  return (
-    <motion.button
-      onClick={onClick}
-      whileHover={{ y: -5, scale: 1.01 }}
-      whileTap={{ scale: 0.99 }}
-      transition={{ duration: 0.3 }}
-      className="group w-full text-left glass-card p-6 space-y-4 border border-border-subtle hover:border-border-default cursor-pointer"
-      data-cursor-label="View"
-    >
-      {/* Header */}
-      <div className="flex items-start gap-4">
-        <div className={cn("w-12 h-12 rounded-2xl bg-gradient-to-br flex items-center justify-center text-2xl flex-shrink-0", achievement.color)}>
-          <Icon size={23} className="text-white" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex flex-wrap gap-2 mb-2">
-            <span className="text-xs px-2 py-0.5 rounded-full bg-border-subtle border border-border-default text-muted font-mono">
-              {achievement.category}
-            </span>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-accent-blue/10 border border-accent-blue/20 text-accent-blue">
-              {achievement.level}
-            </span>
-            {achievement.highlight && (
-              <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 font-semibold">
-                <Star size={12} fill="currentColor" />
-              </span>
-            )}
-          </div>
-          <span className="text-xs text-muted font-mono">{achievement.year}</span>
-        </div>
-      </div>
-
-      <div>
-        <h3 className="font-bold text-primary mb-1 group-hover:text-gradient transition-all">
-          {achievement.title}
-        </h3>
-        <p className="text-xs text-secondary mb-2">{achievement.subtitle}</p>
-        <p className="text-sm text-muted leading-relaxed line-clamp-2">
-          {achievement.description}
-        </p>
-      </div>
-
-      {/* Certificate indicator */}
-      {achievement.certificate && (
-        <div className="flex items-center gap-2 text-xs text-accent-blue">
-          <Award size={12} />
-          <span>Certificate available</span>
-        </div>
-      )}
-    </motion.button>
-  );
-}
-
-function AchievementModal({
-  achievement,
-  onClose,
-}: {
-  achievement: (typeof ACHIEVEMENTS)[0];
-  onClose: () => void;
-}) {
-  const Icon = ACHIEVEMENT_ICONS[achievement.id] ?? FileBadge;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      onClick={onClose}
-    >
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-bg-primary/80 backdrop-blur-xl" />
-
-      {/* Modal */}
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0, y: 20 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.9, opacity: 0, y: 20 }}
-        transition={{ type: "spring", bounce: 0.3 }}
-        onClick={(e) => e.stopPropagation()}
-        className="relative glass-card border border-border-default max-w-2xl w-full max-h-[90vh] overflow-y-auto p-8 space-y-6"
-      >
-        {/* Close */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 w-9 h-9 rounded-xl glass border border-border-subtle flex items-center justify-center text-secondary hover:text-primary"
-        >
-          <X size={16} />
-        </button>
-
-        {/* Header */}
-        <div className="flex items-start gap-5">
-          <div className={cn("w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center text-3xl flex-shrink-0", achievement.color)}>
-            <Icon size={28} className="text-white" />
-          </div>
-          <div>
-            <div className="flex flex-wrap gap-2 mb-2">
-              <span className="tech-badge">{achievement.category}</span>
-              <span className="tech-badge">{achievement.level} · {achievement.year}</span>
-            </div>
-            <h2 className="text-2xl font-bold text-primary">{achievement.title}</h2>
-            <p className="text-secondary text-sm">{achievement.subtitle}</p>
-          </div>
-        </div>
-
-        {/* Description */}
-        <p className="text-secondary leading-relaxed">{achievement.description}</p>
-
-        {/* Certificate */}
-        {achievement.certificate && (
-          <div className="space-y-3">
-            <h3 className="font-semibold text-primary">Certificate</h3>
-            <div className="relative w-full rounded-2xl overflow-hidden border border-border-default">
-              <Image
-                src={achievement.certificate}
-                alt={`${achievement.title} certificate`}
-                width={800}
-                height={600}
-                className="w-full h-auto object-contain bg-white/5"
-                sizes="(max-width: 768px) 100vw, 600px"
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Gallery */}
-        {achievement.gallery && achievement.gallery.length > 0 && (
-          <div className="space-y-3">
-            <h3 className="font-semibold text-primary">Event Gallery</h3>
-            <div className="grid grid-cols-2 gap-3">
-              {achievement.gallery.map((img, i) => (
-                <div key={i} className="relative w-full rounded-xl overflow-hidden border border-border-subtle bg-white/5">
-                  <Image
-                    src={img}
-                    alt={`Event photo ${i + 1}`}
-                    width={400}
-                    height={300}
-                    className="w-full h-auto object-cover"
-                    sizes="(max-width: 768px) 50vw, 300px"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </motion.div>
-    </motion.div>
   );
 }

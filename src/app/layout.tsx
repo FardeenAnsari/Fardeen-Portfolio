@@ -2,7 +2,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
-import { CustomCursor } from "@/components/cursor/CustomCursor";
 import { Navigation } from "@/components/navigation/Navigation";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -10,26 +9,23 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 export const metadata: Metadata = {
   metadataBase: new URL("https://fardeenansari.dev"),
   title: {
-    default: "Fardeen Ansari — Full Stack Engineer & Product Builder",
+    default: "Fardeen Ansari — Full Stack Engineer",
     template: "%s | Fardeen Ansari",
   },
   description:
-    "Full Stack Software Engineer, Product Engineer, and AI Enthusiast. Building scalable web applications, mobile interfaces, and data-driven systems. SIH 2023 National Finalist.",
+    "Fardeen Ansari — Full Stack Software Engineer based in Bengaluru, India. Building high-integrity web applications, distributed systems, and database workflows. SIH National Finalist.",
   keywords: [
     "Fardeen Ansari",
     "Full Stack Developer",
+    "Software Engineer",
     "React Developer",
     "Next.js",
     "TypeScript",
-    "Software Engineer",
-    "Product Engineer",
-    "India",
+    "Node.js",
+    "PostgreSQL",
+    "Bengaluru",
     "Portfolio",
-    "Machine Learning",
-    "Backend Developer",
-    "Frontend Developer",
-    "Vercel",
-    "AWS",
+    "System Design",
   ],
   authors: [{ name: "Fardeen Ansari" }],
   creator: "Fardeen Ansari",
@@ -40,7 +36,7 @@ export const metadata: Metadata = {
     url: "https://fardeenansari.dev",
     title: "Fardeen Ansari — Full Stack Engineer",
     description:
-      "Full Stack Software Engineer, Product Engineer, and AI Enthusiast. Building scalable web applications, mobile interfaces, and data-driven systems.",
+      "Full Stack Software Engineer based in Bengaluru, India. Building high-integrity web applications, distributed systems, and database workflows.",
     siteName: "Fardeen Ansari",
     images: [
       {
@@ -54,7 +50,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Fardeen Ansari — Full Stack Engineer",
-    description: "Building scalable web applications, mobile interfaces, and data-driven systems.",
+    description: "Building high-integrity web applications and scalable database workflows.",
     images: ["/images/fardeen-hero.png"],
   },
   icons: {
@@ -75,9 +71,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    google: "", // TODO: Add Google Search Console verification code
-  },
 };
 
 const personSchema = {
@@ -85,14 +78,14 @@ const personSchema = {
   "@type": "Person",
   name: "Fardeen Ansari",
   jobTitle: "Full Stack Software Engineer",
-  description: "Full Stack Software Engineer, Product Engineer, and AI Enthusiast",
+  description: "Full Stack Software Engineer and Product Builder based in Bengaluru, India.",
   url: "https://fardeenansari.dev",
   email: "imailfard@gmail.com",
   telephone: "+91-9123881320",
   address: {
     "@type": "PostalAddress",
-    addressLocality: "Kolkata",
-    addressRegion: "West Bengal",
+    addressLocality: "Bengaluru",
+    addressRegion: "Karnataka",
     addressCountry: "IN",
   },
   sameAs: [
@@ -105,9 +98,8 @@ const personSchema = {
     "React.js",
     "Next.js",
     "Node.js",
+    "PostgreSQL",
     "Python",
-    "Machine Learning",
-    "IoT",
     "System Design",
   ],
 };
@@ -123,7 +115,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@100;200;300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
         <script
@@ -138,26 +130,16 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange={false}
         >
-          {/* Aurora background */}
-          <div className="aurora-bg" aria-hidden="true">
-            <div className="aurora-orb aurora-orb-1" />
-            <div className="aurora-orb aurora-orb-2" />
-            <div className="aurora-orb aurora-orb-3" />
-          </div>
-
-          {/* Noise texture overlay */}
+          {/* Subtle noise texture overlay */}
           <div className="noise-overlay" aria-hidden="true" />
 
-          {/* Custom cursor */}
-          <CustomCursor />
-
-          {/* Navigation */}
+          {/* Minimal Floating Navigation */}
           <Navigation />
 
-          {/* Main content */}
+          {/* Main Content Landmark */}
           <main id="main-content">{children}</main>
 
-          {/* Analytics */}
+          {/* Telemetry */}
           <Analytics />
           <SpeedInsights />
         </ThemeProvider>

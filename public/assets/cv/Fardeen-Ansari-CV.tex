@@ -1,0 +1,136 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[empty]{fullpage}
+\usepackage[margin=0.5in,top=0.45in,bottom=0.45in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{color}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=black,
+}
+
+\setlist[itemize]{leftmargin=*,nosep,topsep=1pt,partopsep=0pt,parsep=1pt}
+
+% Section formatting
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\vspace{1pt}\hrule height 0.5pt]
+\titlespacing*{\section}{0pt}{6pt}{3pt}
+
+\pagestyle{empty}
+
+\begin{document}
+
+% ── HEADER ──
+\noindent
+\begin{minipage}[t]{0.45\textwidth}
+  \vspace{0pt}
+  {\LARGE \textbf{Fardeen Ansari}}\\[2pt]
+  {\normalsize \textit{Aspiring Software Developer}}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.53\textwidth}
+  \vspace{0pt}
+  \fontsize{8.5pt}{11pt}\selectfont
+  \begin{tabularx}{\textwidth}{@{}X X@{}}
+    \textbf{EMAIL} & \textbf{PHONE} \\
+    \href{mailto:imailfard@gmail.com}{imailfard@gmail.com} & +91 91238 81320 \\[3pt]
+    \textbf{LINKEDIN} & \textbf{GITHUB} \\
+    \href{https://linkedin.com/in/itsfardeen}{linkedin.com/in/itsfardeen} & \href{https://github.com/FardeenAnsari}{github.com/FardeenAnsari} \\[3pt]
+    \textbf{PORTFOLIO} & \textbf{LOCATION} \\
+    \href{https://fardeen-portfolio-puce.vercel.app}{fardeen-portfolio-puce.vercel.app} & Bengaluru, Karnataka
+  \end{tabularx}
+\end{minipage}
+
+\vspace{6pt}
+
+% ── PROFESSIONAL SUMMARY ──
+\section*{Professional Summary}
+\noindent\fontsize{9pt}{11.5pt}\selectfont
+Computer Science \& Engineering graduate (2026) with hands-on experience building and deploying full-stack applications using Python, JavaScript, React.js, Next.js, Node.js, Express.js, REST APIs, and relational databases. Experienced in collaborative project development, translating requirements into application features, and working across frontend workflows, backend services, and data operations. Strong foundation in Object-Oriented Programming, SQL, SDLC, Git, and problem-solving, with basic experience in debugging and software testing. Interested in learning cybersecurity concepts and contributing to reliable SaaS products.
+
+% ── TECHNICAL SKILLS ──
+\section*{Technical Skills}
+\noindent\fontsize{9pt}{11.5pt}\selectfont
+\begin{tabular}{@{}p{0.25\textwidth} p{0.73\textwidth}@{}}
+  \textbf{Programming Languages:} & Python, Java, JavaScript, C \\
+  \textbf{Frontend Development:} & React.js, Next.js, HTML5, CSS3 \\
+  \textbf{Backend \& APIs:} & Node.js, Express.js, REST APIs, API Integration, JSON \\
+  \textbf{Databases \& SQL:} & PostgreSQL, SQLite, Supabase, SQL \\
+  \textbf{Computer Science:} & Object-Oriented Programming (OOP), Programming Fundamentals, SDLC \\
+  \textbf{Engineering Practices:} & Basic Debugging, Basic Software Testing, Problem-Solving, Technical Documentation \\
+  \textbf{Developer Tools:} & Git, GitHub, VS Code, Postman, Chrome DevTools, Vercel, Docker (Basics) \\
+  \textbf{AI-Assisted Development:} & GitHub Copilot, ChatGPT, Claude, Gemini
+\end{tabular}
+
+% ── PROJECTS ──
+\section*{Projects}
+\noindent\fontsize{9pt}{11.5pt}\selectfont
+\textbf{Trashium -- Incentivized Waste Management Platform} \hfill \href{https://github.com/AmartyaSingh07/Trashium}{GitHub} $\cdot$ \href{https://www.trashium.com}{Live Demo}
+\begin{itemize}
+  \item Led collaborative development of a full-stack platform using Next.js, React, and Supabase, contributing to application workflows and feature delivery.
+  \item Built a Python price-prediction model using Linear Regression and Random Forest; implemented Leaflet-based route optimization and a 20-tier gamification experience.
+\end{itemize}
+
+\vspace{3pt}
+\noindent
+\textbf{VetanFlow -- Role-Based Payroll Operations Platform} \hfill \href{https://github.com/FardeenAnsari/vetanflow}{GitHub} $\cdot$ \href{https://vetanflow.vercel.app/}{Live Demo}
+\begin{itemize}
+  \item Developed a database-driven application using React, Express.js, PostgreSQL, and Supabase, connecting role-based workflows with backend APIs and database operations.
+  \item Implemented Row-Level Security, month-locking, and database immutability rules to support access control and data integrity.
+\end{itemize}
+
+\vspace{3pt}
+\noindent
+\textbf{Meneu -- Offline-First Restaurant POS Mobile Application} \hfill \href{https://github.com/FardeenAnsari/RestaurantPOS}{GitHub}
+\begin{itemize}
+  \item Built an offline-first mobile application using React Native, Expo, and SQLite, with local data persistence.
+  \item Developed features for table management, menu ordering, billing, discounts, and GST-compliant receipt generation.
+\end{itemize}
+
+% ── INTERNSHIP EXPERIENCE ──
+\section*{Internship Experience}
+\noindent\fontsize{9pt}{11.5pt}\selectfont
+\textbf{Summer Intern -- Embedded Systems \& IoT -- Jadavpur University} \hfill 2024 \quad \href{https://drive.google.com/file/d/1XP1j9ylUgpK528J4_yt1luJFLb9CBnwl/view?usp=drive_link}{Certificate}
+\begin{itemize}
+  \item Completed a 5-week technical internship involving Python, MATLAB, and machine-learning integration; received \textbf{Grade A}.
+  \item Collaborated on a Smart Bee Hive Monitoring System, applying programming and analytical problem-solving to a practical project.
+\end{itemize}
+
+% ── EDUCATION ──
+\section*{Education}
+\noindent\fontsize{9pt}{11.5pt}\selectfont
+\textbf{B.Tech $\mid$ Computer Science \& Engineering $\mid$ MAKAUT} \hfill 2022--2026\\
+Supreme Knowledge Foundation Group of Institutions \hfill \textbf{CGPA: 7.52}\\[2pt]
+\textbf{Class XII $\mid$ WBCHSE} \hfill 2022\\
+Jagatdal Chasma-I Rahamat High School \hfill \textbf{77.2\%}\\[2pt]
+\textbf{Class X $\mid$ WBBSE} \hfill 2020\\
+Jagatdal Sri Hari Uchcha Vidyalaya \hfill \textbf{69.0\%}
+
+% ── ACHIEVEMENTS ──
+\section*{Achievements}
+\noindent\fontsize{9pt}{11.5pt}\selectfont
+\textbf{Smart India Hackathon -- National Finalist} \hfill 2023 \quad \href{https://drive.google.com/file/d/1LSpvR00tUAIy6ErloFasTqFllAVgryOH/view?usp=drive_link}{View Credential}
+\begin{itemize}
+  \item Collaborated with a team to develop a full-stack platform for routing civic issues to government authorities.
+\end{itemize}
+
+\vspace{2pt}
+\noindent
+\textbf{NGP-DST Geo Innovation Challenge} \hfill 2024 \quad \href{https://drive.google.com/file/d/1BiXBPspHi2SLBWQ2HGbcPzRJvPHHoiAD/view?usp=drive_link}{View Credential}
+\begin{itemize}
+  \item Presented a flood risk management and early warning system at a national-level innovation challenge.
+\end{itemize}
+
+\vspace{2pt}
+\noindent
+\textbf{International Seminar Presenter (RTET 2024)} \hfill 2024 \quad \href{https://drive.google.com/file/d/1mB_UXSquJLat85Gv0f_MCwX6FhphC85N/view?usp=drive_link}{View Credential}
+\begin{itemize}
+  \item Presented a research framework on NLP model evaluation at an international seminar.
+\end{itemize}
+
+\end{document}

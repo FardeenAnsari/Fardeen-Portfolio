@@ -1,217 +1,148 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import { TIMELINE } from "@/lib/data";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { Star } from "lucide-react";
+import { useState } from "react";
+import { GraduationCap, Briefcase, Award, Eye } from "lucide-react";
+import { PreviewModal, PreviewItem } from "@/components/ui/PreviewModal";
 
-const CATEGORY_STYLES: Record<string, { color: string; bg: string; label: string }> = {
-  education: { color: "text-blue-400", bg: "bg-blue-500/10 border-blue-500/20", label: "Education" },
-  achievement: { color: "text-yellow-400", bg: "bg-yellow-500/10 border-yellow-500/20", label: "Achievement" },
-  experience: { color: "text-green-400", bg: "bg-green-500/10 border-green-500/20", label: "Experience" },
-  project: { color: "text-purple-400", bg: "bg-purple-500/10 border-purple-500/20", label: "Project" },
+const JU_CERTIFICATE_ITEM: PreviewItem = {
+  id: "jadavpur-esiot-cert",
+  title: "Summer Internship — Embedded Systems & IoT",
+  subtitle: "Jadavpur University — Grade A Honors",
+  imageUrl: "/images/certificates/esiot.jpeg",
+  category: "Research Internship",
+  date: "Summer 2024",
+  description: "Official credential awarded by Jadavpur University for 5-week intensive research internship in Embedded Systems and IoT, completing Smart Bee Hive signal analysis with highest Grade A.",
 };
 
-export function JourneySection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+const MILESTONES = [
+  {
+    period: "2022 — 2026",
+    badge: "GRADUATED",
+    title: "Bachelor of Technology — Computer Science & Engineering",
+    institution: "Supreme Knowledge Foundation Group of Institutions (MAKAUT)",
+    description:
+      "Graduated in July 2026 with a cumulative 7.52 CGPA and zero academic backlogs across 8 semesters. Rigorous coursework spanning Data Structures, DBMS, Computer Networks, and Software Engineering. Built Trashium (waste mgmt ML platform) and VetanFlow (payroll RBAC platform) as capstone software systems.",
+    metric: "CGPA 7.52",
+    hasCert: false,
+  },
+  {
+    period: "2024 (5 Weeks)",
+    badge: "RESEARCH INTERNSHIP",
+    title: "Summer Intern — Embedded Systems & IoT",
+    institution: "Jadavpur University",
+    description:
+      "Selected for an intensive research internship in Embedded Systems & IoT. Contributed to a Smart Bee Hive environmental monitoring system, developing signal analysis routines with Python and MATLAB, and gaining hands-on exposure to FPGA, Verilog, Arduino, and micro-sensor networks. Completed with highest honors.",
+    metric: "Grade A",
+    hasCert: true,
+  },
+  {
+    period: "2020 — 2022",
+    badge: "HIGHER SECONDARY",
+    title: "Higher Secondary Examination (Class XII)",
+    institution: "WBCHSE — Jagatdal Chasma-I Rahamat High School",
+    description:
+      "Completed higher secondary education in the Science stream with a strong foundation in Mathematics, Physics, and analytical problem solving.",
+    metric: "77.2%",
+    hasCert: false,
+  },
+  {
+    period: "2018 — 2020",
+    badge: "SECONDARY",
+    title: "Secondary Examination (Class X)",
+    institution: "WBBSE — Jagatdal Sri Hari Uchcha Vidyalaya",
+    description:
+      "Completed foundational schooling covering general sciences, mathematics, and regional languages.",
+    metric: "69.0%",
+    hasCert: false,
+  },
+];
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start center", "end end"]
-  });
-  
-  const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
+export function JourneySection() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <section
-      id="journey"
-      ref={ref}
-      className="section-padding relative"
-      aria-label="Engineering journey timeline"
-    >
-      <div className="container-portfolio">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="space-y-16"
-        >
-          {/* Header */}
-          <div className="space-y-4">
-            <span className="section-label">Engineering Journey</span>
-            <h2 className="text-4xl lg:text-5xl font-bold mt-4">
-              A story told in{" "}
-              <span className="font-serif italic text-gradient">milestones</span>
+    <section id="journey" className="section border-t border-[var(--color-rule)]" aria-label="Academic and Practical Journey">
+      <div className="container">
+        
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12 lg:mb-16">
+          <div className="space-y-3">
+            <div className="section-label">Academic &amp; Professional Trajectory</div>
+            <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-[var(--color-ink)]">
+              Journey &amp; Education
             </h2>
-            <p className="text-secondary max-w-xl">
-              From classrooms to conference halls — every achievement that shaped who I am.
-            </p>
           </div>
+          <p className="text-sm sm:text-base text-[var(--color-ink-2)] max-w-[42ch]">
+            Solid computer science foundation backed by research, competitive engineering, and rigorous academics.
+          </p>
+        </div>
 
-          {/* Timeline */}
-          <div className="relative">
-            {/* Background line track */}
-            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-border-subtle/50" />
-            
-            {/* Scroll-filling Vertical line */}
-            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px">
-              <motion.div
-                className="h-full w-[2px] -ml-[0.5px] bg-gradient-to-b from-accent-blue via-[#C08552] to-transparent origin-top"
-                style={{ scaleY }}
-              />
-            </div>
+        {/* Rows Composition */}
+        <div className="divide-y divide-[var(--color-rule)] border-y border-[var(--color-rule)]">
+          {MILESTONES.map((item, index) => (
+            <div
+              key={index}
+              className="py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start hover:bg-[var(--color-paper-2)]/50 transition-colors px-2 sm:px-4 rounded-xl"
+            >
+              {/* Col 1: Timeline & Badge */}
+              <div className="lg:col-span-3 space-y-2">
+                <div className="font-mono text-sm font-semibold text-[var(--color-ink)]">
+                  {item.period}
+                </div>
+                <div className="inline-block px-2 py-0.5 rounded text-[11px] font-mono tracking-wider uppercase border border-[var(--color-rule)] bg-[var(--color-paper-3)] text-[var(--color-ink-3)]">
+                  {item.badge}
+                </div>
+              </div>
 
-            {/* Timeline items */}
-            <div className="space-y-8 md:space-y-0">
-              {TIMELINE.map((item, idx) => {
-                const isLeft = idx % 2 === 0;
-                const style = CATEGORY_STYLES[item.category];
-                const isActive = activeIndex === idx;
+              {/* Col 2: Degree/Role + Description */}
+              <div className="lg:col-span-7 space-y-2">
+                <h3 className="text-lg sm:text-xl font-bold text-[var(--color-ink)] font-display">
+                  {item.title}
+                </h3>
+                <div className="text-sm font-medium text-[var(--color-accent)]">
+                  {item.institution}
+                </div>
+                <p className="text-sm text-[var(--color-ink-2)] leading-relaxed pt-1">
+                  {item.description}
+                </p>
 
-                return (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.5 }}
-                    className={cn(
-                      "relative md:grid md:grid-cols-2 md:gap-8 items-center",
-                      "pl-14 sm:pl-16 md:pl-0"
-                    )}
-                  >
-                    {/* Content */}
-                    <div className={cn("md:pr-12", isLeft ? "md:text-right md:pr-12" : "md:col-start-2 md:pl-12")}>
-                      <motion.button
-                        onClick={() => setActiveIndex(isActive ? null : idx)}
-                        whileHover={{ scale: 1.02 }}
-                        className={cn(
-                          "w-full text-left glass-card p-4 sm:p-5 border transition-all duration-300",
-                          isActive ? "border-accent-blue/40 shadow-glow-sm" : "border-border-subtle"
-                        )}
-                      >
-                        <div className={cn("flex items-center gap-2 mb-2", isLeft && "md:flex-row-reverse")}>
-                          <span className={cn("text-xs font-semibold px-2 py-1 rounded-full border", style.bg, style.color)}>
-                            {style.label}
-                          </span>
-                          <span className="text-xs text-muted font-mono">{item.year}</span>
-                          {item.highlight && (
-                            <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 font-semibold">
-                              <Star size={11} fill="currentColor" />
-                              Highlight
-                            </span>
-                          )}
-                        </div>
-                        <h3 className="font-bold text-primary mb-1">{item.title}</h3>
-                        <p className="text-secondary text-sm leading-relaxed">{item.description}</p>
-
-                        {/* Gallery preview */}
-                        {item.gallery && item.gallery.length > 0 && isActive && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            className="mt-4 grid grid-cols-2 gap-2"
-                          >
-                            {item.gallery.slice(0, 4).map((img, i) => (
-                              <div
-                                key={i}
-                                className="relative aspect-video rounded-xl overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  setPreviewImage(img);
-                                }}
-                              >
-                                <Image
-                                  src={img}
-                                  alt={`${item.title} photo ${i + 1}`}
-                                  fill
-                                  className="object-contain"
-                                  sizes="200px"
-                                />
-                              </div>
-                            ))}
-                          </motion.div>
-                        )}
-
-                        {/* Certificate preview */}
-                        {item.certificate && isActive && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            className="mt-4"
-                          >
-                            <div
-                              className="relative w-full rounded-xl overflow-hidden border border-border-subtle cursor-pointer hover:opacity-80 transition-opacity bg-surface-mid/30"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setPreviewImage(item.certificate!);
-                              }}
-                            >
-                              <Image
-                                src={item.certificate}
-                                alt={`${item.title} certificate`}
-                                width={600}
-                                height={450}
-                                className="w-full h-auto object-contain"
-                                sizes="(max-width: 768px) 100vw, 400px"
-                              />
-                            </div>
-                          </motion.div>
-                        )}
-                      </motion.button>
-                    </div>
-
-                    {/* Center dot */}
-                    <div
-                      className={cn(
-                        "absolute left-8 top-5 md:left-1/2 md:top-1/2",
-                        "w-5 h-5 rounded-full border-2 border-accent-blue bg-bg-primary",
-                        "-translate-x-1/2 -translate-y-0 md:-translate-y-1/2",
-                        "flex items-center justify-center text-sm z-10"
-                      )}
+                {item.hasCert && (
+                  <div className="pt-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsModalOpen(true)}
+                      className="inline-flex items-center gap-1.5 text-xs font-mono text-[var(--color-ink-2)] hover:text-[var(--color-ink)] underline underline-offset-4"
+                      aria-label="Preview Jadavpur University Certificate"
                     >
-                      <motion.div
-                        className="w-2 h-2 rounded-full bg-accent-blue"
-                        animate={{ scale: [1, 1.3, 1] }}
-                        transition={{ duration: 2, repeat: Infinity, delay: idx * 0.3 }}
-                      />
-                    </div>
+                      <Eye size={13} />
+                      <span>Preview Jadavpur University Certificate</span>
+                    </button>
+                  </div>
+                )}
+              </div>
 
-                    {/* Year label — mobile */}
-                    <div className="absolute left-12 top-5 md:hidden">
-                      <span className="text-xs text-muted font-mono">{item.year}</span>
-                    </div>
-                  </motion.div>
-                );
-              })}
+              {/* Col 3: Highlight Metric */}
+              <div className="lg:col-span-2 lg:text-right">
+                <div className="font-mono text-xl sm:text-2xl font-bold text-[var(--color-ink)]">
+                  {item.metric}
+                </div>
+                <div className="text-[11px] font-mono text-[var(--color-ink-3)] uppercase">
+                  Verified Score
+                </div>
+              </div>
+
             </div>
-          </div>
-        </motion.div>
+          ))}
+        </div>
+
       </div>
 
-      <AnimatePresence>
-        {previewImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-background/90 backdrop-blur-sm p-4 md:p-12 cursor-pointer"
-            onClick={() => setPreviewImage(null)}
-          >
-            <div className="relative w-full h-full max-w-5xl max-h-[80vh] rounded-2xl overflow-hidden shadow-2xl border border-border-subtle">
-              <Image src={previewImage} alt="Preview" fill className="object-contain" />
-            </div>
-            <div className="absolute top-6 right-6 text-primary/50 hover:text-primary transition-colors text-sm font-mono tracking-widest uppercase">
-              Click anywhere to close
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* In-app Certificate Modal */}
+      <PreviewModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        currentItem={JU_CERTIFICATE_ITEM}
+      />
     </section>
   );
 }

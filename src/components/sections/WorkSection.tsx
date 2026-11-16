@@ -1,371 +1,243 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import {
-  ArrowUpRight,
-  BriefcaseBusiness,
-  Check,
-  ExternalLink,
-  Leaf,
-  Link2,
-  type LucideIcon,
-  Recycle,
-  UtensilsCrossed,
-} from "lucide-react";
+import { useState } from "react";
+import { ArrowUpRight, Github, ExternalLink, Layers, Database, Cpu, Sparkles } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
-import { PROJECTS } from "@/lib/data";
-import { cn } from "@/lib/utils";
-
-const PROJECT_GRADIENT: Record<string, string> = {
-  trashium: "from-emerald-500/20 via-teal-500/10 to-transparent",
-  vetanflow: "from-blue-500/20 via-indigo-500/10 to-transparent",
-  restaurantpos: "from-orange-500/20 via-amber-500/10 to-transparent",
-  "tiny-link": "from-cyan-500/20 via-blue-500/10 to-transparent",
-};
-
-const PROJECT_ICONS: Record<string, LucideIcon> = {
-  trashium: Recycle,
-  vetanflow: BriefcaseBusiness,
-  restaurantpos: UtensilsCrossed,
-  "tiny-link": Link2,
-};
 
 export function WorkSection() {
-  const router = useRouter();
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
-
   return (
-    <section
-      id="work"
-      ref={ref}
-      className="section-padding relative"
-      aria-label="Featured projects"
-    >
-      <div className="container-portfolio">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6 }}
-          className="space-y-16"
-        >
-          {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
-            <div className="space-y-4">
-              <span className="section-label">Featured Work</span>
-              <h2 className="text-4xl lg:text-5xl font-bold mt-4">
-                Products I&apos;ve{" "}
-                <span className="font-serif italic text-gradient">built</span>
-              </h2>
-              <p className="text-secondary max-w-lg">
-                Each project is a story of problem-solving, engineering depth, and design craft.
-              </p>
-            </div>
-            <Link
-              href="/work"
-              className="btn-ghost flex items-center gap-2 self-start sm:self-end whitespace-nowrap"
-              data-cursor-label="All"
-            >
-              View All Projects
-              <ArrowUpRight size={16} />
-            </Link>
+    <section id="work" className="section border-t border-[var(--color-rule)]" aria-label="Selected Projects">
+      <div className="container">
+        
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12 lg:mb-16">
+          <div className="space-y-3">
+            <div className="section-label">Selected Engineering</div>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[var(--color-ink)]">
+              Featured Work
+            </h2>
           </div>
+          <p className="text-sm sm:text-base text-[var(--color-ink-2)] max-w-[42ch]">
+            Real-world systems with strict data modeling, scalable APIs, and performance-first interfaces.
+          </p>
+        </div>
 
-          {/* Trashium — Hero Feature */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.8 }}
-          >
-            <TrashiumHeroCard />
-          </motion.div>
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+          
+          {/* ── CARD 1: Trashium (Full 12 cols flagship) ── */}
+          <div className="lg:col-span-12 rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 sm:p-10 transition-colors hover:border-[var(--color-accent)]/40 relative overflow-hidden group">
+            <div className="grid lg:grid-cols-12 gap-8 items-start">
+              
+              <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-6">
+                <div>
+                  <div className="flex items-center gap-3 text-xs font-mono text-[var(--color-ink-3)] mb-3">
+                    <span>FLAGSHIP SYSTEM</span>
+                    <span>·</span>
+                    <span>COLLABORATIVE</span>
+                    <span>·</span>
+                    <span>2024</span>
+                  </div>
 
-          {/* Other projects grid */}
-          <div className="grid md:grid-cols-3 gap-6">
-            {PROJECTS.filter((p) => p.id !== "trashium").map((project, i) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.4 + i * 0.1, duration: 0.6 }}
-              >
-                <ProjectCard
-                  project={project}
-                  isHovered={hoveredProject === project.id}
-                  onHover={() => setHoveredProject(project.id)}
-                  onLeave={() => setHoveredProject(null)}
-                />
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[var(--color-ink)] mb-3">
+                    Trashium
+                  </h3>
 
-function TrashiumHeroCard() {
-  const router = useRouter();
-  const trashium = PROJECTS.find((p) => p.id === "trashium")!;
-  const ProjectIcon = PROJECT_ICONS[trashium.id];
+                  <p className="text-base text-[var(--color-ink-2)] leading-relaxed mb-6">
+                    Incentivized waste-management platform designed to drive community recycling. 
+                    Integrates a Python machine learning pricing model (Linear Regression &amp; Random Forest) 
+                    for dynamic recyclable valuation, interactive Leaflet route optimization for waste pickup crews, 
+                    and a 20-tier gamification loyalty engine.
+                  </p>
 
-  return (
-    <div onClick={() => router.push(`/work/${trashium.id}`)} className="group block cursor-pointer">
-      <motion.div
-        whileHover={{ y: -4 }}
-        transition={{ duration: 0.3 }}
-        className="relative glass-card overflow-hidden border border-border-subtle hover:border-emerald-500/30 transition-colors duration-500 p-0"
-        style={{ padding: 0 }}
-      >
-        {/* Background gradient */}
-        <div
-          className={cn(
-            "absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500",
-            PROJECT_GRADIENT[trashium.id]
-          )}
-        />
-
-        <div className="relative p-8 md:p-10 grid md:grid-cols-2 gap-8 items-center">
-          {/* Left */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10 text-emerald-400">
-                <ProjectIcon size={22} />
-              </span>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="section-label text-xs">Flagship Project</span>
-                  <span className="tech-badge text-emerald-400 border-emerald-500/20 bg-emerald-500/10">
-                    {trashium.status}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-3xl lg:text-4xl font-bold text-primary mb-2 group-hover:text-gradient transition-all">
-                {trashium.title}
-              </h3>
-              <p className="text-accent-blue font-mono text-sm mb-4">{trashium.tagline}</p>
-              <p className="text-secondary leading-relaxed">{trashium.description}</p>
-            </div>
-
-            {/* Highlights */}
-            <div className="space-y-2">
-              {trashium.highlights.slice(0, 3).map((h, i) => (
-                <div key={i} className="flex items-start gap-2">
-                  <Check size={15} className="mt-0.5 flex-shrink-0 text-emerald-400" />
-                  <span className="text-secondary text-sm">{h}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Tech stack */}
-            <div className="flex flex-wrap gap-2">
-              {trashium.tech.slice(0, 6).map((t) => (
-                <span key={t} className="tech-badge">{t}</span>
-              ))}
-            </div>
-
-            {/* Links */}
-            <div className="flex gap-3">
-              <a
-                href={trashium.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="btn-primary flex items-center gap-2 text-xs px-4 py-2"
-                data-cursor-label="Visit"
-              >
-                <ExternalLink size={14} /> Live Demo
-              </a>
-              <a
-                href={trashium.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="btn-ghost flex items-center gap-2 text-xs px-4 py-2"
-                data-cursor-label="Code"
-              >
-                <FaGithub size={14} /> Source
-              </a>
-            </div>
-          </div>
-
-          {/* Right — Visual */}
-          <div className="relative hidden md:block">
-            <div className="glass rounded-2xl p-6 border border-emerald-500/20 space-y-4">
-              {/* Mock UI */}
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-3 h-3 rounded-full bg-red-400/60" />
-                <div className="w-3 h-3 rounded-full bg-yellow-400/60" />
-                <div className="w-3 h-3 rounded-full bg-green-400/60" />
-                <div className="ml-2 flex-1 h-5 rounded glass border border-border-subtle flex items-center px-2">
-                  <span className="text-xs text-muted font-mono">trashium.com</span>
-                </div>
-              </div>
-
-              {/* Stats */}
-              {[
-                { label: "Green Credits Earned", value: "12,450", trend: "+18%" },
-                { label: "KG Recycled", value: "8,920 kg", trend: "+24%" },
-                { label: "CO₂ Saved", value: "2.4 tons", trend: "+31%" },
-                { label: "Active Households", value: "847", trend: "+15%" },
-              ].map((stat) => (
-                <div key={stat.label} className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-border-subtle">
-                  <span className="text-xs text-muted">{stat.label}</span>
-                  <div className="text-right">
-                    <span className="text-sm font-bold text-primary block">{stat.value}</span>
-                    <span className="text-xs text-emerald-400">{stat.trend}</span>
+                  {/* Tech stack tags */}
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    <span className="tech-tag">Next.js</span>
+                    <span className="tech-tag">React.js</span>
+                    <span className="tech-tag">Supabase</span>
+                    <span className="tech-tag">Python (scikit-learn)</span>
+                    <span className="tech-tag">Leaflet Maps</span>
+                    <span className="tech-tag">Dynamic Pricing ML</span>
                   </div>
                 </div>
-              ))}
 
-              {/* Eco tier badge */}
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                <Leaf size={24} className="text-emerald-400" />
-                <div>
-                  <p className="text-xs text-emerald-400 font-semibold">Eco Level 12</p>
-                  <p className="text-xs text-muted">Forest Guardian</p>
+                {/* Actions */}
+                <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-[var(--color-rule)]">
+                  <a
+                    href="https://www.trashium.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary"
+                    aria-label="Visit Trashium live website"
+                  >
+                    <span>Live Platform</span>
+                    <ExternalLink size={15} />
+                  </a>
+
+                  <a
+                    href="https://github.com/AmartyaSingh07/Trashium"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-ghost"
+                    aria-label="View Trashium GitHub repository"
+                  >
+                    <FaGithub size={15} />
+                    <span>View Repository</span>
+                  </a>
                 </div>
               </div>
+
+              {/* Architectural Feature Box */}
+              <div className="lg:col-span-5 rounded-xl border border-[var(--color-rule)] bg-[var(--color-paper-3)] p-6 space-y-4 font-mono text-xs">
+                <div className="text-[var(--color-ink-3)] border-b border-[var(--color-rule)] pb-2 flex items-center justify-between">
+                  <span>SUBSYSTEM ARCHITECTURE</span>
+                  <span className="text-emerald-400">STATUS: PROD</span>
+                </div>
+
+                <div className="space-y-3 text-[var(--color-ink-2)]">
+                  <div>
+                    <span className="text-zinc-500">&#47;&#47; Dynamic Valuation Engine</span>
+                    <p className="text-[var(--color-ink)] font-sans text-xs pt-1">
+                      scikit-learn Linear Regression + Random Forest models predicting fair-market rates for segregated plastics and metals.
+                    </p>
+                  </div>
+
+                  <div>
+                    <span className="text-zinc-500">&#47;&#47; Geospatial Dispatch</span>
+                    <p className="text-[var(--color-ink)] font-sans text-xs pt-1">
+                      Route optimization algorithm minimizing collection vehicle mileage across municipal pickup zones.
+                    </p>
+                  </div>
+
+                  <div>
+                    <span className="text-zinc-500">&#47;&#47; Gamification Tier Logic</span>
+                    <p className="text-[var(--color-ink)] font-sans text-xs pt-1">
+                      20 ecological status levels driving sustained household participation via tokenized Green Credits.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
             </div>
-
-            {/* Floating label */}
-            <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
-              className="absolute -bottom-6 right-4 glass rounded-xl px-3 py-2 border border-border-subtle"
-            >
-              <span className="text-xs font-mono text-accent-blue">ML Pricing Engine</span>
-            </motion.div>
           </div>
-        </div>
 
-        {/* Arrow indicator */}
-        <div className="absolute top-6 right-6">
-          <motion.div
-            whileHover={{ x: 2, y: -2 }}
-            className="w-9 h-9 rounded-xl glass border border-border-subtle flex items-center justify-center text-secondary group-hover:text-primary group-hover:border-accent-blue/30 transition-all"
-          >
-            <ArrowUpRight size={16} />
-          </motion.div>
-        </div>
-      </motion.div>
-    </div>
-  );
-}
+          {/* ── CARD 2: VetanFlow (6 cols) ── */}
+          <div className="lg:col-span-6 rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 sm:p-8 flex flex-col justify-between transition-colors hover:border-[var(--color-accent)]/40 group">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between text-xs font-mono text-[var(--color-ink-3)]">
+                <span>ENTERPRISE BACKEND</span>
+                <span>2024</span>
+              </div>
 
-function ProjectCard({
-  project,
-  isHovered,
-  onHover,
-  onLeave,
-}: {
-  project: (typeof PROJECTS)[0];
-  isHovered: boolean;
-  onHover: () => void;
-  onLeave: () => void;
-}) {
-  const ProjectIcon = PROJECT_ICONS[project.id] ?? Link2;
+              <h3 className="text-xl sm:text-2xl font-bold text-[var(--color-ink)]">
+                VetanFlow
+              </h3>
 
-  const router = useRouter();
+              <p className="text-sm text-[var(--color-ink-2)] leading-relaxed">
+                Role-based payroll operations platform built with architectural security at its center. 
+                Features granular Row-Level Security (RLS) for 5 distinct roles (Owners, HR, Finance, Managers, Employees), 
+                month-locking workflows, and database-enforced immutability to eliminate payroll discrepancies.
+              </p>
 
-  return (
-    <div onClick={() => router.push(`/work/${project.id}`)} className="group block h-full cursor-pointer">
-      <motion.div
-        whileHover={{ y: -6, scale: 1.01 }}
-        transition={{ duration: 0.3 }}
-        onHoverStart={onHover}
-        onHoverEnd={onLeave}
-        className="relative h-full glass-card overflow-hidden border border-border-subtle hover:border-border-default p-6 space-y-5"
-      >
-        {/* Background */}
-        <div
-          className={cn(
-            "absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500",
-            PROJECT_GRADIENT[project.id]
-          )}
-        />
-
-        <div className="relative space-y-4">
-          {/* Header */}
-          <div className="flex items-start justify-between">
-            <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-border-subtle bg-white/5 text-accent-blue">
-                <ProjectIcon size={19} />
-              </span>
-              <div>
-                <span className={cn(
-                  "text-xs px-2 py-0.5 rounded-full font-semibold",
-                  project.status === "Live" ? "text-emerald-400 bg-emerald-500/10 border border-emerald-500/20" :
-                  project.status === "Released" ? "text-blue-400 bg-blue-500/10 border border-blue-500/20" :
-                  "text-muted bg-border-subtle border border-border-subtle"
-                )}>
-                  {project.status}
-                </span>
+              <div className="flex flex-wrap gap-2 pt-2">
+                <span className="tech-tag">React 19</span>
+                <span className="tech-tag">Express 5</span>
+                <span className="tech-tag">PostgreSQL</span>
+                <span className="tech-tag">Supabase RLS</span>
+                <span className="tech-tag">REST APIs</span>
               </div>
             </div>
-            <motion.div
-              whileHover={{ x: 2, y: -2 }}
-              className="w-8 h-8 rounded-lg glass border border-border-subtle flex items-center justify-center text-muted group-hover:text-primary transition-colors"
-            >
-              <ArrowUpRight size={14} />
-            </motion.div>
-          </div>
 
-          {/* Title */}
-          <div>
-            <h3 className="text-xl font-bold text-primary mb-1 group-hover:text-gradient transition-all duration-300">
-              {project.title}
-            </h3>
-            <p className="text-xs text-muted font-mono">{project.subtitle}</p>
-          </div>
-
-          {/* Description */}
-          <p className="text-secondary text-sm leading-relaxed line-clamp-3">
-            {project.description}
-          </p>
-
-          {/* Tech */}
-          <div className="flex flex-wrap gap-1.5">
-            {project.tech.slice(0, 4).map((t) => (
-              <span key={t} className="tech-badge text-xs py-1 px-2">{t}</span>
-            ))}
-            {project.tech.length > 4 && (
-              <span className="tech-badge text-xs py-1 px-2 text-muted">+{project.tech.length - 4}</span>
-            )}
-          </div>
-
-          {/* Links */}
-          <div className="flex gap-2 pt-2 border-t border-border-subtle">
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-1.5 text-xs text-secondary hover:text-primary transition-colors"
-            >
-              <FaGithub size={12} /> Code
-            </a>
-            {project.live !== "#" && (
+            <div className="flex items-center gap-3 pt-6 mt-6 border-t border-[var(--color-rule)]">
               <a
-                href={project.live}
+                href="https://vetanflow.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-1.5 text-xs text-accent-blue hover:underline"
+                className="btn-primary"
+                aria-label="Open VetanFlow live application"
               >
-                <ExternalLink size={12} /> Live
+                <span>Live App</span>
+                <ArrowUpRight size={14} />
               </a>
-            )}
+              <a
+                href="https://github.com/FardeenAnsari/vetanflow"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost"
+                aria-label="View VetanFlow repository on GitHub"
+              >
+                <FaGithub size={14} />
+                <span>Code</span>
+              </a>
+            </div>
           </div>
+
+          {/* ── CARD 3: Meneu / RestaurantPOS (6 cols) ── */}
+          <div className="lg:col-span-6 rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 sm:p-8 flex flex-col justify-between transition-colors hover:border-[var(--color-accent)]/40 group">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between text-xs font-mono text-[var(--color-ink-3)]">
+                <span>MOBILE / OFFLINE-FIRST</span>
+                <span>2024</span>
+              </div>
+
+              <h3 className="text-xl sm:text-2xl font-bold text-[var(--color-ink)]">
+                Meneu / RestaurantPOS
+              </h3>
+
+              <p className="text-sm text-[var(--color-ink-2)] leading-relaxed">
+                Offline-first mobile restaurant point-of-sale built for high-throughput hospitality environments. 
+                Powered by React Native and Expo with an embedded local SQLite engine for zero-latency table management, 
+                order dispatching, split billing, discount calculations, and GST-compliant receipt generation.
+              </p>
+
+              <div className="flex flex-wrap gap-2 pt-2">
+                <span className="tech-tag">React Native</span>
+                <span className="tech-tag">Expo SDK 57</span>
+                <span className="tech-tag">SQLite</span>
+                <span className="tech-tag">Offline-First</span>
+                <span className="tech-tag">GST Receipts</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 pt-6 mt-6 border-t border-[var(--color-rule)]">
+              <a
+                href="https://github.com/FardeenAnsari/RestaurantPOS"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
+                aria-label="View RestaurantPOS repository on GitHub"
+              >
+                <FaGithub size={14} />
+                <span>GitHub Repository</span>
+              </a>
+            </div>
+          </div>
+
+          {/* ── CARD 4: Tiny-Link & AgriSense Architecture Note ── */}
+          <div className="lg:col-span-12 rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <h4 className="text-base font-bold text-[var(--color-ink)]">Tiny-Link</h4>
+                  <span className="tech-tag">Utility Service</span>
+                </div>
+                <p className="text-sm text-[var(--color-ink-2)] max-w-[65ch]">
+                  High-throughput URL shortener built on Node.js, Express, and PostgreSQL with atomic redirection counters and cryptographic short hash collision handling.
+                </p>
+              </div>
+              <div className="flex items-center gap-2 font-mono text-xs text-[var(--color-ink-3)]">
+                <span>Node.js</span>
+                <span>·</span>
+                <span>Express</span>
+                <span>·</span>
+                <span>PostgreSQL</span>
+              </div>
+            </div>
+          </div>
+
         </div>
-      </motion.div>
-    </div>
+
+      </div>
+    </section>
   );
 }

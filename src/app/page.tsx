@@ -2,9 +2,10 @@
 
 import { useEffect } from "react";
 import { HeroSection } from "@/components/sections/HeroSection";
-import { AboutSection, MindSection } from "@/components/sections/AboutSection";
-import { JourneySection } from "@/components/sections/JourneySection";
 import { WorkSection } from "@/components/sections/WorkSection";
+import { GitHubStatusSection } from "@/components/sections/GitHubStatusSection";
+import { AboutSection } from "@/components/sections/AboutSection";
+import { JourneySection } from "@/components/sections/JourneySection";
 import { AchievementsSection } from "@/components/sections/AchievementsSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { Footer } from "@/components/sections/Footer";
@@ -69,10 +70,10 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <AboutSection />
-      <MindSection />
-      <JourneySection />
       <WorkSection />
+      <GitHubStatusSection />
+      <AboutSection />
+      <JourneySection />
       <AchievementsSection />
       <ContactSection />
       <Footer />
