@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { Award, Eye, Globe2, Medal, Waves, Images, Sparkles } from "lucide-react";
+import { useState, useMemo } from "react";
+import { Eye, Images, Sparkles, LayoutGrid, Rotate3d, Filter } from "lucide-react";
 import Image from "next/image";
 import { PreviewModal, PreviewItem } from "@/components/ui/PreviewModal";
+import { RollingGallery } from "@/components/ui/RollingGallery";
 
 const CERTIFICATES: PreviewItem[] = [
   {
@@ -35,7 +36,20 @@ const CERTIFICATES: PreviewItem[] = [
   },
 ];
 
-const EVENT_GALLERY: PreviewItem[] = [
+/**
+ * Authentic visual assets for summits, hackathons, and research credentials.
+ * The attached SIH 2024 problem statement screenshot (sih2024.jpeg) has been cleanly removed.
+ */
+const SUMMIT_EVENT_ITEMS: PreviewItem[] = [
+  {
+    id: "gic-presentation",
+    title: "Technical Defence & Live Demonstration",
+    subtitle: "Geo Innovation Challenge — National Summit",
+    imageUrl: "/images/events/gic-1.jpg",
+    category: "Live Telemetry",
+    date: "2024",
+    description: "Delivering the live system demonstration and telemetry dashboard for regional flood prediction before the expert evaluation jury.",
+  },
   {
     id: "gic-fardeen-pic",
     title: "Fardeen at Geo Innovation Challenge",
@@ -46,22 +60,13 @@ const EVENT_GALLERY: PreviewItem[] = [
     description: "Fardeen presenting the flood-risk telemetry architecture before the evaluation panel at the national Geo Innovation Challenge.",
   },
   {
-    id: "gic-presentation",
-    title: "Technical Defence & Presentation",
-    subtitle: "Geo Innovation Challenge Summit",
-    imageUrl: "/images/events/gic-1.jpg",
-    category: "Summit Presentation",
-    date: "2024",
-    description: "Delivering the live system demonstration and telemetry dashboard for regional flood prediction.",
-  },
-  {
     id: "gic-summit",
-    title: "Innovation Summit Stage",
-    subtitle: "NGP-DST National Challenge",
+    title: "Innovation Summit Proceedings",
+    subtitle: "NGP-DST National Challenge Stage",
     imageUrl: "/images/events/gic-3.jpg",
     category: "National Summit",
     date: "2024",
-    description: "On-stage event capture at the National Geospatial Challenge proceedings.",
+    description: "On-stage event capture during the proceedings of the National Geospatial Challenge finals.",
   },
   {
     id: "gic-team-group",
@@ -70,24 +75,69 @@ const EVENT_GALLERY: PreviewItem[] = [
     imageUrl: "/images/events/gic-group.jpg",
     category: "Team & Cohort",
     date: "2024",
-    description: "With fellow engineering innovators and jury members at the conclusion of the Geo Innovation Challenge.",
-  },
-  {
-    id: "sih-event-team",
-    title: "Smart India Hackathon Team",
-    subtitle: "National Hackathon Arena",
-    imageUrl: "/images/events/sih2024.jpeg",
-    category: "Hackathon Arena",
-    date: "SIH Finals",
-    description: "Collaborative 36-hour sprint at the Smart India Hackathon solving municipal workflow bottlenecks.",
+    description: "With fellow engineering innovators and jury panel members following the technical defense and project adjudication.",
   },
 ];
 
-const ALL_PREVIEW_ITEMS = [...CERTIFICATES, ...EVENT_GALLERY];
+const CREDENTIAL_GALLERY_ITEMS: PreviewItem[] = [
+  {
+    id: "sih2023-credential",
+    title: "Smart India Hackathon 2023 National Finalist",
+    subtitle: "Ministry of Education & AICTE",
+    imageUrl: "/images/certificates/sih2023.jpeg",
+    category: "National Credential",
+    date: "2023",
+    description: "Official credential awarded for qualifying as a National Finalist in Smart India Hackathon 2023 for civic workflow automation.",
+  },
+  {
+    id: "gic2024-credential",
+    title: "Geo Innovation Challenge 2024 Presenter",
+    subtitle: "NGP-DST Government of India",
+    imageUrl: "/images/certificates/gic-cert.jpg",
+    category: "National Credential",
+    date: "2024",
+    description: "Official certificate of presentation at the national level Geo Innovation Challenge for flood-risk mitigation telemetry.",
+  },
+  {
+    id: "rtet2024-credential",
+    title: "RTET 2024 International Conference Presenter",
+    subtitle: "Recent Trends in Engineering & Tech",
+    imageUrl: "/images/certificates/rtet2024.png",
+    category: "Conference Paper",
+    date: "2024",
+    description: "Presented research framework on NLP evaluation benchmarks at the international RTET conference proceedings.",
+  },
+  {
+    id: "ju-esiot-credential",
+    title: "Jadavpur University Research Internship (Grade A)",
+    subtitle: "Embedded Systems & IoT",
+    imageUrl: "/images/certificates/esiot.jpeg",
+    category: "Research Credential",
+    date: "2024",
+    description: "Official Grade A honors certificate awarded by Jadavpur University for smart sensor signal analysis and IoT hardware research.",
+  },
+];
+
+// Complete set for the 8-facet 3D cylinder
+const ALL_GALLERY_ITEMS: PreviewItem[] = [
+  ...SUMMIT_EVENT_ITEMS,
+  ...CREDENTIAL_GALLERY_ITEMS,
+];
+
+type GalleryFilter = "all" | "summits" | "credentials";
+type GalleryViewMode = "cylinder" | "grid";
 
 export function AchievementsSection() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<PreviewItem | null>(null);
+  const [filter, setFilter] = useState<GalleryFilter>("all");
+  const [viewMode, setViewMode] = useState<GalleryViewMode>("cylinder");
+
+  const filteredItems = useMemo(() => {
+    if (filter === "summits") return SUMMIT_EVENT_ITEMS;
+    if (filter === "credentials") return CREDENTIAL_GALLERY_ITEMS;
+    return ALL_GALLERY_ITEMS;
+  }, [filter]);
 
   const handleOpenPreview = (item: PreviewItem) => {
     setSelectedItem(item);
@@ -111,7 +161,7 @@ export function AchievementsSection() {
           </p>
         </div>
 
-        {/* 3-Across Cards Grid */}
+        {/* 3-Across Key Honors Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           
           {/* Card 1: SIH 2023 */}
@@ -242,47 +292,157 @@ export function AchievementsSection() {
 
         </div>
 
-        {/* Event Photo Gallery Strip — In-app visual proof */}
-        <div className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 sm:p-8 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--color-rule)] pb-4">
+        {/* Enhanced Gallery Section — React Bits 3D RollingGallery & Curated Grid */}
+        <div className="space-y-6">
+          
+          {/* Gallery Subheader & Controls Bar */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2">
             <div className="space-y-1">
-              <div className="flex items-center gap-2 text-xs font-mono text-[var(--color-accent)]">
-                <Images size={13} />
-                <span>INNOVATION SUMMIT GALLERY</span>
+              <div className="flex items-center gap-2 text-xs font-mono text-[var(--color-accent)] font-semibold">
+                <Images size={14} />
+                <span>INNOVATION SUMMIT &amp; CREDENTIAL GALLERY</span>
               </div>
-              <h3 className="text-lg font-bold text-[var(--color-ink)] font-display">
-                National Stage &amp; Technical Defences
+              <h3 className="text-2xl sm:text-3xl font-bold text-[var(--color-ink)] font-display">
+                National Stage, Technical Defences &amp; Proofs
               </h3>
             </div>
-            <span className="text-xs font-mono text-[var(--color-ink-3)]">
-              Click any frame to inspect full-size
-            </span>
+
+            {/* Filter Chips & View Mode Switcher */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+              
+              {/* Category Filter Pills */}
+              <div className="flex items-center rounded-xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-1 text-xs font-mono">
+                <button
+                  type="button"
+                  onClick={() => setFilter("all")}
+                  className={`px-3 py-1.5 rounded-lg transition-colors ${
+                    filter === "all"
+                      ? "bg-[var(--color-accent)] text-[var(--color-paper)] font-bold shadow-sm"
+                      : "text-[var(--color-ink-2)] hover:text-[var(--color-ink)]"
+                  }`}
+                >
+                  All ({ALL_GALLERY_ITEMS.length})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFilter("summits")}
+                  className={`px-3 py-1.5 rounded-lg transition-colors ${
+                    filter === "summits"
+                      ? "bg-[var(--color-accent)] text-[var(--color-paper)] font-bold shadow-sm"
+                      : "text-[var(--color-ink-2)] hover:text-[var(--color-ink)]"
+                  }`}
+                >
+                  Summits ({SUMMIT_EVENT_ITEMS.length})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFilter("credentials")}
+                  className={`px-3 py-1.5 rounded-lg transition-colors ${
+                    filter === "credentials"
+                      ? "bg-[var(--color-accent)] text-[var(--color-paper)] font-bold shadow-sm"
+                      : "text-[var(--color-ink-2)] hover:text-[var(--color-ink)]"
+                  }`}
+                >
+                  Credentials ({CREDENTIAL_GALLERY_ITEMS.length})
+                </button>
+              </div>
+
+              {/* View Mode Toggle: 3D Cylinder vs Grid */}
+              <div className="flex items-center rounded-xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-1 text-xs font-mono">
+                <button
+                  type="button"
+                  onClick={() => setViewMode("cylinder")}
+                  className={`p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg flex items-center gap-1.5 transition-colors ${
+                    viewMode === "cylinder"
+                      ? "bg-[var(--color-paper-3)] text-[var(--color-ink)] border border-[var(--color-rule)] font-semibold"
+                      : "text-[var(--color-ink-2)] hover:text-[var(--color-ink)]"
+                  }`}
+                  aria-label="3D Cylinder View"
+                  title="3D Cylinder View"
+                >
+                  <Rotate3d size={14} className="text-[var(--color-accent)]" />
+                  <span className="hidden sm:inline">3D Cylinder</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode("grid")}
+                  className={`p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg flex items-center gap-1.5 transition-colors ${
+                    viewMode === "grid"
+                      ? "bg-[var(--color-paper-3)] text-[var(--color-ink)] border border-[var(--color-rule)] font-semibold"
+                      : "text-[var(--color-ink-2)] hover:text-[var(--color-ink)]"
+                  }`}
+                  aria-label="Grid View"
+                  title="Grid View"
+                >
+                  <LayoutGrid size={14} className="text-[var(--color-accent)]" />
+                  <span className="hidden sm:inline">Grid</span>
+                </button>
+              </div>
+
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-            {EVENT_GALLERY.map((photo) => (
-              <button
-                key={photo.id}
-                type="button"
-                onClick={() => handleOpenPreview(photo)}
-                className="group relative aspect-[4/3] rounded-xl overflow-hidden border border-[var(--color-rule)] bg-[var(--color-paper-3)] hover:border-[var(--color-accent)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] text-left"
-                aria-label={`View photo: ${photo.title}`}
-              >
-                <Image
-                  src={photo.imageUrl}
-                  alt={photo.title}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-2 flex flex-col justify-end">
-                  <span className="text-[11px] font-mono text-white truncate font-medium">
-                    {photo.title}
-                  </span>
-                </div>
-              </button>
-            ))}
-          </div>
+          {/* Interactive Visual Presentation */}
+          {viewMode === "cylinder" ? (
+            /* React Bits 3D RollingGallery Component */
+            <RollingGallery
+              items={filteredItems}
+              autoplay={true}
+              autoplaySpeed={9}
+              pauseOnHover={true}
+              onItemClick={(item) => handleOpenPreview(item)}
+            />
+          ) : (
+            /* Curated Bento Grid View */
+            <div className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-4 sm:p-6 lg:p-8 space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                {filteredItems.map((photo, index) => (
+                  <button
+                    key={photo.id}
+                    type="button"
+                    onClick={() => handleOpenPreview(photo)}
+                    className="group relative aspect-[4/3] rounded-xl overflow-hidden border border-[var(--color-rule)] bg-[var(--color-paper-3)] hover:border-[var(--color-accent)] transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] text-left flex flex-col justify-end p-3.5 shadow-md"
+                    aria-label={`View photo: ${photo.title}`}
+                  >
+                    <Image
+                      src={photo.imageUrl}
+                      alt={photo.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105 pointer-events-none"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    />
+                    
+                    {/* Dark gradient for text legibility */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
+                    
+                    <div className="relative z-10 space-y-1">
+                      <div className="flex items-center justify-between text-[10px] font-mono">
+                        <span className="px-1.5 py-0.5 rounded bg-[var(--color-paper)]/80 text-[var(--color-accent)] border border-[var(--color-rule)] font-semibold truncate max-w-[120px]">
+                          {photo.category || "Event"}
+                        </span>
+                        {photo.date && (
+                          <span className="text-[var(--color-ink-3)]">{photo.date}</span>
+                        )}
+                      </div>
+                      
+                      <h4 className="text-xs sm:text-sm font-bold text-white font-display line-clamp-2 leading-snug">
+                        {photo.title}
+                      </h4>
+                      
+                      <div className="pt-1 flex items-center justify-between text-[11px] font-mono text-[var(--color-ink-2)] group-hover:text-white transition-colors">
+                        <span className="flex items-center gap-1">
+                          <Eye size={12} className="text-[var(--color-accent)]" />
+                          <span>Inspect Full Size</span>
+                        </span>
+                        <span className="text-[10px] opacity-60">#{index + 1}</span>
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
         </div>
 
       </div>
@@ -292,7 +452,7 @@ export function AchievementsSection() {
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         currentItem={selectedItem}
-        items={ALL_PREVIEW_ITEMS}
+        items={ALL_GALLERY_ITEMS}
         onNavigate={(item) => setSelectedItem(item)}
       />
     </section>
