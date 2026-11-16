@@ -287,33 +287,33 @@ export function SpaceInvaders() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-surface/80 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center z-10"
+              className="absolute inset-0 bg-[var(--color-paper)]/90 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center z-10"
             >
               {gameState === "start" && (
                 <>
-                  <h3 className="text-3xl font-bold font-serif text-primary mb-2">Space Invaders</h3>
-                  <p className="text-secondary text-sm mb-6 max-w-sm">
-                    Use <kbd className="px-2 py-1 bg-surface-mid rounded mx-1 font-mono">A</kbd> <kbd className="px-2 py-1 bg-surface-mid rounded mx-1 font-mono">D</kbd> or Arrows to move. Spacebar to shoot.
+                  <h3 className="text-3xl font-bold font-display text-[var(--color-ink)] mb-2">Space Invaders</h3>
+                  <p className="text-[var(--color-ink-2)] text-sm mb-6 max-w-sm">
+                    Use <kbd className="px-2 py-1 bg-[var(--color-paper-3)] border border-[var(--color-rule)] rounded mx-1 font-mono text-[var(--color-ink)]">A</kbd> <kbd className="px-2 py-1 bg-[var(--color-paper-3)] border border-[var(--color-rule)] rounded mx-1 font-mono text-[var(--color-ink)]">D</kbd> or Arrows to move. Spacebar to shoot.
                   </p>
-                  <button onClick={initGame} className="btn-primary flex items-center gap-2 border-none">
+                  <button onClick={initGame} className="btn-primary flex items-center gap-2">
                     Start Game
                   </button>
                 </>
               )}
               {gameState === "gameover" && (
                 <>
-                  <h3 className="text-3xl font-bold font-serif text-red-500 mb-2">Game Over</h3>
-                  <p className="text-secondary text-sm mb-6 max-w-sm">Final Score: {score}</p>
-                  <button onClick={initGame} className="btn-primary flex items-center gap-2 border-none">
+                  <h3 className="text-3xl font-bold font-display text-rose-400 mb-2">Game Over</h3>
+                  <p className="text-[var(--color-ink-2)] text-sm mb-6 max-w-sm">Final Score: {score}</p>
+                  <button onClick={initGame} className="btn-primary flex items-center gap-2">
                     <RotateCcw size={16} /> Try Again
                   </button>
                 </>
               )}
               {gameState === "won" && (
                 <>
-                  <h3 className="text-3xl font-bold font-serif text-emerald-600 mb-2">Victory!</h3>
-                  <p className="text-secondary text-sm mb-6 max-w-sm">Earth is safe (for now). Score: {score}</p>
-                  <button onClick={initGame} className="btn-primary flex items-center gap-2 border-none">
+                  <h3 className="text-3xl font-bold font-display text-emerald-400 mb-2">Victory!</h3>
+                  <p className="text-[var(--color-ink-2)] text-sm mb-6 max-w-sm">Earth is safe (for now). Score: {score}</p>
+                  <button onClick={initGame} className="btn-primary flex items-center gap-2">
                     <Trophy size={16} /> Play Again
                   </button>
                 </>
@@ -324,32 +324,35 @@ export function SpaceInvaders() {
       </div>
 
       {/* Mobile Controls */}
-      <div className="flex sm:hidden w-full max-w-[800px] justify-between gap-4 px-4">
-        <div className="flex gap-2">
+      <div className="flex sm:hidden w-full max-w-[800px] justify-between gap-4 px-4 pt-2">
+        <div className="flex gap-3">
           <button
             onPointerDown={(e) => { e.preventDefault(); handleTouchStart("left"); }}
             onPointerUp={(e) => { e.preventDefault(); handleTouchEnd("left"); }}
             onPointerLeave={(e) => { e.preventDefault(); handleTouchEnd("left"); }}
-            className="w-16 h-16 rounded-2xl glass flex items-center justify-center text-primary active:scale-95 transition-transform select-none"
+            className="w-14 h-14 rounded-2xl bg-[var(--color-paper-2)] border border-[var(--color-rule)] flex items-center justify-center text-[var(--color-ink)] active:scale-95 transition-transform select-none touch-manipulation"
+            aria-label="Move left"
           >
-            <ChevronLeft size={32} />
+            <ChevronLeft size={28} />
           </button>
           <button
             onPointerDown={(e) => { e.preventDefault(); handleTouchStart("right"); }}
             onPointerUp={(e) => { e.preventDefault(); handleTouchEnd("right"); }}
             onPointerLeave={(e) => { e.preventDefault(); handleTouchEnd("right"); }}
-            className="w-16 h-16 rounded-2xl glass flex items-center justify-center text-primary active:scale-95 transition-transform select-none"
+            className="w-14 h-14 rounded-2xl bg-[var(--color-paper-2)] border border-[var(--color-rule)] flex items-center justify-center text-[var(--color-ink)] active:scale-95 transition-transform select-none touch-manipulation"
+            aria-label="Move right"
           >
-            <ChevronRight size={32} />
+            <ChevronRight size={28} />
           </button>
         </div>
         <button
           onPointerDown={(e) => { e.preventDefault(); handleTouchStart("fire"); }}
           onPointerUp={(e) => { e.preventDefault(); handleTouchEnd("fire"); }}
           onPointerLeave={(e) => { e.preventDefault(); handleTouchEnd("fire"); }}
-          className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#C08552] to-[#8C5A3C] text-white flex items-center justify-center active:scale-95 transition-transform shadow-lg shadow-[#C08552]/20 select-none border-none"
+          className="w-14 h-14 rounded-2xl bg-[var(--color-accent)] text-[var(--color-accent-ink)] flex items-center justify-center active:scale-95 transition-transform select-none border border-[var(--color-rule)] shadow-lg shadow-black/40 touch-manipulation"
+          aria-label="Fire weapon"
         >
-          <Crosshair size={28} />
+          <Crosshair size={26} />
         </button>
       </div>
     </div>

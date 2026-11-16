@@ -150,14 +150,14 @@ export function PreviewModal({
         </div>
 
         {/* Image Preview Body */}
-        <div className="relative flex-1 min-h-[300px] max-h-[68vh] overflow-auto p-4 sm:p-6 flex items-center justify-center bg-[var(--color-paper)]">
-          <div className="relative w-full h-full min-h-[280px] max-h-[64vh] flex items-center justify-center">
+        <div className="relative flex-1 min-h-[260px] max-h-[65vh] overflow-auto p-3 sm:p-6 flex items-center justify-center bg-[var(--color-paper)]">
+          <div className="relative w-full h-full min-h-[240px] max-h-[60vh] flex items-center justify-center">
             <Image
               src={currentItem.imageUrl}
               alt={currentItem.title}
               width={1400}
               height={1000}
-              className="max-h-[64vh] w-auto max-w-full object-contain rounded-lg border border-[var(--color-rule)] shadow-lg"
+              className="max-h-[58vh] w-auto max-w-full object-contain rounded-lg border border-[var(--color-rule)] shadow-lg"
               priority
             />
           </div>
@@ -168,18 +168,18 @@ export function PreviewModal({
               <button
                 type="button"
                 onClick={handlePrev}
-                className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full border border-[var(--color-rule)] bg-[var(--color-paper-2)]/90 text-[var(--color-ink)] hover:border-[var(--color-accent)] transition-colors shadow-lg"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2.5 sm:p-2 rounded-full border border-[var(--color-rule)] bg-[var(--color-paper-2)]/90 text-[var(--color-ink)] hover:border-[var(--color-accent)] transition-colors shadow-lg touch-manipulation"
                 aria-label="Previous item"
               >
-                <ChevronLeft size={18} />
+                <ChevronLeft size={20} />
               </button>
               <button
                 type="button"
                 onClick={handleNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full border border-[var(--color-rule)] bg-[var(--color-paper-2)]/90 text-[var(--color-ink)] hover:border-[var(--color-accent)] transition-colors shadow-lg"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2.5 sm:p-2 rounded-full border border-[var(--color-rule)] bg-[var(--color-paper-2)]/90 text-[var(--color-ink)] hover:border-[var(--color-accent)] transition-colors shadow-lg touch-manipulation"
                 aria-label="Next item"
               >
-                <ChevronRight size={18} />
+                <ChevronRight size={20} />
               </button>
             </>
           )}

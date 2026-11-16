@@ -41,18 +41,19 @@ const FALLOFF_CURVES: Record<Falloff, (p: number) => number> = {
 
 const DEFAULT_ITEMS: LineSidebarItem[] = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/#about' },
-  { label: 'Skills', href: '/#mind' },
-  { label: 'Journey', href: '/#journey' },
   { label: 'Work', href: '/#work' },
+  { label: 'GitHub', href: '/#github-status' },
+  { label: 'About', href: '/#about' },
+  { label: 'Journey', href: '/#journey' },
+  { label: 'Recognition', href: '/#achievements' },
   { label: 'Contact', href: '/#contact' }
 ];
 
 const LineSidebar = ({
   items = DEFAULT_ITEMS,
-  accentColor = '#C08552',
-  textColor = '#3D271D',
-  markerColor = '#8C5A3C',
+  accentColor = 'var(--color-accent)',
+  textColor = 'var(--color-ink-2)',
+  markerColor = 'var(--color-rule)',
   showIndex = true,
   showMarker = true,
   proximityRadius = 100,

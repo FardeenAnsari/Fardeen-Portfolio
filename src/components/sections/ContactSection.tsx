@@ -139,7 +139,7 @@ export function ContactSection() {
 
           {/* Right Column: High-Integrity Minimalist Form */}
           <div className="lg:col-span-7">
-            <div className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 sm:p-10">
+            <div className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-5 sm:p-8 md:p-10">
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 
@@ -156,7 +156,7 @@ export function ContactSection() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="e.g. Alex Chen"
-                    className="w-full px-4 py-3 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-3)] text-sm text-[var(--color-ink)] placeholder-[var(--color-ink-3)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
+                    className="w-full px-4 py-3 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-3)] text-base sm:text-sm text-[var(--color-ink)] placeholder-[var(--color-ink-3)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -174,7 +174,7 @@ export function ContactSection() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="alex@example.com"
-                      className="w-full px-4 py-3 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-3)] text-sm text-[var(--color-ink)] placeholder-[var(--color-ink-3)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
+                      className="w-full px-4 py-3 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-3)] text-base sm:text-sm text-[var(--color-ink)] placeholder-[var(--color-ink-3)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                     />
                   </div>
 
@@ -189,7 +189,7 @@ export function ContactSection() {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="+91 90000 00000"
-                      className="w-full px-4 py-3 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-3)] text-sm text-[var(--color-ink)] placeholder-[var(--color-ink-3)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
+                      className="w-full px-4 py-3 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-3)] text-base sm:text-sm text-[var(--color-ink)] placeholder-[var(--color-ink-3)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
@@ -207,7 +207,7 @@ export function ContactSection() {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Describe the role, project, or collaboration opportunity..."
-                    className="w-full px-4 py-3 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-3)] text-sm text-[var(--color-ink)] placeholder-[var(--color-ink-3)] focus:border-[var(--color-accent)] focus:outline-none transition-colors resize-none"
+                    className="w-full px-4 py-3 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-3)] text-base sm:text-sm text-[var(--color-ink)] placeholder-[var(--color-ink-3)] focus:border-[var(--color-accent)] focus:outline-none transition-colors resize-none"
                   />
                 </div>
 

@@ -102,16 +102,16 @@ export function HeroSection() {
 
             {/* Headline: Space Grotesk, massive, monolithic */}
             <div className="space-y-2">
-              <h1 className="font-display text-5xl sm:text-7xl lg:text-8xl font-bold tracking-tight text-[var(--color-ink)] leading-[0.95]">
+              <h1 className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-[var(--color-ink)] leading-[0.96] break-words">
                 Fardeen<br />Ansari
               </h1>
 
               {/* Dynamic Typewriter terminal line */}
               <div className="min-h-7 flex items-center pt-2">
-                <p className="font-mono text-sm sm:text-base text-[var(--color-ink-2)] flex items-center gap-2">
+                <p className="font-mono text-xs sm:text-base text-[var(--color-ink-2)] flex items-center gap-2">
                   <span className="text-[var(--color-accent)] font-bold">&gt;</span>
-                  <span>{displayText}</span>
-                  <span className="inline-block w-2 h-4 bg-[var(--color-accent)] animate-pulse" />
+                  <span className="truncate">{displayText}</span>
+                  <span className="inline-block w-2 h-4 bg-[var(--color-accent)] animate-pulse flex-shrink-0" />
                 </p>
               </div>
             </div>
@@ -204,7 +204,7 @@ export function HeroSection() {
               </div>
 
               {/* Terminal Code Body */}
-              <div className="p-5 font-mono text-xs sm:text-[13px] leading-relaxed text-[var(--color-ink-2)] overflow-x-auto">
+              <div className="p-4 sm:p-5 font-mono text-[11px] sm:text-xs leading-relaxed text-[var(--color-ink-2)] overflow-x-auto">
                 <div className="text-[var(--color-ink-3)] pb-2">&#47;&#47; System Manifest: Fardeen Ansari</div>
                 
                 <div>

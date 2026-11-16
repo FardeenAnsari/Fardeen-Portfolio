@@ -5,190 +5,213 @@ import Link from "next/link";
 import { ArrowLeft, ExternalLink, Calendar, Tag, CheckCircle, Leaf, Briefcase, Utensils, Link as LinkIcon, Target } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { PROJECTS } from "@/lib/data";
-import { cn } from "@/lib/utils";
 
 type Project = (typeof PROJECTS)[0];
 
 const PROJECT_ICONS: Record<string, React.ReactNode> = {
-  trashium: <Leaf className="text-emerald-500" size={32} />,
-  vetanflow: <Briefcase className="text-blue-500" size={32} />,
-  restaurantpos: <Utensils className="text-orange-500" size={32} />,
-  "tiny-link": <LinkIcon className="text-purple-500" size={32} />,
+  trashium: <Leaf className="text-emerald-400" size={28} />,
+  vetanflow: <Briefcase className="text-[var(--color-accent)]" size={28} />,
+  restaurantpos: <Utensils className="text-amber-400" size={28} />,
+  "tiny-link": <LinkIcon className="text-sky-400" size={28} />,
 };
 
 export function ProjectPageClient({ project }: { project: Project }) {
   const relatedProjects = PROJECTS.filter((p) => p.id !== project.id).slice(0, 2);
 
   return (
-    <div className="min-h-screen pt-24 pb-24">
-      <div className="container-portfolio space-y-16">
-        {/* Back button */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+    <div className="min-h-screen pt-24 sm:pt-32 pb-24 text-[var(--color-ink)] bg-[var(--color-paper)]">
+      <div className="container space-y-12 sm:space-y-16">
+        
+        {/* Back Button */}
+        <div>
           <Link
             href="/#work"
-            className="inline-flex items-center gap-2 text-secondary hover:text-primary transition-colors text-sm"
+            className="inline-flex items-center gap-2 text-xs font-mono text-[var(--color-ink-2)] hover:text-[var(--color-ink)] transition-colors py-2"
           >
-            <ArrowLeft size={16} />
-            Back to Work
+            <ArrowLeft size={14} />
+            <span>&larr; Back to Selected Work</span>
           </Link>
-        </motion.div>
+        </div>
 
-        {/* Hero */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.7 }}
-          className="space-y-8"
-        >
-          {/* Badge row */}
+        {/* Project Hero Header */}
+        <div className="space-y-8">
+          
+          {/* Metadata badges */}
           <div className="flex flex-wrap items-center gap-3">
             <span className="section-label">{project.category}</span>
-            <span className={cn(
-              "text-xs px-3 py-1 rounded-full font-semibold border",
-              project.status === "Live" ? "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" :
-              "text-blue-400 bg-blue-500/10 border-blue-500/20"
-            )}>
+            <span className="text-[11px] font-mono px-2.5 py-0.5 rounded border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-medium">
               {project.status}
             </span>
-            <span className="text-xs text-muted font-mono flex items-center gap-1">
-              <Calendar size={11} /> {project.year}
+            <span className="text-xs text-[var(--color-ink-3)] font-mono flex items-center gap-1">
+              <Calendar size={12} /> {project.year}
             </span>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <span className="text-5xl">{PROJECT_ICONS[project.id]}</span>
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            
+            {/* Title & Long Description */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="flex items-start gap-4">
+                <div className="p-3 rounded-xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] flex-shrink-0">
+                  {PROJECT_ICONS[project.id]}
+                </div>
                 <div>
-                  <h1 className="text-4xl lg:text-5xl font-bold text-primary">{project.title}</h1>
-                  <p className="text-accent-blue font-mono text-sm mt-1">{project.tagline}</p>
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--color-ink)] font-display tracking-tight">
+                    {project.title}
+                  </h1>
+                  <p className="text-[var(--color-accent)] font-mono text-xs sm:text-sm mt-1">
+                    {project.tagline}
+                  </p>
                 </div>
               </div>
 
-              <p className="text-secondary leading-relaxed text-lg">{project.longDescription}</p>
+              <p className="text-[var(--color-ink-2)] leading-relaxed text-base sm:text-lg">
+                {project.longDescription}
+              </p>
 
-              {/* Links */}
-              <div className="flex gap-3 flex-wrap">
+              {/* Action Buttons */}
+              <div className="flex gap-3 flex-wrap pt-2">
                 {project.live !== "#" && (
-                  <a href={project.live} target="_blank" rel="noopener noreferrer" className="btn-primary flex items-center gap-2">
-                    <ExternalLink size={16} /> Live Demo
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary flex items-center gap-2"
+                  >
+                    <span>Launch Live Platform</span>
+                    <ExternalLink size={15} />
                   </a>
                 )}
-                <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn-ghost flex items-center gap-2">
-                  <FaGithub size={16} /> Source Code
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-ghost flex items-center gap-2"
+                >
+                  <FaGithub size={15} />
+                  <span>Inspect Codebase</span>
                 </a>
               </div>
             </div>
 
-            {/* Tech stack */}
-            <div className="glass-card p-6 space-y-4">
-              <h2 className="font-semibold text-primary flex items-center gap-2">
-                <Tag size={16} className="text-accent-blue" />
-                Technology Stack
-              </h2>
+            {/* Architecture & Tech Spec Card */}
+            <div className="lg:col-span-5 rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 space-y-5">
+              <div className="flex items-center gap-2 border-b border-[var(--color-rule)] pb-3">
+                <Tag size={15} className="text-[var(--color-accent)]" />
+                <h2 className="text-sm font-bold text-[var(--color-ink)] font-display uppercase tracking-wider">
+                  Technology Stack
+                </h2>
+              </div>
+
               <div className="flex flex-wrap gap-2">
                 {project.tech.map((t) => (
-                  <span key={t} className="tech-badge">{t}</span>
+                  <span key={t} className="tech-tag">
+                    {t}
+                  </span>
                 ))}
               </div>
 
-              {/* Architecture */}
-              <div className="pt-4 border-t border-border-subtle space-y-3">
-                <h3 className="text-sm font-semibold text-secondary">Architecture</h3>
+              {/* Architecture Key-Value */}
+              <div className="pt-4 border-t border-[var(--color-rule)] space-y-3 font-mono text-xs">
+                <div className="text-[var(--color-ink-3)] uppercase tracking-wider">System Architecture</div>
                 {Object.entries(project.architecture).map(([key, value]) => (
-                  <div key={key} className="flex gap-3">
-                    <span className="text-xs text-muted font-mono capitalize min-w-[80px] pt-0.5">{key}:</span>
-                    <span className="text-xs text-secondary">{value}</span>
+                  <div key={key} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
+                    <span className="text-[var(--color-ink-3)] capitalize min-w-[90px]">{key}:</span>
+                    <span className="text-[var(--color-ink)] font-sans">{value}</span>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
-        </motion.div>
 
-        {/* Highlights */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
-          className="space-y-6"
-        >
-          <h2 className="text-2xl font-bold text-primary">Key Features</h2>
-          <div className="grid sm:grid-cols-2 gap-3">
+          </div>
+        </div>
+
+        {/* Key Features */}
+        <div className="space-y-6 pt-6 border-t border-[var(--color-rule)]">
+          <div className="space-y-1">
+            <div className="section-label">Subsystem Breakdown</div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--color-ink)] font-display">
+              Core Capabilities &amp; Features
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {project.highlights.map((h, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 + i * 0.05 }}
-                className="glass rounded-xl p-4 border border-border-subtle flex items-start gap-3"
+                className="rounded-xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-5 flex items-start gap-3"
               >
-                <CheckCircle size={16} className="text-emerald-400 mt-0.5 flex-shrink-0" />
-                <span className="text-secondary text-sm">{h}</span>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Challenges */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          className="space-y-6"
-        >
-          <h2 className="text-2xl font-bold text-primary">Engineering Challenges</h2>
-          <div className="space-y-4">
-            {project.challenges.map((c, i) => (
-              <div key={i} className="glass-card p-5 border border-border-subtle flex items-start gap-4">
-                <span className="text-lg font-bold text-gradient font-mono flex-shrink-0">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <p className="text-secondary">{c}</p>
+                <CheckCircle size={17} className="text-emerald-400 mt-0.5 flex-shrink-0" />
+                <span className="text-[var(--color-ink-2)] text-sm leading-relaxed">{h}</span>
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
+
+        {/* Engineering Challenges */}
+        <div className="space-y-6 pt-6 border-t border-[var(--color-rule)]">
+          <div className="space-y-1">
+            <div className="section-label">Technical Trade-Offs</div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--color-ink)] font-display">
+              Engineering Challenges Solved
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            {project.challenges.map((c, i) => (
+              <div
+                key={i}
+                className="rounded-xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-5 flex items-start gap-4"
+              >
+                <span className="text-base font-bold text-[var(--color-accent)] font-mono flex-shrink-0 pt-0.5">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <p className="text-[var(--color-ink-2)] text-sm leading-relaxed">{c}</p>
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* Impact */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.6 }}
-          className="glass-card p-8 border border-accent-blue/20 bg-accent-blue/5"
-        >
-          <h2 className="text-xl font-bold text-primary mb-3 flex items-center gap-2">
-            <Target className="text-accent-blue" size={20} /> Impact
-          </h2>
-          <p className="text-secondary">{project.impact}</p>
-        </motion.div>
+        <div className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 sm:p-8 space-y-3">
+          <div className="flex items-center gap-2 text-[var(--color-accent)] font-display text-lg font-bold">
+            <Target size={18} />
+            <span>Demonstrated Impact</span>
+          </div>
+          <p className="text-[var(--color-ink-2)] text-sm leading-relaxed">{project.impact}</p>
+        </div>
 
-        {/* Related projects */}
-        <div className="space-y-6">
-          <h2 className="text-2xl font-bold text-primary">More Projects</h2>
-          <div className="grid sm:grid-cols-2 gap-5">
+        {/* Related Projects Navigation */}
+        <div className="space-y-6 pt-6 border-t border-[var(--color-rule)]">
+          <h2 className="text-xl sm:text-2xl font-bold text-[var(--color-ink)] font-display">
+            Explore Other Work
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {relatedProjects.map((rp) => (
               <Link
                 key={rp.id}
                 href={`/work/${rp.id}`}
-                className="glass-card p-6 border border-border-subtle hover:border-border-default group block"
+                className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 hover:border-[var(--color-accent)]/50 transition-colors block group space-y-3"
               >
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-2xl">{PROJECT_ICONS[rp.id]}</span>
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-3)]">
+                    {PROJECT_ICONS[rp.id]}
+                  </div>
                   <div>
-                    <h3 className="font-bold text-primary group-hover:text-gradient transition-colors">{rp.title}</h3>
-                    <p className="text-xs text-muted">{rp.subtitle}</p>
+                    <h3 className="font-bold text-[var(--color-ink)] group-hover:text-[var(--color-accent)] transition-colors font-display">
+                      {rp.title}
+                    </h3>
+                    <p className="text-xs text-[var(--color-ink-3)] font-mono">{rp.subtitle}</p>
                   </div>
                 </div>
-                <p className="text-secondary text-sm line-clamp-2">{rp.description}</p>
+                <p className="text-[var(--color-ink-2)] text-sm line-clamp-2 leading-relaxed">
+                  {rp.description}
+                </p>
               </Link>
             ))}
           </div>
         </div>
+
       </div>
     </div>
   );
