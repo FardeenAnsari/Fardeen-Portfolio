@@ -35,7 +35,7 @@ $ identity --inspect fardeen.ansari
 
   NAME          : Fardeen Ansari
   LOCATION      : Bengaluru, Karnataka, India
-  EDUCATION     : B.Tech in Computer Science & Engineering (SKFGI, MAKAUT)
+  EDUCATION     : B.Tech in CSE — Supreme Knowledge Foundation Group of Institutions (affiliated with MAKAUT, formerly WBUT)
   GRADUATION    : July 2026 (CGPA 7.52 / 10.0 · Zero Active Backlogs)
   PRIMARY FOCUS : Full-Stack Architecture, Distributed APIs, Offline-First Mobile
   CONTACT       : imailfard@gmail.com · +91 91238 81320

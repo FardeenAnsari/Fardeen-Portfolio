@@ -18,10 +18,13 @@ export const PERSONAL = {
   education: {
     degree: "B.Tech, Computer Science & Engineering",
     institution: "Supreme Knowledge Foundation Group of Institutions (SKFGI)",
-    university: "MAKAUT",
+    college: "Supreme Knowledge Foundation Group of Institutions",
+    university: "Maulana Abul Kalam Azad University of Technology (MAKAUT)",
+    formerUniversityName: "West Bengal University of Technology (WBUT)",
+    affiliation: "Affiliated to Maulana Abul Kalam Azad University of Technology (MAKAUT, formerly WBUT)",
     period: "2022 – 2026",
     cgpa: "7.52",
-    location: "Mankundu, West Bengal (Graduated July 2026)",
+    location: "Mankundu, Hooghly, West Bengal (Graduated July 2026)",
   },
 } as const;
 
@@ -379,7 +382,7 @@ export const TIMELINE = [
   {
     year: "2022",
     title: "Class XII — WBCHSE",
-    description: "Completed higher secondary with 77.2%. Enrolled in B.Tech CSE at SKFGI.",
+    description: "Completed higher secondary with 77.2%. Enrolled in B.Tech CSE at Supreme Knowledge Foundation Group of Institutions (affiliated with Maulana Abul Kalam Azad University of Technology — MAKAUT, formerly WBUT).",
     category: "education",
   },
   {
@@ -450,7 +453,7 @@ export const TIMELINE = [
   {
     year: "2026",
     title: "B.Tech Graduation",
-    description: "Completed B.Tech Computer Science & Engineering at SKFGI — CGPA: 7.52",
+    description: "Graduated with B.Tech in Computer Science & Engineering from Supreme Knowledge Foundation Group of Institutions (affiliated with Maulana Abul Kalam Azad University of Technology — MAKAUT, formerly WBUT) with a cumulative CGPA of 7.52.",
     category: "education",
   },
 ];

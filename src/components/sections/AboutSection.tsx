@@ -22,8 +22,10 @@ export function AboutSection() {
               <div className="space-y-4 text-base text-[var(--color-ink-2)] leading-relaxed">
                 <p>
                   I am a full stack software engineer with a completed B.Tech in Computer Science &amp; Engineering 
-                  (July 2026, CGPA 7.52). Based in Bengaluru, I build systems end-to-end — from normalized database 
-                  schemas and access control layers to high-performance, accessible user interfaces.
+                  from Supreme Knowledge Foundation Group of Institutions, affiliated with Maulana Abul Kalam Azad 
+                  University of Technology (MAKAUT, formerly WBUT), graduated in July 2026 with a cumulative 7.52 CGPA. 
+                  Based in Bengaluru, I build systems end-to-end — from normalized database schemas and access 
+                  control layers to high-performance, accessible user interfaces.
                 </p>
 
                 <p>

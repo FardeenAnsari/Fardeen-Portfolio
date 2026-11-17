@@ -88,6 +88,17 @@ const personSchema = {
     addressRegion: "Karnataka",
     addressCountry: "IN",
   },
+  alumniOf: [
+    {
+      "@type": "EducationalOrganization",
+      name: "Supreme Knowledge Foundation Group of Institutions",
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Maulana Abul Kalam Azad University of Technology, West Bengal",
+      alternateName: "West Bengal University of Technology (WBUT)",
+    },
+  ],
   sameAs: [
     "https://linkedin.com/in/itsfardeen",
     "https://github.com/FardeenAnsari",

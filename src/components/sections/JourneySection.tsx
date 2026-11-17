@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { GraduationCap, Briefcase, Award, Eye } from "lucide-react";
 import { PreviewModal, PreviewItem } from "@/components/ui/PreviewModal";
 
@@ -19,7 +20,20 @@ const MILESTONES = [
     period: "2022 — 2026",
     badge: "GRADUATED",
     title: "Bachelor of Technology — Computer Science & Engineering",
-    institution: "Supreme Knowledge Foundation Group of Institutions (MAKAUT)",
+    institution: "Supreme Knowledge Foundation Group of Institutions",
+    affiliation: "Affiliated to Maulana Abul Kalam Azad University of Technology (MAKAUT, formerly WBUT)",
+    logos: [
+      {
+        src: "/images/education/skfgi-logo.png",
+        alt: "Supreme Knowledge Foundation Group of Institutions",
+        label: "College: SKFGI",
+      },
+      {
+        src: "/images/education/makaut-logo.png",
+        alt: "Maulana Abul Kalam Azad University of Technology",
+        label: "Affiliated: MAKAUT (WBUT)",
+      },
+    ],
     description:
       "Graduated in July 2026 with a cumulative 7.52 CGPA and zero academic backlogs across 8 semesters. Rigorous coursework spanning Data Structures, DBMS, Computer Networks, and Software Engineering. Built Trashium (waste mgmt ML platform) and VetanFlow (payroll RBAC platform) as capstone software systems.",
     metric: "CGPA 7.52",
@@ -99,9 +113,35 @@ export function JourneySection() {
                 <h3 className="text-lg sm:text-xl font-bold text-[var(--color-ink)] font-display">
                   {item.title}
                 </h3>
-                <div className="text-sm font-medium text-[var(--color-accent)]">
+                <div className="text-sm font-semibold text-[var(--color-accent)]">
                   {item.institution}
                 </div>
+                {"affiliation" in item && item.affiliation && (
+                  <div className="text-xs font-mono text-[var(--color-ink-3)]">
+                    {item.affiliation}
+                  </div>
+                )}
+                {"logos" in item && Array.isArray(item.logos) && (
+                  <div className="flex flex-wrap items-center gap-3 pt-1.5 pb-1">
+                    {item.logos.map((logo, lIdx) => (
+                      <div
+                        key={lIdx}
+                        className="flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-white/95 dark:bg-zinc-900 border border-[var(--color-rule)] shadow-sm"
+                      >
+                        <Image
+                          src={logo.src}
+                          alt={logo.alt}
+                          width={80}
+                          height={24}
+                          className="h-6 w-auto object-contain"
+                        />
+                        <span className="text-[11px] font-mono text-zinc-800 dark:text-zinc-200 font-medium">
+                          {logo.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 <p className="text-sm text-[var(--color-ink-2)] leading-relaxed pt-1">
                   {item.description}
                 </p>
