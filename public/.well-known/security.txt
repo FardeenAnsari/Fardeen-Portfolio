@@ -1,0 +1,6 @@
+# Security Policy for Fardeen Ansari's Portfolio
+Contact: mailto:imailfard@gmail.com
+Preferred-Languages: en
+Canonical: https://fardeenansari.dev/.well-known/security.txt
+Policy: https://github.com/FardeenAnsari/Fardeen-Portfolio/blob/main/README.md
+Expires: 2028-12-31T23:59:59.000Z

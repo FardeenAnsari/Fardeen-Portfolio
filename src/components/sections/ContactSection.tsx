@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle, Loader2, Clock, Globe, ArrowUpRight } from "lucide-react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { PERSONAL } from "@/lib/data";
@@ -13,9 +13,15 @@ export function ContactSection() {
     message: "",
     website: "", // Anti-bot honeypot
   });
+  const [renderedAt, setRenderedAt] = useState<number>(0);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [fallbackMailto, setFallbackMailto] = useState("");
+
+  useEffect(() => {
+    // Record page load timestamp for bot-timing defense
+    setRenderedAt(Date.now());
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -33,7 +39,7 @@ export function ContactSection() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, renderedAt }),
       });
 
       const data = await res.json();
@@ -46,6 +52,7 @@ export function ContactSection() {
         setFallbackMailto(data.fallbackMailto);
       }
       setFormData({ name: "", email: "", subject: "", message: "", website: "" });
+      setRenderedAt(Date.now());
     } catch (err: unknown) {
       setStatus("error");
       const errText = err instanceof Error ? err.message : "Failed to dispatch message.";

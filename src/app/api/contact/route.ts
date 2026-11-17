@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 
 const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
 const RATE_LIMIT_MAX = 5;
-const store: { ip: string; count: number; first: number }[] = [];
+let store: { ip: string; count: number; first: number }[] = [];
 
 function getClientIp(request: NextRequest): string {
   const forwarded = request.headers.get("x-forwarded-for");
@@ -13,6 +13,9 @@ function getClientIp(request: NextRequest): string {
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
+  // Clean up entries older than the rate limit window to avoid unbounded memory growth
+  store = store.filter((e) => now - e.first <= RATE_LIMIT_WINDOW_MS);
+
   const entry = store.find((e) => e.ip === ip);
   if (!entry) {
     store.push({ ip, count: 1, first: now });
@@ -30,7 +33,14 @@ function isRateLimited(ip: string): boolean {
 // Max allowed request size: 16 KB (prevents memory exhaustion attacks)
 const MAX_PAYLOAD_BYTES = 16 * 1024;
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+function sanitizeString(str: string): string {
+  return str
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+    .replace(/javascript:/gi, "")
+    .replace(/on\w+=/gi, "");
+}
 
 function validate(body: unknown): { name: string; email: string; subject?: string; message: string } | { error: string } {
   if (!body || typeof body !== "object") return { error: "Invalid request payload." };
@@ -42,18 +52,31 @@ function validate(body: unknown): { name: string; email: string; subject?: strin
     return { error: "Automated submission detected." };
   }
 
-  // 2. Email header injection defense (strip newlines \r, \n) and enforce max lengths
-  const rawName = typeof b.name === "string" ? b.name.trim() : "";
+  // 2. Anti-bot submission speed verification
+  // Automated headless scripts populate DOM and submit in < 1.5 seconds
+  if (typeof b.renderedAt === "number") {
+    const elapsedMs = Date.now() - b.renderedAt;
+    if (elapsedMs < 1200) {
+      return { error: "Submission received too quickly. Please take your time." };
+    }
+    // Stale form session (> 3 hours)
+    if (elapsedMs > 3 * 60 * 60 * 1000) {
+      return { error: "Form session expired. Please refresh the page." };
+    }
+  }
+
+  // 3. Email header injection defense (strip newlines \r, \n) and sanitize script fragments
+  const rawName = typeof b.name === "string" ? sanitizeString(b.name.trim()) : "";
   const rawEmail = typeof b.email === "string" ? b.email.trim() : "";
-  const rawSubject = typeof b.subject === "string" ? b.subject.trim() : "Portfolio Contact Inquiry";
-  const rawMessage = typeof b.message === "string" ? b.message.trim() : "";
+  const rawSubject = typeof b.subject === "string" ? sanitizeString(b.subject.trim()) : "Portfolio Contact Inquiry";
+  const rawMessage = typeof b.message === "string" ? sanitizeString(b.message.trim()) : "";
 
   const name = rawName.replace(/[\r\n]/g, " ").slice(0, 100);
   const email = rawEmail.replace(/[\r\n]/g, "").slice(0, 120);
   const subject = rawSubject.replace(/[\r\n]/g, " ").slice(0, 150);
   const message = rawMessage.slice(0, 5000);
 
-  // 3. Validation bounds
+  // 4. Validation bounds
   if (!name || name.length < 2) return { error: "Name must be at least 2 characters." };
   if (!email || !emailRegex.test(email)) return { error: "A valid email address is required." };
   if (!message || message.length < 10) return { error: "Message must be at least 10 characters." };

@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 
+export function GET() {
+  return NextResponse.json({ error: "Not Found" }, { status: 404 });
+}
+
 export function POST() {
-  return NextResponse.json(
-    { message: "Blog admin API is not available in this deployment. Content is managed via src/lib/data/index.ts." },
-    { status: 501 }
-  );
+  return NextResponse.json({ error: "Not Found" }, { status: 404 });
 }
