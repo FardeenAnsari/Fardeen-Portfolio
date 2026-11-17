@@ -11,6 +11,7 @@ export function ContactSection() {
     email: "",
     subject: "",
     message: "",
+    website: "", // Anti-bot honeypot
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -22,6 +23,8 @@ export function ContactSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (status === "loading") return; // Prevent double-submission
+
     setStatus("loading");
     setErrorMessage("");
     setFallbackMailto("");
@@ -42,7 +45,7 @@ export function ContactSection() {
       if (data.fallbackMailto) {
         setFallbackMailto(data.fallbackMailto);
       }
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      setFormData({ name: "", email: "", subject: "", message: "", website: "" });
     } catch (err: unknown) {
       setStatus("error");
       const errText = err instanceof Error ? err.message : "Failed to dispatch message.";
@@ -226,9 +229,16 @@ export function ContactSection() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5" noValidate>
                   
-                  {/* Honeypot field for anti-bot protection */}
-                  <div className="hidden" aria-hidden="true">
-                    <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+                  {/* Honeypot field for anti-bot protection (invisible to humans, bots autofill this) */}
+                  <div className="hidden" aria-hidden="true" style={{ display: "none" }}>
+                    <input
+                      type="text"
+                      name="website"
+                      value={formData.website}
+                      onChange={handleChange}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
                   </div>
 
                   {/* Name Input */}

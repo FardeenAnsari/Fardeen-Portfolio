@@ -27,21 +27,33 @@ function isRateLimited(ip: string): boolean {
   return entry.count > RATE_LIMIT_MAX;
 }
 
+// Max allowed request size: 16 KB (prevents memory exhaustion attacks)
+const MAX_PAYLOAD_BYTES = 16 * 1024;
+
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function validate(body: unknown): { name: string; email: string; subject?: string; message: string } | { error: string } {
-  if (!body || typeof body !== "object") return { error: "Invalid request payload" };
+  if (!body || typeof body !== "object") return { error: "Invalid request payload." };
   const b = body as Record<string, unknown>;
   
-  // Anti-bot honeypot check
+  // 1. Anti-bot honeypot check (hidden field that only bots fill in)
   const honeypot = b.website;
-  if (honeypot !== undefined && honeypot !== "") return { error: "Invalid submission" };
+  if (honeypot !== undefined && honeypot !== "") {
+    return { error: "Automated submission detected." };
+  }
 
-  const name = typeof b.name === "string" ? b.name.trim() : "";
-  const email = typeof b.email === "string" ? b.email.trim() : "";
-  const subject = typeof b.subject === "string" ? b.subject.trim() : "Portfolio Contact Inquiry";
-  const message = typeof b.message === "string" ? b.message.trim() : "";
+  // 2. Email header injection defense (strip newlines \r, \n) and enforce max lengths
+  const rawName = typeof b.name === "string" ? b.name.trim() : "";
+  const rawEmail = typeof b.email === "string" ? b.email.trim() : "";
+  const rawSubject = typeof b.subject === "string" ? b.subject.trim() : "Portfolio Contact Inquiry";
+  const rawMessage = typeof b.message === "string" ? b.message.trim() : "";
 
+  const name = rawName.replace(/[\r\n]/g, " ").slice(0, 100);
+  const email = rawEmail.replace(/[\r\n]/g, "").slice(0, 120);
+  const subject = rawSubject.replace(/[\r\n]/g, " ").slice(0, 150);
+  const message = rawMessage.slice(0, 5000);
+
+  // 3. Validation bounds
   if (!name || name.length < 2) return { error: "Name must be at least 2 characters." };
   if (!email || !emailRegex.test(email)) return { error: "A valid email address is required." };
   if (!message || message.length < 10) return { error: "Message must be at least 10 characters." };
@@ -59,17 +71,27 @@ function escapeHtml(text: string): string {
 }
 
 export async function POST(request: NextRequest) {
+  // Defense 1: Reject payload if content-length exceeds 16KB
+  const contentLength = Number(request.headers.get("content-length") || "0");
+  if (contentLength > MAX_PAYLOAD_BYTES) {
+    return NextResponse.json(
+      { error: "Payload too large. Maximum 16KB allowed." },
+      { status: 413, headers: { "Cache-Control": "no-store" } }
+    );
+  }
+
+  // Defense 2: IP-based rate limiting (5 req / min)
   const ip = getClientIp(request);
   if (isRateLimited(ip)) {
     return NextResponse.json(
-      { error: "Too many messages sent. Please wait a minute before retrying." },
-      { status: 429 }
+      { error: "Rate limit reached. Please wait a minute before retrying." },
+      { status: 429, headers: { "Cache-Control": "no-store" } }
     );
   }
 
   const parsed = validate(await request.json().catch(() => ({})));
   if ("error" in parsed) {
-    return NextResponse.json({ error: parsed.error }, { status: 400 });
+    return NextResponse.json({ error: parsed.error }, { status: 400, headers: { "Cache-Control": "no-store" } });
   }
 
   const { name, email, subject, message } = parsed;
