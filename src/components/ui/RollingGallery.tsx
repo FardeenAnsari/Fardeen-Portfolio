@@ -62,27 +62,27 @@ export function RollingGallery({
       let pers = 1200;
 
       if (width < 640) {
-        // Mobile screens
-        cardW = 170;
-        cardH = 240;
-        pers = 900;
+        // Mobile screens: compact cards
+        cardW = 140;
+        cardH = 195;
+        pers = 850;
       } else if (width < 1024) {
-        // Tablet screens
-        cardW = 210;
-        cardH = 290;
-        pers = 1100;
+        // Tablet screens: medium compact
+        cardW = 175;
+        cardH = 240;
+        pers = 1000;
       } else {
-        // Desktop
-        cardW = 250;
-        cardH = 340;
-        pers = 1300;
+        // Desktop: sleek, refined compact scale
+        cardW = 200;
+        cardH = 275;
+        pers = 1200;
       }
 
       // Calculate cylinder radius so cards fit snugly on the perimeter
       // R = (cardWidth / 2) / tan(PI / count)
       const calculatedRadius = Math.round((cardW / 2) / Math.tan(Math.PI / count));
       // Clamp radius so it doesn't compress or stretch excessively
-      const finalRadius = Math.max(cardW * 1.15, calculatedRadius + 24);
+      const finalRadius = Math.max(cardW * 1.15, calculatedRadius + 16);
 
       setDimensions({
         cardWidth: cardW,
@@ -243,7 +243,7 @@ export function RollingGallery({
       <div
         className="relative w-full flex items-center justify-center cursor-grab active:cursor-grabbing overflow-hidden"
         style={{
-          height: dimensions.cardHeight + 60,
+          height: dimensions.cardHeight + 36,
           perspective: `${dimensions.perspective}px`,
         }}
       >

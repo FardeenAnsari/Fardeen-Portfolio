@@ -1,8 +1,22 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Calendar, Tag, CheckCircle, Leaf, Briefcase, Utensils, Link as LinkIcon, Target } from "lucide-react";
+import {
+  ArrowLeft,
+  ExternalLink,
+  Calendar,
+  Tag,
+  CheckCircle,
+  Leaf,
+  Briefcase,
+  Utensils,
+  Link as LinkIcon,
+  Target,
+  ShieldCheck,
+  Scale,
+  Layers,
+  AlertTriangle,
+} from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { PROJECTS } from "@/lib/data";
 
@@ -12,11 +26,13 @@ const PROJECT_ICONS: Record<string, React.ReactNode> = {
   trashium: <Leaf className="text-emerald-400" size={28} />,
   vetanflow: <Briefcase className="text-[var(--color-accent)]" size={28} />,
   restaurantpos: <Utensils className="text-amber-400" size={28} />,
+  meneu: <Utensils className="text-amber-400" size={28} />,
   "tiny-link": <LinkIcon className="text-sky-400" size={28} />,
 };
 
 export function ProjectPageClient({ project }: { project: Project }) {
   const relatedProjects = PROJECTS.filter((p) => p.id !== project.id).slice(0, 2);
+  const caseStudy = "caseStudy" in project ? project.caseStudy : undefined;
 
   return (
     <div className="min-h-screen pt-24 sm:pt-32 pb-24 text-[var(--color-ink)] bg-[var(--color-paper)]">
@@ -53,7 +69,7 @@ export function ProjectPageClient({ project }: { project: Project }) {
             <div className="lg:col-span-7 space-y-6">
               <div className="flex items-start gap-4">
                 <div className="p-3 rounded-xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] flex-shrink-0">
-                  {PROJECT_ICONS[project.id]}
+                  {PROJECT_ICONS[project.id] || PROJECT_ICONS["restaurantpos"]}
                 </div>
                 <div>
                   <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--color-ink)] font-display tracking-tight">
@@ -126,10 +142,143 @@ export function ProjectPageClient({ project }: { project: Project }) {
           </div>
         </div>
 
-        {/* Key Features */}
+        {/* Case Study Section (if available) */}
+        {caseStudy && (
+          <div className="space-y-12 sm:space-y-16 pt-8 border-t border-[var(--color-rule)]">
+            
+            {/* Problem & Solution Split */}
+            <div className="space-y-6">
+              <div className="section-label">Case Study Context</div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-[var(--color-ink)] font-display">
+                Operational Problem &amp; Architecture Solution
+              </h2>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                {/* Problem Statement */}
+                <div className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 sm:p-8 space-y-4">
+                  <div className="flex items-center gap-2 text-amber-400 font-mono text-xs uppercase tracking-wider font-semibold">
+                    <AlertTriangle size={15} />
+                    <span>The Problem Context</span>
+                  </div>
+                  <p className="text-[var(--color-ink-2)] text-sm sm:text-base leading-relaxed">
+                    {caseStudy.problem}
+                  </p>
+                </div>
+
+                {/* Solution Architecture */}
+                <div className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 sm:p-8 space-y-4">
+                  <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs uppercase tracking-wider font-semibold">
+                    <CheckCircle size={15} />
+                    <span>The Engineered Solution</span>
+                  </div>
+                  <p className="text-[var(--color-ink-2)] text-sm sm:text-base leading-relaxed">
+                    {caseStudy.solution}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Subsystems Deep Dive */}
+            {caseStudy.subsystems && caseStudy.subsystems.length > 0 && (
+              <div className="space-y-6">
+                <div className="space-y-1">
+                  <div className="section-label">Subsystem Decomposition</div>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-[var(--color-ink)] font-display">
+                    Architectural Modules &amp; Data Flow
+                  </h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  {caseStudy.subsystems.map((sub, i) => (
+                    <div
+                      key={i}
+                      className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 space-y-3"
+                    >
+                      <div className="flex items-center gap-2 text-[var(--color-accent)] font-mono text-xs font-semibold">
+                        <Layers size={14} />
+                        <span>Module {String(i + 1).padStart(2, "0")}</span>
+                      </div>
+                      <h3 className="text-base font-bold text-[var(--color-ink)] font-display">
+                        {sub.name}
+                      </h3>
+                      <p className="text-sm text-[var(--color-ink-2)] leading-relaxed">
+                        {sub.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Engineering Trade-Offs */}
+            {caseStudy.tradeOffs && caseStudy.tradeOffs.length > 0 && (
+              <div className="space-y-6">
+                <div className="space-y-1">
+                  <div className="section-label">Design Rationale</div>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-[var(--color-ink)] font-display">
+                    Key Technical Trade-Offs
+                  </h2>
+                </div>
+
+                <div className="space-y-4">
+                  {caseStudy.tradeOffs.map((t, i) => (
+                    <div
+                      key={i}
+                      className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 sm:p-7 space-y-2.5"
+                    >
+                      <div className="flex items-center gap-2 text-[var(--color-accent)] font-mono text-xs font-semibold">
+                        <Scale size={14} />
+                        <span>Trade-Off Decision {i + 1}</span>
+                      </div>
+                      <h3 className="text-base font-bold text-[var(--color-ink)] font-display">
+                        {t.decision}
+                      </h3>
+                      <p className="text-sm text-[var(--color-ink-2)] leading-relaxed">
+                        <span className="text-[var(--color-ink)] font-semibold">Rationale: </span>
+                        {t.rationale}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Data Integrity & Security Controls */}
+            {caseStudy.integrityAndSecurity && caseStudy.integrityAndSecurity.length > 0 && (
+              <div className="space-y-6">
+                <div className="space-y-1">
+                  <div className="section-label">Security &amp; Defenses</div>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-[var(--color-ink)] font-display">
+                    Data Integrity &amp; Failure Modes
+                  </h2>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {caseStudy.integrityAndSecurity.map((item, i) => (
+                    <div
+                      key={i}
+                      className="rounded-xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-5 space-y-2"
+                    >
+                      <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs font-semibold">
+                        <ShieldCheck size={14} />
+                        <span>{item.title}</span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-[var(--color-ink-2)] leading-relaxed">
+                        {item.detail}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+          </div>
+        )}
+
+        {/* Key Features & Highlights */}
         <div className="space-y-6 pt-6 border-t border-[var(--color-rule)]">
           <div className="space-y-1">
-            <div className="section-label">Subsystem Breakdown</div>
+            <div className="section-label">Capabilities Matrix</div>
             <h2 className="text-2xl sm:text-3xl font-bold text-[var(--color-ink)] font-display">
               Core Capabilities &amp; Features
             </h2>
@@ -148,12 +297,12 @@ export function ProjectPageClient({ project }: { project: Project }) {
           </div>
         </div>
 
-        {/* Engineering Challenges */}
+        {/* Engineering Challenges Solved */}
         <div className="space-y-6 pt-6 border-t border-[var(--color-rule)]">
           <div className="space-y-1">
-            <div className="section-label">Technical Trade-Offs</div>
+            <div className="section-label">System Hardening</div>
             <h2 className="text-2xl sm:text-3xl font-bold text-[var(--color-ink)] font-display">
-              Engineering Challenges Solved
+              Technical Hurdles Overcome
             </h2>
           </div>
 
@@ -172,7 +321,7 @@ export function ProjectPageClient({ project }: { project: Project }) {
           </div>
         </div>
 
-        {/* Impact */}
+        {/* Demonstrated Impact */}
         <div className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-6 sm:p-8 space-y-3">
           <div className="flex items-center gap-2 text-[var(--color-accent)] font-display text-lg font-bold">
             <Target size={18} />
@@ -195,7 +344,7 @@ export function ProjectPageClient({ project }: { project: Project }) {
               >
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-lg border border-[var(--color-rule)] bg-[var(--color-paper-3)]">
-                    {PROJECT_ICONS[rp.id]}
+                    {PROJECT_ICONS[rp.id] || PROJECT_ICONS["restaurantpos"]}
                   </div>
                   <div>
                     <h3 className="font-bold text-[var(--color-ink)] group-hover:text-[var(--color-accent)] transition-colors font-display">

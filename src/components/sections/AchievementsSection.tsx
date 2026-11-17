@@ -395,7 +395,7 @@ export function AchievementsSection() {
           ) : (
             /* Curated Bento Grid View */
             <div className="rounded-2xl border border-[var(--color-rule)] bg-[var(--color-paper-2)] p-4 sm:p-6 lg:p-8 space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                 {filteredItems.map((photo, index) => (
                   <button
                     key={photo.id}

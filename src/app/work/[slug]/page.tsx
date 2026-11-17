@@ -7,12 +7,21 @@ interface Props {
   params: { slug: string };
 }
 
+function getProjectBySlug(slug: string) {
+  if (slug === "meneu") {
+    return PROJECTS.find((p) => p.id === "restaurantpos");
+  }
+  return PROJECTS.find((p) => p.id === slug);
+}
+
 export async function generateStaticParams() {
-  return PROJECTS.map((p) => ({ slug: p.id }));
+  const slugs = PROJECTS.map((p) => ({ slug: p.id }));
+  slugs.push({ slug: "meneu" });
+  return slugs;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const project = PROJECTS.find((p) => p.id === params.slug);
+  const project = getProjectBySlug(params.slug);
   if (!project) return { title: "Project Not Found" };
 
   return {
@@ -27,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function ProjectPage({ params }: Props) {
-  const project = PROJECTS.find((p) => p.id === params.slug);
+  const project = getProjectBySlug(params.slug);
   if (!project) notFound();
 
   return <ProjectPageClient project={project} />;

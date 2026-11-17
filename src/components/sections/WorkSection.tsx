@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowUpRight, Github, ExternalLink, Layers, Database, Cpu, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 
 export function WorkSection() {
@@ -84,6 +84,14 @@ export function WorkSection() {
                     <FaGithub size={15} />
                     <span>View Repository</span>
                   </a>
+
+                  <Link
+                    href="/work/trashium"
+                    className="btn-ghost text-xs font-mono sm:ml-auto"
+                    aria-label="Read Trashium Case Study"
+                  >
+                    <span>Read Case Study &rarr;</span>
+                  </Link>
                 </div>
               </div>
 
@@ -148,7 +156,7 @@ export function WorkSection() {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 pt-6 mt-6 border-t border-[var(--color-rule)]">
+            <div className="flex flex-wrap items-center gap-3 pt-6 mt-6 border-t border-[var(--color-rule)]">
               <a
                 href="https://vetanflow.vercel.app/"
                 target="_blank"
@@ -169,6 +177,13 @@ export function WorkSection() {
                 <FaGithub size={14} />
                 <span>Code</span>
               </a>
+              <Link
+                href="/work/vetanflow"
+                className="btn-ghost text-xs font-mono sm:ml-auto"
+                aria-label="Read VetanFlow Case Study"
+              >
+                <span>Case Study &rarr;</span>
+              </Link>
             </div>
           </div>
 
@@ -199,7 +214,7 @@ export function WorkSection() {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 pt-6 mt-6 border-t border-[var(--color-rule)]">
+            <div className="flex flex-wrap items-center gap-3 pt-6 mt-6 border-t border-[var(--color-rule)]">
               <a
                 href="https://github.com/FardeenAnsari/RestaurantPOS"
                 target="_blank"
@@ -210,6 +225,13 @@ export function WorkSection() {
                 <FaGithub size={14} />
                 <span>GitHub Repository</span>
               </a>
+              <Link
+                href="/work/restaurantpos"
+                className="btn-ghost text-xs font-mono sm:ml-auto"
+                aria-label="Read Meneu Case Study"
+              >
+                <span>Case Study &rarr;</span>
+              </Link>
             </div>
           </div>
 

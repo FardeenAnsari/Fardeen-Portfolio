@@ -6,11 +6,12 @@ export const PERSONAL = {
   taglines: ["Full Stack Engineer", "Product Engineer", "AI Enthusiast", "IoT Developer", "System Designer"],
   location: "Bengaluru, Karnataka, India",
   email: "imailfard@gmail.com",
-  phone: "+91 91238 81320",
+  phone: "",
+  preferredContact: "Email / LinkedIn",
+  availability: "Available for Full-Time Roles",
   linkedin: "https://linkedin.com/in/itsfardeen",
   github: "https://github.com/FardeenAnsari",
   portfolio: "https://fardeenansari.github.io/Fardeen-Portfolio/",
-  whatsapp: "919123881320",
   bio: "B.Tech Computer Science & Engineering graduate (July 2026, CGPA 7.52) with strong foundations in full-stack web development. I build scalable web applications, mobile interfaces, and database-driven systems — bridging the gap between design and engineering with precision and craft.",
   bio_short: "Engineer who builds products with craft.",
   education: {
@@ -91,6 +92,56 @@ export const PROJECTS = [
       ml: "Python scikit-learn nightly pipeline",
       design: "Editorial Botanical — warm earth tones + WebGL ribbons",
     },
+    caseStudy: {
+      problem:
+        "Suburban municipalities across West Bengal face severe household apathy toward domestic waste segregation. Traditional scrap collection is informal, opaque, and inconsistent, leading to recyclable material diversion into open landfills. Without reliable pricing metrics or tangible civic incentives, households have little reason to separate organic and recyclable waste at source.",
+      solution:
+        "Trashium bridges the gap between environmental responsibility and tangible incentives through a closed-loop platform: households schedule collections, earn Green Credits scaled by material weight and quality, and redeem rewards in an eco-marketplace. A nightly Python ML pipeline analyzes commodity scrap trends to publish fair, transparent rate cards, while an integrated geospatial route optimizer groups pickups to minimize collection vehicle emissions.",
+      subsystems: [
+        {
+          name: "Dynamic Pricing Engine (Python + Scikit-Learn)",
+          description:
+            "Nightly batch inference job evaluating scrap demand curves across metals, plastics, paper, and e-waste. Uses Linear Regression as an interpretability baseline and Random Forest ensembles for volatile scrap commodities, achieving a Mean Absolute Percentage Error (MAPE) of ~6.11%.",
+        },
+        {
+          name: "Geospatial Fleet Routing (Leaflet + 2-Opt)",
+          description:
+            "Client-side geospatial clustering using nearest-neighbor heuristics refined by a 2-opt trajectory solver. Sequences collection manifests for municipal crew vehicles across Howrah, Rishra, and Shyamnagar to eliminate redundant transit loops.",
+        },
+        {
+          name: "Habit-Forming Gamification Subsystem",
+          description:
+            "A 20-tier progression model engineered with dynamic streak multipliers, milestone achievement badges (15 unlockable achievements), and community leaderboards to turn routine waste segregation into sustained civic engagement.",
+        },
+        {
+          name: "Security & Multi-Tenant Data Fabric",
+          description:
+            "Supabase PostgreSQL configured with strict Row-Level Security (RLS). Households can only query their own ledger; collection crews receive isolated, time-bounded route manifests; administrative staff supervise regional compliance telemetry.",
+        },
+      ],
+      tradeOffs: [
+        {
+          decision: "Classical Ensembles (Random Forest) vs Deep Learning",
+          rationale:
+            "Scrap market pricing data is structured and tabular. Classical regression ensembles offered superior parameter explainability, faster daily training runs, and zero black-box drift compared to heavy neural architectures.",
+        },
+        {
+          decision: "Client-Side 2-Opt Heuristic vs Commercial Routing APIs",
+          rationale:
+            "Commercial mapping APIs incur per-stop billing costs that would make municipal rollouts cost-prohibitive. Implementing a client-side 2-opt solver on geo-coordinates delivered 90%+ path efficiency without recurring API fees.",
+        },
+      ],
+      integrityAndSecurity: [
+        {
+          title: "Green Credit Anti-Tampering",
+          detail: "All credit issuance transactions are strictly executed via database functions with immutable audit logging, preventing client-side credit inflation.",
+        },
+        {
+          title: "Role-Segregated Route Manifests",
+          detail: "Household addresses and contact metadata are only exposed to designated municipal drivers during an active, accepted pickup window.",
+        },
+      ],
+    },
     challenges: [
       "Building a fair, abuse-resistant ML pricing system for volatile recyclables markets",
       "Designing gamification that drives real-world behavior, not just engagement",
@@ -130,6 +181,56 @@ export const PROJECTS = [
       database: "PostgreSQL + Supabase RLS + triggers",
       security: "Service-role key backend-only, RLS, grants, immutable snapshots",
     },
+    caseStudy: {
+      problem:
+        "SME payroll management in growing organizations is riddled with operational risks: spreadsheets emailed across departments, sensitive compensation figures leaked to unauthorized staff, and silent retro-active attendance edits corrupting finalized tax filings. Most off-the-shelf software functions merely as a calculator, failing to enforce institutional governance.",
+      solution:
+        "VetanFlow re-engineers payroll as an immutable, role-guarded state machine. It introduces strict separation of duty across 6 distinct role workspaces (Owner, Admin, HR, Finance, Manager, Employee), mandates maker-checker dual-authorization before any payroll execution, enforces month-locking to isolate attendance data from calculation drift, and secures finalized runs using database-level immutable triggers.",
+      subsystems: [
+        {
+          name: "6-Role Partitioned Workspaces",
+          description:
+            "Completely isolated component trees and API surfaces for Owner, Admin, HR, Finance, Manager, and Employee. Implements strict zero-cross-role UI leakage — employees only see personal compensation and attendance, while HR and Finance operate restricted governance cockpits.",
+        },
+        {
+          name: "Maker-Checker State Governance",
+          description:
+            "Dual-authorization workflow requiring an HR Maker to prepare draft payroll iterations, followed by an independent Finance Checker or Owner to approve and sign off. Neither entity can execute the entire cycle unilaterally.",
+        },
+        {
+          name: "Database-Level Immutability Triggers",
+          description:
+            "PostgreSQL BEFORE UPDATE and BEFORE DELETE triggers guarding the payroll_runs table. Once a cycle status is committed as 'FINALIZED', all write operations on that run are permanently rejected at the database engine level.",
+        },
+        {
+          name: "Confidential Payslip Generation Pipeline",
+          description:
+            "Serverless PDF rendering pipeline compiling itemized gross pay, HRA, DA, statutory PF, and TDS deductions. Generates time-bounded signed URLs (expires in 15 minutes) ensuring sensitive wage data cannot be scraped or accessed via direct links.",
+        },
+      ],
+      tradeOffs: [
+        {
+          decision: "Database Triggers vs Application-Level Middleware",
+          rationale:
+            "Application middleware can be bypassed by direct database migrations, script executions, or ORM bugs. Enforcing finalized run immutability inside PostgreSQL triggers guarantees that historical financial records remain tamper-proof under all circumstances.",
+        },
+        {
+          decision: "Dedicated Role Workspaces vs Permission-Gated Flags",
+          rationale:
+            "Rather than toggling UI buttons with permission booleans (which leaves dormant admin code in client bundles), each role runs an isolated workspace hierarchy, eliminating DOM inspection leaks.",
+        },
+      ],
+      integrityAndSecurity: [
+        {
+          title: "Month-Locking Data Guard",
+          detail: "Once a payroll calculation cycle begins, source attendance and leave records for that month are frozen to prevent retro-active changes from silently invalidating net pay calculations.",
+        },
+        {
+          title: "Service-Role Key Isolation",
+          detail: "Privileged Supabase service-role keys are strictly encapsulated inside the Express 5 backend with zero exposure to frontend bundles or client network logs.",
+        },
+      ],
+    },
     challenges: [
       "Designing six completely different UX surfaces for six distinct roles",
       "Implementing maker-checker separation that cannot be bypassed at any layer",
@@ -139,7 +240,7 @@ export const PROJECTS = [
   },
   {
     id: "restaurantpos",
-    title: "RestaurantPOS",
+    title: "Meneu (RestaurantPOS)",
     subtitle: "Offline-first Point of Sale for Android Tablets",
     tagline: "No internet. No problem. Full restaurant ops, locally.",
     description: "A high-performance, offline-first Point of Sale tablet application (Bamboo Hut POS) designed specifically for Android tablets in landscape orientation. Features table floor-plan management, cart billing, GST thermal receipt printing, and expense auditing — all running on local SQLite.",
@@ -168,6 +269,56 @@ export const PROJECTS = [
       state: "Zustand (in-memory cart, table configurations)",
       database: "SQLite via repository pattern",
       output: "Thermal print engine + CSV export",
+    },
+    caseStudy: {
+      problem:
+        "Commercial dining establishments operate under intense pressure where a 30-second delay frustrates patrons and disrupts kitchen pacing. Cloud-dependent POS setups fail catastrophically during internet dropouts, power interruptions, or ISP throttling: table orders are dropped, kitchen tickets are lost, and patrons cannot be billed, directly threatening operational revenue.",
+      solution:
+        "Meneu (RestaurantPOS) is built from the metal up as an offline-first, native Android tablet application (tested on Expo SDK 57). By executing 100% of orders, floor-plan transitions, billing splits, and inventory audits against an embedded SQLite database, it guarantees zero-latency, sub-millisecond checkouts with total resilience against connectivity loss. Integrated ESC/POS drivers generate GST-compliant 80mm receipts directly to local thermal printers.",
+      subsystems: [
+        {
+          name: "Embedded Local-First Storage (SQLite)",
+          description:
+            "Repository-pattern architecture wrapping SQLite on Android. Enforces full ACID transactions on every table state transition, menu item modification, and payment confirmation with zero external network handshakes.",
+        },
+        {
+          name: "Visual Table Floor Plan State Engine",
+          description:
+            "Landscape-oriented interactive floor plan powered by Zustand reactive state. Tracks live table states (Available, Occupied, Billing In-Progress, Cleaning) with split-bill support and instant tab transfer capabilities.",
+        },
+        {
+          name: "80mm Thermal Receipt Engine (ESC/POS)",
+          description:
+            "Direct-to-printer driver pipeline generating standardized ESC/POS byte streams. Computes itemized CGST and SGST tax splits, applies promotional percentage discounts, and prints kitchen order tickets (KOT) and customer receipts.",
+        },
+        {
+          name: "Financial Audit & Expense Ledger",
+          description:
+            "On-device accounting module aggregating daily and weekly revenue trends, category profitability curves, staff shifts, and petty cash expense tracking, exportable directly to CSV for tax compliance.",
+        },
+      ],
+      tradeOffs: [
+        {
+          decision: "Local SQLite Storage vs Cloud Syncing",
+          rationale:
+            "In busy dining rooms, network dependency is a fatal liability. Storing all operational data locally in SQLite guarantees instant response times, zero server hosting costs, and 100% uptime regardless of restaurant WiFi or ISP outages.",
+        },
+        {
+          decision: "Landscape-First Tablet Ergonomics",
+          rationale:
+            "Designed intentionally for counter-mounted 10-inch Android tablets. A split two-column interface (table floor plan on the left, live cart and numeric payment keypad on the right) minimizes cashier finger travel and speeds up ticket closing.",
+        },
+      ],
+      integrityAndSecurity: [
+        {
+          title: "ACID Order Persistence",
+          detail: "Every bill settlement is committed to SQLite within an atomic transaction, ensuring table status, payment records, and inventory deductions never enter an inconsistent state.",
+        },
+        {
+          title: "Cryptographic Receipt Hashing",
+          detail: "Sequential bill IDs with audit timestamps prevent retro-active ticket deletion or under-the-table order cancellations.",
+        },
+      ],
     },
     challenges: [
       "Building a production-quality offline app with zero data loss guarantees",
