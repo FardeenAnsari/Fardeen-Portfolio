@@ -95,51 +95,55 @@ export const PROJECTS = [
     },
     caseStudy: {
       problem:
-        "Suburban municipalities across West Bengal face severe household apathy toward domestic waste segregation. Traditional scrap collection is informal, opaque, and inconsistent, leading to recyclable material diversion into open landfills. Without reliable pricing metrics or tangible civic incentives, households have little reason to separate organic and recyclable waste at source.",
+        "Field research conducted across four West Bengal municipalities (Rishra, Belur, Bally, and Shyamnagar) with 16 local domain respondents (8 scrap dealers, 5 kabadiwallas, and 3 recycling operators) revealed systemic breakdowns in domestic waste segregation. In Rishra, industrial dust degraded cardboard value; in Belur and Bally, dense residential collectors prioritized convenience over rate cards; in Shyamnagar, extended transit distances erased margins on low-value items. Informal collections suffered from arbitrary weighing, opaque rate cards, and zero institutional rewards, leaving 70%+ of dry recyclables directed to open municipal landfills.",
       solution:
-        "Trashium bridges the gap between environmental responsibility and tangible incentives through a closed-loop platform: households schedule collections, earn Green Credits scaled by material weight and quality, and redeem rewards in an eco-marketplace. A nightly Python ML pipeline analyzes commodity scrap trends to publish fair, transparent rate cards, while an integrated geospatial route optimizer groups pickups to minimize collection vehicle emissions.",
+        "Trashium introduces an end-to-end, role-based circular economy ecosystem uniting Households, Collection Crews, and Administrators. Households schedule dry-waste pickups, view algorithmic price estimates, earn Green Credits, and redeem them in an eco-marketplace. Collection crews receive 2-opt optimized route manifests and upload geo-tagged photo proofs to verify contaminated or disputed scrap. An automated Supabase PostgreSQL trigger atomically issues Green Credits upon collection completion, while a leak-free Python machine learning pipeline estimates daily fair-market value across 17 scrap categories.",
       subsystems: [
         {
-          name: "Dynamic Pricing Engine (Python + Scikit-Learn)",
+          name: "Leak-Free Machine Learning Pricing Pipeline",
           description:
-            "Nightly batch inference job evaluating scrap demand curves across metals, plastics, paper, and e-waste. Uses Linear Regression as an interpretability baseline and Random Forest ensembles for volatile scrap commodities, achieving a Mean Absolute Percentage Error (MAPE) of ~6.11%.",
+            "Evaluated on historical and survey rate data across 17 scrap categories. Strictly prevents data leakage by isolating market pricing features (month, day-of-week, weekend flag, region, material type, market demand, quality-defect risk) from transaction-dependent operational parameters (quantity, distance, logistics cost). The selected Linear Regression on log(market_value) achieved a test MAPE of 6.11%, R² of 0.9988, and MAE of ₹5.869, outperforming a 400-tree Random Forest challenger (MAPE 8.12%) and Moving Average baseline (MAPE 10.42%). 93.1% of predictions fall within ±15% tolerance accuracy.",
         },
         {
-          name: "Geospatial Fleet Routing (Leaflet + 2-Opt)",
+          name: "Downstream Payout & Margin Governance",
           description:
-            "Client-side geospatial clustering using nearest-neighbor heuristics refined by a 2-opt trajectory solver. Sequences collection manifests for municipal crew vehicles across Howrah, Rishra, and Shyamnagar to eliminate redundant transit loops.",
+            "A deterministic financial formula calculates user payouts and platform gross margins (32% to 62% across materials like paper, plastic, metals, e-waste, and glass). Enforces mathematical risk monotonicity (Low ×1.0, Medium ×0.92, High ×0.82) ensuring defective scrap value decreases predictably while maintaining non-negative payouts across realistic operational scenarios.",
         },
         {
-          name: "Habit-Forming Gamification Subsystem",
+          name: "Geospatial Fleet Routing & Geo-Proof Engine",
           description:
-            "A 20-tier progression model engineered with dynamic streak multipliers, milestone achievement badges (15 unlockable achievements), and community leaderboards to turn routine waste segregation into sustained civic engagement.",
+            "Interactive Leaflet maps equipped with client-side nearest-neighbor clustering and 2-opt trajectory solvers. Optimizes pickup sequences across Howrah, Rishra, Shyamnagar, Tarakeswar, and Hugli-Chinsura. Integrated with a crew geo-proof screen capturing on-site photographic evidence stored in Supabase Storage when scrap quality is rejected or degraded.",
         },
         {
-          name: "Security & Multi-Tenant Data Fabric",
+          name: "Gamified Civic Marketplace & Atomic Triggers",
           description:
-            "Supabase PostgreSQL configured with strict Row-Level Security (RLS). Households can only query their own ledger; collection crews receive isolated, time-bounded route manifests; administrative staff supervise regional compliance telemetry.",
+            "A 20-tier loyalty progression system engineered with streak multipliers, 15 unlockable milestone achievement badges, and digital marketplace redemption. Governed by an automated on_pickup_completed PostgreSQL trigger that atomically deposits Green Credits exactly once, guaranteeing zero client-side credit tampering.",
         },
       ],
       tradeOffs: [
         {
-          decision: "Classical Ensembles (Random Forest) vs Deep Learning",
+          decision: "Log-Linear Regression vs Deep Learning / Random Forest",
           rationale:
-            "Scrap market pricing data is structured and tabular. Classical regression ensembles offered superior parameter explainability, faster daily training runs, and zero black-box drift compared to heavy neural architectures.",
+            "While a 400-tree Random Forest was trained as a benchmark, Linear Regression on log(market_value) demonstrated superior percentage-level stability across both budget scrap (cardboard at ₹7/kg) and premium commodities (copper at ₹600/kg), delivering lower MAPE (6.11% vs 8.12%), zero black-box drift, and total mathematical transparency for household payouts.",
         },
         {
-          decision: "Client-Side 2-Opt Heuristic vs Commercial Routing APIs",
+          decision: "Client-Side 2-Opt Heuristic vs Commercial Fleet APIs",
           rationale:
-            "Commercial mapping APIs incur per-stop billing costs that would make municipal rollouts cost-prohibitive. Implementing a client-side 2-opt solver on geo-coordinates delivered 90%+ path efficiency without recurring API fees.",
+            "Commercial fleet routing APIs impose recurring per-stop billing that would compromise financial sustainability in suburban municipalities. Implementing an in-browser 2-opt trajectory optimizer on Leaflet coordinates delivered 90%+ path efficiency with zero ongoing API licensing costs.",
         },
       ],
       integrityAndSecurity: [
         {
-          title: "Green Credit Anti-Tampering",
-          detail: "All credit issuance transactions are strictly executed via database functions with immutable audit logging, preventing client-side credit inflation.",
+          title: "Atomic Completion Database Trigger",
+          detail: "The on_pickup_completed PostgreSQL trigger guarantees Green Credits deposit occurs as an atomic, idempotent database transaction, completely eliminating race conditions and double-crediting.",
         },
         {
-          title: "Role-Segregated Route Manifests",
-          detail: "Household addresses and contact metadata are only exposed to designated municipal drivers during an active, accepted pickup window.",
+          title: "Geo-Tagged Contamination Proofs",
+          detail: "Collection crews capture on-site photographic evidence with spatial coordinates uploaded directly to Supabase Storage whenever waste quality fails verification, providing an unalterable audit trail for admin review.",
+        },
+        {
+          title: "Feature Decoupling Against Target Leakage",
+          detail: "Distance and pickup weight are strictly omitted from the price prediction model and applied only in downstream business formulas, preventing synthetic metric inflation.",
         },
       ],
     },
