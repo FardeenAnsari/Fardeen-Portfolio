@@ -124,12 +124,12 @@ function Scene() {
       <String anchorRef={anchorRef} cardRef={cardRef} />
 
       <Environment resolution={256}>
-        {/* Warm key light */}
-        <Lightformer form="rect" intensity={2} color="#FFF8F0" position={[5, 5, 5]} target={[0, 0, 0]} />
-        {/* Cool rim light */}
-        <Lightformer form="rect" intensity={1} color="#FFF8F0" position={[-5, 5, -5]} target={[0, 0, 0]} />
-        {/* Bronze fill */}
-        <Lightformer form="circle" intensity={3} color="#C08552" position={[0, -5, 5]} target={[0, 0, 0]} />
+        {/* Cool key light */}
+        <Lightformer form="rect" intensity={2} color="#ffffff" position={[5, 5, 5]} target={[0, 0, 0]} />
+        {/* Crisp rim light */}
+        <Lightformer form="rect" intensity={1} color="#e4e4e7" position={[-5, 5, -5]} target={[0, 0, 0]} />
+        {/* Neutral silver fill */}
+        <Lightformer form="circle" intensity={2} color="#71717a" position={[0, -5, 5]} target={[0, 0, 0]} />
       </Environment>
     </>
   );

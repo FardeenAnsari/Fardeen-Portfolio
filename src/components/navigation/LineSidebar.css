@@ -1,7 +1,7 @@
 .line-sidebar {
-  --accent-color: #C08552;
-  --text-color: #3D271D;
-  --marker-color: #8C5A3C;
+  --accent-color: var(--color-ink, #f4f4f5);
+  --text-color: var(--color-ink-3, #71717a);
+  --marker-color: var(--color-rule, #27272a);
   --marker-length: 60px;
   --marker-gap: 0px;
   --tick-scale: 0.5;

@@ -36,15 +36,15 @@ module.exports = {
         'accent-cyan': 'var(--accent-cyan)',
         'accent-pink': 'var(--accent-pink)',
         // Dark theme palette
-        'electric-blue': '#C08552',
-        'aurora-purple': '#8C5A3C',
-        'cyan-accent': '#C08552',
-        'deep-dark': '#4B2E2B',
-        'surface-dark': '#FFF8F0',
-        'surface-mid': '#FFF8F0',
+        'electric-blue': '#38bdf8',
+        'aurora-purple': '#a855f7',
+        'cyan-accent': '#06b6d4',
+        'deep-dark': '#09090b',
+        'surface-dark': '#18181b',
+        'surface-mid': '#27272a',
         // Light theme palette
-        'electric-blue-light': '#C08552',
-        'aurora-purple-light': '#8C5A3C',
+        'electric-blue-light': '#0284c7',
+        'aurora-purple-light': '#9333ea',
 
       },
       animation: {

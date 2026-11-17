@@ -31,6 +31,21 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 
+# LaTeX artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+
+# Backups and temp
+*.bak
+*.tmp
+
 # Vercel
 .vercel
 
