@@ -81,6 +81,7 @@ const personSchema = {
   description: "Full Stack Software Engineer and Product Builder based in Bengaluru, India.",
   url: "https://fardeenansari.dev",
   email: "imailfard@gmail.com",
+  telephone: "+91-9123881320",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Bengaluru",

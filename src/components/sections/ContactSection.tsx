@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, MapPin, Send, CheckCircle2, AlertCircle, Loader2, Clock, Globe, ArrowUpRight } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle, Loader2, Clock, Globe, ArrowUpRight } from "lucide-react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { PERSONAL } from "@/lib/data";
 
@@ -100,6 +100,17 @@ export function ContactSection() {
                   className="text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors underline underline-offset-4 font-semibold"
                 >
                   {PERSONAL.email}
+                </a>
+              </div>
+
+              {/* Direct Phone */}
+              <div className="py-4 flex items-center justify-between">
+                <span className="text-xs text-[var(--color-ink-3)] uppercase">Phone</span>
+                <a
+                  href={`tel:${PERSONAL.phone.replace(/\s+/g, "")}`}
+                  className="text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors font-semibold"
+                >
+                  {PERSONAL.phone}
                 </a>
               </div>
 
