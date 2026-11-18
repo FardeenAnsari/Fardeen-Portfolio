@@ -1,137 +1,180 @@
+% TARGET ROLE: Systems Engineering Associate | Company: Salesforce | Job ID: JR368441
 \documentclass[10pt,a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[empty]{fullpage}
-\usepackage[margin=0.5in,top=0.45in,bottom=0.45in]{geometry}
-\usepackage{hyperref}
+\usepackage[a4paper,top=0.32in,bottom=0.32in,left=0.35in,right=0.35in]{geometry}
+\usepackage[hidelinks]{hyperref}
 \usepackage{enumitem}
 \usepackage{titlesec}
+\usepackage{array}
 \usepackage{tabularx}
-\usepackage{color}
-
-\hypersetup{
-    colorlinks=true,
-    linkcolor=black,
-    filecolor=black,
-    urlcolor=black,
-}
-
-\setlist[itemize]{leftmargin=*,nosep,topsep=1pt,partopsep=0pt,parsep=1pt}
-
-% Section formatting
-\titleformat{\section}{\large\bfseries}{}{0em}{}[\vspace{1pt}\hrule height 0.5pt]
-\titlespacing*{\section}{0pt}{6pt}{3pt}
-
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz}
+\usepackage{sourcesans}
+\renewcommand{\familydefault}{\sfdefault}
 \pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{3pt}{1.5pt}
+\setlist[itemize]{leftmargin=*,itemsep=0.5pt,topsep=0.5pt,parsep=0pt,partopsep=0pt}
 
 \begin{document}
 
-% ── HEADER ──
+% ===== COMPACT PROFESSIONAL MONOCHROME HEADER =====
+\definecolor{HeaderBlack}{HTML}{171717}
+\definecolor{HeaderText}{HTML}{202020}
+\definecolor{HeaderGray}{HTML}{666666}
+\definecolor{HeaderLine}{HTML}{D8D8D8}
+
+\begin{tcolorbox}[
+    enhanced,
+    width=\textwidth,
+    colback=white,
+    colframe=HeaderLine,
+    boxrule=0.45pt,
+    arc=1.5mm,
+    outer arc=1.5mm,
+    left=10pt,
+    right=10pt,
+    top=7pt,
+    bottom=6pt,
+    boxsep=0pt,
+    before skip=0pt,
+    after skip=0pt
+]
 \noindent
-\begin{minipage}[t]{0.45\textwidth}
-  \vspace{0pt}
-  {\LARGE \textbf{Fardeen Ansari}}\\[2pt]
-  {\normalsize \textit{Aspiring Software Developer}}
-\end{minipage}%
-\hfill
-\begin{minipage}[t]{0.53\textwidth}
-  \vspace{0pt}
-  \fontsize{8.5pt}{11pt}\selectfont
-  \begin{tabularx}{\textwidth}{@{}X X@{}}
-    \textbf{EMAIL} & \textbf{PHONE} \\
-    \href{mailto:imailfard@gmail.com}{imailfard@gmail.com} & +91 91238 81320 \\[3pt]
-    \textbf{LINKEDIN} & \textbf{GITHUB} \\
-    \href{https://linkedin.com/in/itsfardeen}{linkedin.com/in/itsfardeen} & \href{https://github.com/FardeenAnsari}{github.com/FardeenAnsari} \\[3pt]
-    \textbf{PORTFOLIO} & \textbf{LOCATION} \\
-    \href{https://fardeen-portfolio-puce.vercel.app}{fardeen-portfolio-puce.vercel.app} & Bengaluru, Karnataka
-  \end{tabularx}
+\begin{minipage}[c]{0.355\textwidth}
+    {\color{HeaderBlack}\rule{3.2cm}{2.2pt}}\\[6pt]
+    {\fontsize{23}{26}\selectfont\bfseries\color{HeaderText} Fardeen Ansari}\\[2pt]
+    {\fontsize{10.5}{13}\selectfont\color{HeaderGray} Software Engineer}
 \end{minipage}
+\hfill
+\begin{minipage}[c]{0.4pt}
+    \vspace{-1pt}
+    \color{HeaderLine}\rule{0.4pt}{1.3cm}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.595\textwidth}
+    \footnotesize
+    \begin{minipage}[t]{0.48\linewidth}
+        \raggedright
+        {\fontsize{7.2}{8.5}\selectfont\bfseries\color{HeaderGray} EMAIL}\\[-1pt]
+        {\fontsize{9}{11}\selectfont\color{HeaderText}\href{mailto:imailfard@gmail.com}{imailfard@gmail.com}}\\[3pt]
+        {\fontsize{7.2}{8.5}\selectfont\bfseries\color{HeaderGray} LINKEDIN}\\[-1pt]
+        {\fontsize{9}{11}\selectfont\color{HeaderText}\href{https://linkedin.com/in/itsfardeen}{linkedin.com/in/itsfardeen}}\\[3pt]
+        {\fontsize{7.2}{8.5}\selectfont\bfseries\color{HeaderGray} PORTFOLIO}\\[-1pt]
+        {\fontsize{9}{11}\selectfont\color{HeaderText}\href{https://fardeen-portfolio-puce.vercel.app}{fardeen-portfolio-puce.vercel.app}}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.48\linewidth}
+        \raggedright
+        {\fontsize{7.2}{8.5}\selectfont\bfseries\color{HeaderGray} PHONE}\\[-1pt]
+        {\fontsize{9}{11}\selectfont\color{HeaderText} +91 91238 81320}\\[3pt]
+        {\fontsize{7.2}{8.5}\selectfont\bfseries\color{HeaderGray} GITHUB}\\[-1pt]
+        {\fontsize{9}{11}\selectfont\color{HeaderText}\href{https://github.com/FardeenAnsari}{github.com/FardeenAnsari}}\\[3pt]
+        {\fontsize{7.2}{8.5}\selectfont\bfseries\color{HeaderGray} LOCATION}\\[-1pt]
+        {\fontsize{9}{11}\selectfont\color{HeaderText} Bengaluru, Karnataka}
+    \end{minipage}
+\end{minipage}
+\end{tcolorbox}
+\vspace{1.5pt}
 
-\vspace{6pt}
-
-% ── PROFESSIONAL SUMMARY ──
+% ============================================================
+% PROFESSIONAL SUMMARY
+% ============================================================
 \section*{Professional Summary}
-\noindent\fontsize{9pt}{11.5pt}\selectfont
-Computer Science \& Engineering graduate (2026) with hands-on experience building and deploying full-stack applications using Python, JavaScript, React.js, Next.js, Node.js, Express.js, REST APIs, and relational databases. Experienced in collaborative project development, translating requirements into application features, and working across frontend workflows, backend services, and data operations. Strong foundation in Object-Oriented Programming, SQL, SDLC, Git, and problem-solving, with basic experience in debugging and software testing. Interested in learning cybersecurity concepts and contributing to reliable SaaS products.
+Computer Science \& Engineering graduate (2026) with hands-on experience developing and deploying full-stack applications using JavaScript, React.js, Next.js, Node.js, Express.js, REST APIs, and relational databases. Experienced in building role-based workflows, integrating application services, and implementing data-access and integrity controls. Strong foundation in Python, Java, Object-Oriented Programming, SQL, SDLC, and basic software testing. Interested in developing reliable enterprise applications and improving Finance and Employee Success workflows through thoughtful engineering and collaboration.
 
-% ── TECHNICAL SKILLS ──
+% ============================================================
+% TECHNICAL SKILLS
+% ============================================================
 \section*{Technical Skills}
-\noindent\fontsize{9pt}{11.5pt}\selectfont
-\begin{tabular}{@{}p{0.25\textwidth} p{0.73\textwidth}@{}}
-  \textbf{Programming Languages:} & Python, Java, JavaScript, C \\
-  \textbf{Frontend Development:} & React.js, Next.js, HTML5, CSS3 \\
-  \textbf{Backend \& APIs:} & Node.js, Express.js, REST APIs, API Integration, JSON \\
-  \textbf{Databases \& SQL:} & PostgreSQL, SQLite, Supabase, SQL \\
-  \textbf{Computer Science:} & Object-Oriented Programming (OOP), Programming Fundamentals, SDLC \\
-  \textbf{Engineering Practices:} & Basic Debugging, Basic Software Testing, Problem-Solving, Technical Documentation \\
-  \textbf{Developer Tools:} & Git, GitHub, VS Code, Postman, Chrome DevTools, Vercel, Docker (Basics) \\
-  \textbf{AI-Assisted Development:} & GitHub Copilot, ChatGPT, Claude, Gemini
-\end{tabular}
+\renewcommand{\arraystretch}{0.98}
+\begin{tabularx}{\textwidth}{@{}>{\bfseries\raggedright\arraybackslash}p{4.8cm}@{\hspace{0.2cm}}>{\raggedright\arraybackslash}X@{}}
+Programming Languages: & Python, Java, JavaScript, C \\
+Backend \& APIs: & Node.js, Express.js, REST APIs, API Integration, JSON \\
+Frontend Development: & React.js, Next.js, HTML5, CSS3, Tailwind CSS \\
+Databases \& SQL: & PostgreSQL, SQLite, Supabase, SQL (Triggers, RLS, ACID) \\
+Computer Science: & Object-Oriented Programming (OOP), Data Structures, SDLC \\
+Testing \& Quality: & Basic Software Testing, Test-Case Writing, Integration Testing Fundamentals, Debugging \\
+Tools \& Documentation: & Git, GitHub, VS Code, Postman, Technical Documentation \\
+AI-Assisted Development: & GitHub Copilot, ChatGPT, Claude, Gemini \\
+\end{tabularx}
 
-% ── PROJECTS ──
+% ============================================================
+% PROJECTS
+% ============================================================
 \section*{Projects}
-\noindent\fontsize{9pt}{11.5pt}\selectfont
-\textbf{Trashium -- Incentivized Waste Management Platform} \hfill \href{https://github.com/AmartyaSingh07/Trashium}{GitHub} $\cdot$ \href{https://www.trashium.com}{Live Demo}
+
+\textbf{Trashium -- Reverse-Logistics \& Scrap Monetization Platform}
+\hfill \href{https://github.com/AmartyaSingh07/Trashium}{GitHub} \quad$\cdot$\quad \href{https://www.trashium.com}{Live Demo}\\
+\textit{What it is:} Distributed marketplace connecting households, scrap dealers, and recyclers to digitize informal waste trade.\\
+\textbf{Technologies Used:} Next.js 14, React, TypeScript, Python (scikit-learn), Supabase, PostgreSQL, Leaflet, Tailwind CSS
 \begin{itemize}
-  \item Led collaborative development of a full-stack platform using Next.js, React, and Supabase, contributing to application workflows and feature delivery.
-  \item Built a Python price-prediction model using Linear Regression and Random Forest; implemented Leaflet-based route optimization and a 20-tier gamification experience.
+\item Built full-stack workflows for scheduled scrap pickup dispatch, verified collection logging, and atomic PostgreSQL triggers for automated wallet payouts and digital receipt ledgering.
+\item Engineered a Python price-prediction model using Linear Regression (MAPE = 6.11\%, $R^2 = 0.9988$) across 17 scrap categories, combined with 2-opt Leaflet fleet routing and a 20-tier gamification system.
+\end{itemize}
+\vspace{1pt}
+
+\textbf{VetanFlow -- Multi-Tenant Enterprise Payroll Operations Platform}
+\hfill \href{https://github.com/FardeenAnsari/vetanflow}{GitHub} \quad$\cdot$\quad \href{https://vetanflow.vercel.app/}{Live Demo}\\
+\textit{What it is:} Enterprise payroll governance platform enforcing strict maker-checker approval workflows and tamper-evident audit trails.\\
+\textbf{Technologies Used:} React, TypeScript, Node.js, Express.js, PostgreSQL, Supabase, Row-Level Security (RLS), jsPDF
+\begin{itemize}
+\item Engineered 6 role-segregated workspaces (Admin, HR, Finance, Auditor, Employee) with maker-checker state machines, REST APIs, and database-level immutability using PostgreSQL \texttt{BEFORE UPDATE/DELETE} triggers.
+\item Implemented transactional month-locking to prevent retroactive compensation alteration, automated calculation pipelines, salary disbursement validation checks, and client-side encrypted PDF payslip generation.
+\end{itemize}
+\vspace{1pt}
+
+\textbf{Meneu -- Offline-First Restaurant POS Mobile Application}
+\hfill \href{https://github.com/FardeenAnsari/RestaurantPOS}{GitHub}\\
+\textit{What it is:} High-availability, zero-latency tablet point-of-sale system engineered for uninterrupted operations during network outages.\\
+\textbf{Technologies Used:} React Native, Expo, TypeScript, Embedded SQLite, ACID Transactions, ESC/POS Bluetooth Protocol
+\begin{itemize}
+\item Built 100\% offline-first relational persistence using embedded SQLite, executing ACID transactions for concurrent table orders, dynamic menu catalogs, split-billing, and dual-tier discounts.
+\item Developed automated GST-compliant tax calculations (CGST + SGST) and integrated ESC/POS Bluetooth printer drivers for wireless 80mm kitchen order tickets (KOT) and customer receipts with zero internet dependency.
 \end{itemize}
 
-\vspace{3pt}
-\noindent
-\textbf{VetanFlow -- Role-Based Payroll Operations Platform} \hfill \href{https://github.com/FardeenAnsari/vetanflow}{GitHub} $\cdot$ \href{https://vetanflow.vercel.app/}{Live Demo}
-\begin{itemize}
-  \item Developed a database-driven application using React, Express.js, PostgreSQL, and Supabase, connecting role-based workflows with backend APIs and database operations.
-  \item Implemented Row-Level Security, month-locking, and database immutability rules to support access control and data integrity.
-\end{itemize}
-
-\vspace{3pt}
-\noindent
-\textbf{Meneu -- Offline-First Restaurant POS Mobile Application} \hfill \href{https://github.com/FardeenAnsari/RestaurantPOS}{GitHub}
-\begin{itemize}
-  \item Built an offline-first mobile application using React Native, Expo, and SQLite, with local data persistence.
-  \item Developed features for table management, menu ordering, billing, discounts, and GST-compliant receipt generation.
-\end{itemize}
-
-% ── INTERNSHIP EXPERIENCE ──
+% ============================================================
+% INTERNSHIP EXPERIENCE
+% ============================================================
 \section*{Internship Experience}
-\noindent\fontsize{9pt}{11.5pt}\selectfont
-\textbf{Summer Intern -- Embedded Systems \& IoT -- Jadavpur University} \hfill 2024 \quad \href{https://drive.google.com/file/d/1XP1j9ylUgpK528J4_yt1luJFLb9CBnwl/view?usp=drive_link}{Certificate}
+\textbf{Summer Intern -- Embedded Systems \& IoT -- Jadavpur University}
+\hfill 2024 \quad \href{https://drive.google.com/file/d/1XP1j9ylUgpK528J4_yt1luJFLb9CBnwl/view?usp=drive_link}{Certificate}
 \begin{itemize}
-  \item Completed a 5-week technical internship involving Python, MATLAB, and machine-learning integration; received \textbf{Grade A}.
-  \item Collaborated on a Smart Bee Hive Monitoring System, applying programming and analytical problem-solving to a practical project.
+\item Completed a 5-week technical internship involving Python, MATLAB, and machine-learning integration; received \textbf{Grade A}.
+\item Collaborated on a Smart Bee Hive Monitoring System, applying programming and analytical problem-solving to a practical project.
 \end{itemize}
 
-% ── EDUCATION ──
+% ============================================================
+% EDUCATION
+% ============================================================
 \section*{Education}
-\noindent\fontsize{9pt}{11.5pt}\selectfont
-\textbf{B.Tech $\mid$ Computer Science \& Engineering $\mid$ CGPA: 7.52} \hfill 2022--2026\\
-Supreme Knowledge Foundation Group of Institutions \hfill Mankundu, West Bengal\\
-\textit{Affiliated to Maulana Abul Kalam Azad University of Technology (MAKAUT, formerly WBUT)}\\[2pt]
-\textbf{Class XII $\mid$ WBCHSE} \hfill 2022\\
-Jagatdal Chasma-I Rahamat High School \hfill \textbf{77.2\%}\\[2pt]
-\textbf{Class X $\mid$ WBBSE} \hfill 2020\\
-Jagatdal Sri Hari Uchcha Vidyalaya \hfill \textbf{69.0\%}
+\textbf{B.Tech | Computer Science \& Engineering | MAKAUT}
+\hfill 2022--2026\\
+Supreme Knowledge Foundation Group of Institutions (Affiliated to MAKAUT, formerly WBUT)
+\hfill CGPA: 7.52
 
-% ── ACHIEVEMENTS ──
+% ============================================================
+% ACHIEVEMENTS
+% ============================================================
 \section*{Achievements}
-\noindent\fontsize{9pt}{11.5pt}\selectfont
-\textbf{Smart India Hackathon -- National Finalist} \hfill 2023 \quad \href{https://drive.google.com/file/d/1LSpvR00tUAIy6ErloFasTqFllAVgryOH/view?usp=drive_link}{View Credential}
+\textbf{Smart India Hackathon -- National Finalist}
+\hfill 2023 \quad \href{https://drive.google.com/file/d/1LSpvR00tUAIy6ErloFasTqFllAVgryOH/view?usp=drive_link}{\small View Credential}
 \begin{itemize}
-  \item Collaborated with a team to develop a full-stack platform for routing civic issues to government authorities.
+\item Collaborated with a team to develop a full-stack platform for routing civic issues to government authorities.
 \end{itemize}
-
-\vspace{2pt}
-\noindent
-\textbf{NGP-DST Geo Innovation Challenge} \hfill 2024 \quad \href{https://drive.google.com/file/d/1BiXBPspHi2SLBWQ2HGbcPzRJvPHHoiAD/view?usp=drive_link}{View Credential}
+\vspace{-1.5pt}
+\textbf{NGP-DST Geo Innovation Challenge}
+\hfill 2024 \quad \href{https://drive.google.com/file/d/1BiXBPspHi2SLBWQ2HGbcPzRJvPHHoiAD/view?usp=drive_link}{\small View Credential}
 \begin{itemize}
-  \item Presented a flood risk management and early warning system at a national-level innovation challenge.
+\item Presented a flood risk management and early warning system at a national-level innovation challenge.
 \end{itemize}
-
-\vspace{2pt}
-\noindent
-\textbf{International Seminar Presenter (RTET 2024)} \hfill 2024 \quad \href{https://drive.google.com/file/d/1mB_UXSquJLat85Gv0f_MCwX6FhphC85N/view?usp=drive_link}{View Credential}
+\vspace{-1.5pt}
+\textbf{International Seminar Presenter (RTET 2024)}
+\hfill 2024 \quad \href{https://drive.google.com/file/d/1mB_UXSquJLat85Gv0f_MCwX6FhphC85N/view?usp=drive_link}{\small View Credential}
 \begin{itemize}
-  \item Presented a research framework on NLP model evaluation at an international seminar.
+\item Presented a research framework on NLP model evaluation at an international seminar.
 \end{itemize}
 
 \end{document}
