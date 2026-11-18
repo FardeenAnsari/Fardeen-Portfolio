@@ -1,6 +1,6 @@
 % TARGET ROLE: Systems Engineering Associate | Company: Salesforce | Job ID: JR368441
 \documentclass[10pt,a4paper]{article}
-\usepackage[a4paper,top=0.32in,bottom=0.32in,left=0.35in,right=0.35in]{geometry}
+\usepackage[a4paper,top=0.28in,bottom=0.28in,left=0.34in,right=0.34in]{geometry}
 \usepackage[hidelinks]{hyperref}
 \usepackage{enumitem}
 \usepackage{titlesec}
@@ -8,72 +8,73 @@
 \usepackage{tabularx}
 \usepackage{xcolor}
 \usepackage[most]{tcolorbox}
-\usepackage{tikz}
 \usepackage{sourcesans}
 \renewcommand{\familydefault}{\sfdefault}
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
-\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
-\titlespacing{\section}{0pt}{3pt}{1.5pt}
-\setlist[itemize]{leftmargin=*,itemsep=0.5pt,topsep=0.5pt,parsep=0pt,partopsep=0pt}
+
+% Styling Tokens
+\definecolor{HeaderBlack}{HTML}{111111}
+\definecolor{HeaderText}{HTML}{1A1A1A}
+\definecolor{HeaderGray}{HTML}{555555}
+\definecolor{HeaderLine}{HTML}{D1D5DB}
+
+\titleformat{\section}{\large\bfseries\color{HeaderBlack}}{}{0em}{}[\vspace{1pt}\titlerule]
+\titlespacing{\section}{0pt}{2.8pt}{1.5pt}
+\setlist[itemize]{leftmargin=*,itemsep=0.3pt,topsep=0.3pt,parsep=0pt,partopsep=0pt}
 
 \begin{document}
 
-% ===== COMPACT PROFESSIONAL MONOCHROME HEADER =====
-\definecolor{HeaderBlack}{HTML}{171717}
-\definecolor{HeaderText}{HTML}{202020}
-\definecolor{HeaderGray}{HTML}{666666}
-\definecolor{HeaderLine}{HTML}{D8D8D8}
-
+% ===== COMPACT PROFESSIONAL IDENTITY CARD =====
 \begin{tcolorbox}[
     enhanced,
     width=\textwidth,
     colback=white,
     colframe=HeaderLine,
-    boxrule=0.45pt,
+    boxrule=0.5pt,
     arc=1.5mm,
     outer arc=1.5mm,
     left=10pt,
     right=10pt,
-    top=7pt,
-    bottom=6pt,
+    top=5.5pt,
+    bottom=5pt,
     boxsep=0pt,
     before skip=0pt,
     after skip=0pt
 ]
 \noindent
 \begin{minipage}[c]{0.355\textwidth}
-    {\color{HeaderBlack}\rule{3.2cm}{2.2pt}}\\[6pt]
+    {\color{HeaderBlack}\rule{3.2cm}{2.2pt}}\\[5pt]
     {\fontsize{23}{26}\selectfont\bfseries\color{HeaderText} Fardeen Ansari}\\[2pt]
-    {\fontsize{10.5}{13}\selectfont\color{HeaderGray} Software Engineer}
+    {\fontsize{10.5}{13}\selectfont\color{HeaderGray} Software Engineer $\cdot$ Full Stack}
 \end{minipage}
 \hfill
 \begin{minipage}[c]{0.4pt}
     \vspace{-1pt}
-    \color{HeaderLine}\rule{0.4pt}{1.3cm}
+    \color{HeaderLine}\rule{0.4pt}{1.28cm}
 \end{minipage}
 \hfill
 \begin{minipage}[c]{0.595\textwidth}
     \footnotesize
     \begin{minipage}[t]{0.48\linewidth}
         \raggedright
-        {\fontsize{7.2}{8.5}\selectfont\bfseries\color{HeaderGray} EMAIL}\\[-1pt]
-        {\fontsize{9}{11}\selectfont\color{HeaderText}\href{mailto:imailfard@gmail.com}{imailfard@gmail.com}}\\[3pt]
-        {\fontsize{7.2}{8.5}\selectfont\bfseries\color{HeaderGray} LINKEDIN}\\[-1pt]
-        {\fontsize{9}{11}\selectfont\color{HeaderText}\href{https://linkedin.com/in/itsfardeen}{linkedin.com/in/itsfardeen}}\\[3pt]
-        {\fontsize{7.2}{8.5}\selectfont\bfseries\color{HeaderGray} PORTFOLIO}\\[-1pt]
+        {\fontsize{7}{8.5}\selectfont\bfseries\color{HeaderGray} EMAIL}\\[-1pt]
+        {\fontsize{9}{11}\selectfont\color{HeaderText}\href{mailto:imailfard@gmail.com}{imailfard@gmail.com}}\\[2.5pt]
+        {\fontsize{7}{8.5}\selectfont\bfseries\color{HeaderGray} LINKEDIN}\\[-1pt]
+        {\fontsize{9}{11}\selectfont\color{HeaderText}\href{https://linkedin.com/in/itsfardeen}{linkedin.com/in/itsfardeen}}\\[2.5pt]
+        {\fontsize{7}{8.5}\selectfont\bfseries\color{HeaderGray} PORTFOLIO}\\[-1pt]
         {\fontsize{9}{11}\selectfont\color{HeaderText}\href{https://fardeen-portfolio-puce.vercel.app}{fardeen-portfolio-puce.vercel.app}}
     \end{minipage}
     \hfill
     \begin{minipage}[t]{0.48\linewidth}
         \raggedright
-        {\fontsize{7.2}{8.5}\selectfont\bfseries\color{HeaderGray} PHONE}\\[-1pt]
-        {\fontsize{9}{11}\selectfont\color{HeaderText} +91 91238 81320}\\[3pt]
-        {\fontsize{7.2}{8.5}\selectfont\bfseries\color{HeaderGray} GITHUB}\\[-1pt]
-        {\fontsize{9}{11}\selectfont\color{HeaderText}\href{https://github.com/FardeenAnsari}{github.com/FardeenAnsari}}\\[3pt]
-        {\fontsize{7.2}{8.5}\selectfont\bfseries\color{HeaderGray} LOCATION}\\[-1pt]
-        {\fontsize{9}{11}\selectfont\color{HeaderText} Bengaluru, Karnataka}
+        {\fontsize{7}{8.5}\selectfont\bfseries\color{HeaderGray} PHONE}\\[-1pt]
+        {\fontsize{9}{11}\selectfont\color{HeaderText} +91 91238 81320}\\[2.5pt]
+        {\fontsize{7}{8.5}\selectfont\bfseries\color{HeaderGray} GITHUB}\\[-1pt]
+        {\fontsize{9}{11}\selectfont\color{HeaderText}\href{https://github.com/FardeenAnsari}{github.com/FardeenAnsari}}\\[2.5pt]
+        {\fontsize{7}{8.5}\selectfont\bfseries\color{HeaderGray} LOCATION}\\[-1pt]
+        {\fontsize{9}{11}\selectfont\color{HeaderText} Bengaluru, Karnataka, India}
     \end{minipage}
 \end{minipage}
 \end{tcolorbox}
@@ -83,98 +84,85 @@
 % PROFESSIONAL SUMMARY
 % ============================================================
 \section*{Professional Summary}
-Computer Science \& Engineering graduate (2026) with hands-on experience developing and deploying full-stack applications using JavaScript, React.js, Next.js, Node.js, Express.js, REST APIs, and relational databases. Experienced in building role-based workflows, integrating application services, and implementing data-access and integrity controls. Strong foundation in Python, Java, Object-Oriented Programming, SQL, SDLC, and basic software testing. Interested in developing reliable enterprise applications and improving Finance and Employee Success workflows through thoughtful engineering and collaboration.
+Computer Science \& Engineering graduate (2026) experienced in building and deploying full-stack web and mobile systems across React, Next.js, Node.js, Express.js, REST APIs, and relational databases (PostgreSQL, SQLite). Skilled in role-based access control, database triggers, data integrity, and test-case verification. Strong foundation in Python, Java, OOP, SQL, and SDLC, oriented toward building reliable enterprise applications and scaling Finance and Employee Success software workflows.
 
 % ============================================================
 % TECHNICAL SKILLS
 % ============================================================
 \section*{Technical Skills}
-\renewcommand{\arraystretch}{0.98}
-\begin{tabularx}{\textwidth}{@{}>{\bfseries\raggedright\arraybackslash}p{4.8cm}@{\hspace{0.2cm}}>{\raggedright\arraybackslash}X@{}}
-Programming Languages: & Python, Java, JavaScript, C \\
-Backend \& APIs: & Node.js, Express.js, REST APIs, API Integration, JSON \\
-Frontend Development: & React.js, Next.js, HTML5, CSS3, Tailwind CSS \\
-Databases \& SQL: & PostgreSQL, SQLite, Supabase, SQL (Triggers, RLS, ACID) \\
-Computer Science: & Object-Oriented Programming (OOP), Data Structures, SDLC \\
-Testing \& Quality: & Basic Software Testing, Test-Case Writing, Integration Testing Fundamentals, Debugging \\
-Tools \& Documentation: & Git, GitHub, VS Code, Postman, Technical Documentation \\
-AI-Assisted Development: & GitHub Copilot, ChatGPT, Claude, Gemini \\
+\renewcommand{\arraystretch}{0.95}
+\begin{tabularx}{\textwidth}{@{}>{\bfseries\color{HeaderBlack}\raggedright\arraybackslash}p{4.6cm}@{\hspace{0.2cm}}>{\raggedright\arraybackslash}X@{}}
+Languages: & Python, Java, JavaScript (ES6+), TypeScript, C \\
+Backend \& APIs: & Node.js, Express.js, RESTful APIs, API Integration, JSON Schemas \\
+Frontend Development: & React.js, Next.js 14 (App Router), Tailwind CSS, HTML5, CSS3 \\
+Databases \& Persistence: & PostgreSQL, SQLite, Supabase, SQL (Triggers, RLS, ACID Transactions) \\
+Core Computer Science: & Object-Oriented Programming (OOP), Data Structures, SDLC, Git \\
+Testing \& Quality Assurance: & Software Testing Fundamentals, Test-Case Writing, Integration Testing, Debugging \\
+Tools \& Environment: & Git, GitHub, VS Code, Postman, Leaflet, Linux CLI, Technical Documentation \\
+AI-Assisted Engineering: & GitHub Copilot, ChatGPT, Claude, Gemini \\
 \end{tabularx}
 
 % ============================================================
-% PROJECTS
+% TECHNICAL PROJECTS
 % ============================================================
-\section*{Projects}
+\section*{Technical Projects}
 
-\textbf{Trashium -- Reverse-Logistics \& Scrap Monetization Platform}
-\hfill \href{https://github.com/AmartyaSingh07/Trashium}{GitHub} \quad$\cdot$\quad \href{https://www.trashium.com}{Live Demo}\\
-\textit{What it is:} Distributed marketplace connecting households, scrap dealers, and recyclers to digitize informal waste trade.\\
-\textbf{Technologies Used:} Next.js 14, React, TypeScript, Python (scikit-learn), Supabase, PostgreSQL, Leaflet, Tailwind CSS
+\noindent
+\textbf{Trashium} \textbar\ \textit{Civic Reverse-Logistics \& Scrap Monetization Platform} \hfill \href{https://www.trashium.com}{Live Demo} $\cdot$ \href{https://github.com/AmartyaSingh07/Trashium}{GitHub}\\
+{\footnotesize\textbf{Tech Stack:} Next.js 14, React, TypeScript, Python (scikit-learn), Supabase, PostgreSQL, Leaflet, Tailwind CSS}
 \begin{itemize}
-\item Built full-stack workflows for scheduled scrap pickup dispatch, verified collection logging, and atomic PostgreSQL triggers for automated wallet payouts and digital receipt ledgering.
-\item Engineered a Python price-prediction model using Linear Regression (MAPE = 6.11\%, $R^2 = 0.9988$) across 17 scrap categories, combined with 2-opt Leaflet fleet routing and a 20-tier gamification system.
+\item \textbf{Architecture \& Workflows:} Architected a distributed reverse-logistics marketplace connecting households, scrap dealers, and recyclers with scheduled pickup dispatch, collection tracking, and atomic PostgreSQL triggers for automated wallet payouts and receipt ledgering.
+\item \textbf{Algorithmic Optimization:} Developed a Python log-linear ML pricing engine (MAPE = 6.11\%, $R^2 = 0.9988$) across 17 scrap categories, paired with 2-opt Leaflet fleet routing and a 20-tier gamified user incentive system.
 \end{itemize}
 \vspace{1pt}
 
-\textbf{VetanFlow -- Multi-Tenant Enterprise Payroll Operations Platform}
-\hfill \href{https://github.com/FardeenAnsari/vetanflow}{GitHub} \quad$\cdot$\quad \href{https://vetanflow.vercel.app/}{Live Demo}\\
-\textit{What it is:} Enterprise payroll governance platform enforcing strict maker-checker approval workflows and tamper-evident audit trails.\\
-\textbf{Technologies Used:} React, TypeScript, Node.js, Express.js, PostgreSQL, Supabase, Row-Level Security (RLS), jsPDF
+\noindent
+\textbf{VetanFlow} \textbar\ \textit{Enterprise Payroll Automation \& Governance Platform} \hfill \href{https://vetanflow.vercel.app/}{Live Demo} $\cdot$ \href{https://github.com/FardeenAnsari/vetanflow}{GitHub}\\
+{\footnotesize\textbf{Tech Stack:} React, TypeScript, Node.js, Express.js, PostgreSQL, Supabase, Row-Level Security (RLS), jsPDF}
 \begin{itemize}
-\item Engineered 6 role-segregated workspaces (Admin, HR, Finance, Auditor, Employee) with maker-checker state machines, REST APIs, and database-level immutability using PostgreSQL \texttt{BEFORE UPDATE/DELETE} triggers.
-\item Implemented transactional month-locking to prevent retroactive compensation alteration, automated calculation pipelines, salary disbursement validation checks, and client-side encrypted PDF payslip generation.
+\item \textbf{Architecture \& Governance:} Engineered a multi-tenant corporate payroll operations engine with 6 segregated role workspaces (Admin, HR, Finance, Auditor, Employee), maker-checker approval workflows, and automated salary disbursement pipelines.
+\item \textbf{Data Integrity \& Compliance:} Enforced database immutability via PostgreSQL \texttt{BEFORE UPDATE/DELETE} triggers and transactional month-locking to prevent retroactive pay tampering, with client-side encrypted PDF payslip generation.
 \end{itemize}
 \vspace{1pt}
 
-\textbf{Meneu -- Offline-First Restaurant POS Mobile Application}
-\hfill \href{https://github.com/FardeenAnsari/RestaurantPOS}{GitHub}\\
-\textit{What it is:} High-availability, zero-latency tablet point-of-sale system engineered for uninterrupted operations during network outages.\\
-\textbf{Technologies Used:} React Native, Expo, TypeScript, Embedded SQLite, ACID Transactions, ESC/POS Bluetooth Protocol
+\noindent
+\textbf{Meneu} \textbar\ \textit{Offline-First Restaurant POS \& Table Management System} \hfill \href{https://github.com/FardeenAnsari/RestaurantPOS}{GitHub}\\
+{\footnotesize\textbf{Tech Stack:} React Native, Expo, TypeScript, Embedded SQLite, ACID Transactions, ESC/POS Bluetooth Protocol}
 \begin{itemize}
-\item Built 100\% offline-first relational persistence using embedded SQLite, executing ACID transactions for concurrent table orders, dynamic menu catalogs, split-billing, and dual-tier discounts.
-\item Developed automated GST-compliant tax calculations (CGST + SGST) and integrated ESC/POS Bluetooth printer drivers for wireless 80mm kitchen order tickets (KOT) and customer receipts with zero internet dependency.
+\item \textbf{Architecture \& Persistence:} Built an offline-first tablet POS system using embedded SQLite with ACID transaction guarantees, ensuring zero-latency operations for concurrent table orders, dynamic catalogs, split billing, and dual-tier discounts.
+\item \textbf{Hardware Protocol Integration:} Developed custom ESC/POS Bluetooth printer drivers for wireless 80mm kitchen order tickets (KOT) and automated GST-compliant tax invoicing (CGST + SGST) with zero internet dependency.
 \end{itemize}
 
 % ============================================================
 % INTERNSHIP EXPERIENCE
 % ============================================================
 \section*{Internship Experience}
-\textbf{Summer Intern -- Embedded Systems \& IoT -- Jadavpur University}
-\hfill 2024 \quad \href{https://drive.google.com/file/d/1XP1j9ylUgpK528J4_yt1luJFLb9CBnwl/view?usp=drive_link}{Certificate}
+\noindent
+\textbf{Jadavpur University} \textbar\ \textit{Research Intern -- Embedded Systems \& IoT} \hfill Kolkata, India $\cdot$ Summer 2024 \quad \href{https://drive.google.com/file/d/1XP1j9ylUgpK528J4_yt1luJFLb9CBnwl/view?usp=drive_link}{\small [Certificate]}
 \begin{itemize}
-\item Completed a 5-week technical internship involving Python, MATLAB, and machine-learning integration; received \textbf{Grade A}.
-\item Collaborated on a Smart Bee Hive Monitoring System, applying programming and analytical problem-solving to a practical project.
+\item \textbf{Research Scope:} Researched a Smart Bee Hive telemetry system, developing Python and MATLAB routines for acoustic vibration analysis and environmental pattern tracking.
+\item \textbf{Systems Integration:} Worked with FPGA/Verilog logic, Arduino microcontrollers, and IoT sensor arrays; delivered technical benchmarks and received highest honors (\textbf{Grade A}).
 \end{itemize}
 
 % ============================================================
 % EDUCATION
 % ============================================================
 \section*{Education}
-\textbf{B.Tech | Computer Science \& Engineering | MAKAUT}
-\hfill 2022--2026\\
-Supreme Knowledge Foundation Group of Institutions (Affiliated to MAKAUT, formerly WBUT)
-\hfill CGPA: 7.52
+\noindent
+\textbf{B.Tech in Computer Science \& Engineering} \hfill 2022 -- 2026\\
+Supreme Knowledge Foundation Group of Institutions \hfill \textbf{CGPA: 7.52 / 10.0}\\
+\textit{Affiliated to Maulana Abul Kalam Azad University of Technology (MAKAUT, formerly WBUT)} \hfill Mankundu, West Bengal
 
 % ============================================================
-% ACHIEVEMENTS
+% HONORS & ACHIEVEMENTS
 % ============================================================
-\section*{Achievements}
-\textbf{Smart India Hackathon -- National Finalist}
-\hfill 2023 \quad \href{https://drive.google.com/file/d/1LSpvR00tUAIy6ErloFasTqFllAVgryOH/view?usp=drive_link}{\small View Credential}
-\begin{itemize}
-\item Collaborated with a team to develop a full-stack platform for routing civic issues to government authorities.
-\end{itemize}
-\vspace{-1.5pt}
-\textbf{NGP-DST Geo Innovation Challenge}
-\hfill 2024 \quad \href{https://drive.google.com/file/d/1BiXBPspHi2SLBWQ2HGbcPzRJvPHHoiAD/view?usp=drive_link}{\small View Credential}
-\begin{itemize}
-\item Presented a flood risk management and early warning system at a national-level innovation challenge.
-\end{itemize}
-\vspace{-1.5pt}
-\textbf{International Seminar Presenter (RTET 2024)}
-\hfill 2024 \quad \href{https://drive.google.com/file/d/1mB_UXSquJLat85Gv0f_MCwX6FhphC85N/view?usp=drive_link}{\small View Credential}
-\begin{itemize}
-\item Presented a research framework on NLP model evaluation at an international seminar.
-\end{itemize}
+\section*{Honors \& Achievements}
+\noindent
+\textbf{Smart India Hackathon -- National Finalist} \hfill 2023 \quad \href{https://drive.google.com/file/d/1LSpvR00tUAIy6ErloFasTqFllAVgryOH/view?usp=drive_link}{\small [Credential]}\\
+\textit{Collaborated with a 6-person team to build a civic grievance routing platform for ministry and municipal authorities.}\\[1pt]
+\textbf{NGP-DST Geo Innovation Challenge -- National Presenter} \hfill 2024 \quad \href{https://drive.google.com/file/d/1BiXBPspHi2SLBWQ2HGbcPzRJvPHHoiAD/view?usp=drive_link}{\small [Credential]}\\
+\textit{Presented a flood risk management and early warning telemetry framework at a national-level innovation challenge.}\\[1pt]
+\textbf{International Seminar Presenter (RTET 2024)} \hfill 2024 \quad \href{https://drive.google.com/file/d/1mB_UXSquJLat85Gv0f_MCwX6FhphC85N/view?usp=drive_link}{\small [Credential]}\\
+\textit{Presented an analytical research framework evaluating NLP model performance at an international academic seminar.}
 
 \end{document}
